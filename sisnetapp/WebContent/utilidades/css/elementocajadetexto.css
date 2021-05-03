@@ -1,0 +1,171 @@
+/* 
+    Document   : elementocajadetexto
+    Created on : 22 de mayo de 2008, 11:50 AM
+    Author     : Sisnet
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/*Caja de texto con ancho de 75 pixeles*/
+input.text75{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 11px;
+    background-color : #E0E0DE;
+    vertical-align:middle;
+    width:73px;
+}
+
+/*Caja de texto con ancho de 80 pixeles*/
+input.text80{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 11px;
+    background-color : #E0E0DE;
+    vertical-align:middle;
+    width:78px;
+    height:16px;
+}
+
+/*Caja de texto con ancho de 125 pixeles*/
+input.text125{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 11px;
+    background-color : #E0E0DE;
+    vertical-align:middle;
+    width:123px;
+}
+
+/*Caja de texto con ancho de 150 pixeles*/
+input.text150{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 11px;
+    background-color : #E0E0DE;
+    vertical-align:middle;
+    width:148px;
+}
+
+/*Caja de texto con ancho de 175 pixeles*/
+input.text175{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 11px;
+    background-color : #E0E0DE;
+    vertical-align:middle;
+    width:173px;
+}
+
+/*Caja de texto con ancho de 200 pixeles*/
+input.text200 {
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px;
+    background-color : #E0E0DE;
+    vertical-align:middle;
+    width:198px;
+}
+
+/*Caja de texto con ancho de 225 pixeles*/
+input.text225{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 11px;
+    background-color : #E0E0DE;
+    vertical-align:middle;
+    width:223px;
+}
+
+/*Caja de texto con ancho de 250 pixeles*/
+input.text250{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 11px;
+    background-color : #E0E0DE;
+    vertical-align:middle;
+    width:248px;
+}
+
+/*Caja de texto con ancho de 275 pixeles*/
+input.text275{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 11px;
+    background-color : #E0E0DE;
+    vertical-align:middle;
+    width:273px;
+}
+
+/*Caja de texto con ancho de 300 pixeles*/
+input.text300 {
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px;
+    background-color : #E0E0DE;
+    vertical-align:middle;
+    width:298px;
+}
+
+/*Caja de texto con ancho de 325 pixeles*/
+input.text325{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 11px;
+    background-color : #E0E0DE;
+    vertical-align:middle;
+    width:323px;
+}
+
+/*Caja de texto con ancho de 350 pixeles*/
+input.text350{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 11px;
+    background-color : #E0E0DE;
+    vertical-align:middle;
+    width:348px;
+}
+
+/*Caja de texto con ancho de 375 pixeles*/
+input.text375{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 11px;
+    background-color : #E0E0DE;
+    vertical-align:middle;
+    width:374px;
+}
+
+/*Caja de texto con ancho de 400 pixeles*/
+input.text400 {
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 11px;
+    background-color : #E0E0DE;
+    vertical-align:middle;
+    width:398px;    
+}
+
+/*Caja de texto con ancho de 425 pixeles*/
+input.text425{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 11px;
+    background-color : #E0E0DE;
+    vertical-align:middle;
+    width:423px;
+}
+
+/*Caja de texto con ancho de 450 pixeles*/
+input.text450{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 11px;
+    background-color : #E0E0DE;
+    vertical-align:middle;
+    width:448px;
+}
+
+/*Caja de texto con ancho de 475 pixeles*/
+input.text475{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 11px;
+    background-color : #E0E0DE;
+    vertical-align:middle;
+    width:473px;
+}
+
+/*Caja de texto con ancho de 500 pixeles*/
+input.text500 {
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 11px;
+    background-color : #E0E0DE;
+    vertical-align:middle;
+    width:498px;
+}
+

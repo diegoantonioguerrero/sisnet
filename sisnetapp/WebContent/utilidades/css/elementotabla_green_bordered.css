@@ -1,0 +1,879 @@
+/* 
+    Document   : elementotabla
+    Created on : 22 de mayo de 2008, 11:20 AM
+    Author     : Sisnet
+    Description:
+        Purpose of the stylesheet follows.
+*/
+/*Kes Se importa la fuente GraviolaSoftRegular*/
+
+@font-face{
+    font-family:'GraviolaSoftRegular';
+    src: url('GraviolaSoftRegular.otf');
+}
+@font-face{
+    font-family:'GraviolaSoftBold';
+    src: url('GraviolaSoftBold.otf');
+}
+
+/*Kes Texto Fecha Version*/
+table.transparente tr th.celdaVersion{
+    font-family: tahoma,verdana,helvetica, sans-serif !important;
+    font-size: 8px !important;
+    font-weight: bold !important;
+    color:#FFFFFF !important;
+    text-align:center !important;
+}
+/*Kes Login Espacio Separacion horizontal y vertical celda*/
+#formularioLogin .formulario, #formularioConsultasa .formulario
+{
+ border-collapse:separate;
+ border-spacing:0px 5px;/*Separacion horizontal y vertical de cada celda de la tabla*/
+ 
+ padding: 0px;
+
+}
+/*Kes Login Espacio fantasma entre etiqueta y campo */
+/*
+#formularioLogin tr th.transparente::before
+{
+ content:" ";
+ padding-left: 5px;
+}
+*/
+/*Kes Login Etiquetas con borde redondo del fomulario de ingreso y el fomulario de consultas*/
+#formularioLogin tr th.etiqueta
+{
+ border-radius:6px 0px 0px 6px;
+ padding-left: 10px;/*Margen izquierdo*/
+ border: 0px solid #000000;
+ /*width: 130px;Ancho de la etiqueta*/
+ width: 150px;
+ /*
+ border-top-right-radius: 0px;
+ border-bottom-right-radius: 0px;
+ */
+}
+
+/*Kes Login Etiquetas Fuente - Etiquetas de opciones de consulta - Usos varios*/
+th.etiqueta{
+	background-image: -moz-linear-gradient(top, #02733C, #02733C);/*Por defecto #C8C3C3, #4D4948*/
+    background-image: -ms-linear-gradient(top, #02733C, #02733C);/*Por defecto #C8C3C3, #4D4948*/
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#02733C), to(#02733C));/*Por defecto #C8C3C3, #4D4948*/
+    background-image: -webkit-linear-gradient(top, #02733C, #02733C);/*Por defecto #C8C3C3, #4D4948*/
+    background-image: -o-linear-gradient(top, #02733C, #02733C);/*Por defecto #C8C3C3, #4D4948*/
+    background-image: linear-gradient(top, #02733C, #02733C);/*Por defecto #C8C3C3, #4D4948*/
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#02733C',endColorstr='#02733C', gradientType='0');/*Por defecto #C8C3C3, #4D4948*/
+    color:#FFFFFF;/*Por defecto #FFFFFF*/
+    background-color:#A7A7A0; /*Por defecto #A7A7A0*/
+    text-align:left;    
+    /*font-size:11px;*//*Por defectos 11px*/
+	font-size: 18px;
+    font-weight:bold;
+    font-family: GraviolaSoftBold, tahoma,verdana,helvetica,sans-serif; /*tahoma,verdana,helvetica,sans-serif;*/    
+	
+border: 0px solid #000000;
+	
+	
+	
+    }
+
+/*Kes bordes de cajas de texto generales, se dejan planos*/
+input[type="text"],input[type="password"],input[type="text"]:focus,input[type="password"]:focus 
+{
+	border-width: 1px !important;
+	border-style: solid !important;
+	box-sizing: border-box !important;
+}
+
+
+/*Kes Login Campos Fuente*/
+#formularioLogin input[type="text"],#formularioLogin input[type="password"],#formularioLogin select
+{
+	color: #02733C !important;/*Por defecto es negro #000 */
+	font-size:18px !important;/*Por defecto es 11px*/
+	background-color:#fff !important;/*Por defecto es #E2FFFF   */
+	font-family: verdana !important;/*Por defecto es tahoma*/
+ margin-top:0px;
+ margin-bottom:0px;
+ padding-left: 0px;/*Margen izquierdo*/
+ padding-right: 0px;/*Margen derecha*/
+ padding-top: 0px;/*Margen Superior*/
+ padding-bottom: 0px;/*Margen Inferior*/
+ border: 0px !important;
+ /*border: 1px solid #02733C;*/
+ border-top: 1px #02733C solid !important;
+ border-right: 1px #02733C solid !important;
+ /*border-left: 1px #E7FEE5 solid !important;*/
+ border-bottom: 1px #02733C solid !important;
+ 
+ 
+ /*width: 250px !important; *//*Ancho del control de login*/
+ width: 330px !important;
+height: 100%;
+
+border-radius:6px 6px;
+border-top-left-radius: 0px;
+border-bottom-left-radius: 0px;
+border-top-right-radius: 6px;
+ 
+}
+
+#formularioLogin input[type="text"]:focus,#formularioLogin input[type="password"]:focus,#formularioLogin select:focus
+{
+	
+	/*color: #0ff !important;*/
+	/*Por defecto es negro #000 02733C*/
+	/*background-color:#f00 !important;*/
+	/*Por defecto es #E2FFFF   E7FEE5*/
+	/*outline: 5px auto Highlight;
+	outline: 5px auto -webkit-focus-ring-color;
+	*/
+	/*border: none !important;*/
+		background-color:#E7FEE5 !important;/*Por defecto es #E2FFFF   */
+
+border: 0px !important;
+ /*border: 1px solid #02733C;*/
+ border-top: 1px #02733C solid !important;
+ border-right: 1px #02733C solid !important;
+ /*border-left: 1px #E7FEE5 solid !important;*/
+ border-bottom: 1px #02733C solid !important;
+
+
+	outline: none;
+	outline-style: none;
+/*box-shadow: none;*/
+/* inset | offset-x | offset-y | color */
+/*box-shadow: inset 5em 1em gold;*/
+/*box-shadow: inset 0 1px 1px rgb(0 0 0 / 34%); */
+/*box-shadow: 2px -1px #02733C;
+-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .30s; 
+*/
+/*border-color: transparent;
+-webkit-box-shadow: inset 0 10px 1px rgb(0 0 245 / 18%);
+*/
+
+-o-transition: border-color ease-in-out .60s, box-shadow ease-in-out .60s;
+}
+
+#formularioLogin input[type="text"]:hover,#formularioLogin input[type="password"]:hover,#formularioLogin select:hover
+{
+	
+	/*color: #0ff !important;*/
+	/*Por defecto es negro #000 02733C*/
+	/*background-color:#f00 !important;*/
+	/*Por defecto es #E2FFFF   E7FEE5*/
+	/*outline: 5px auto Highlight;
+	outline: 5px auto -webkit-focus-ring-color;
+	*/
+	/*border: none !important;*/
+	
+border: 0px !important;
+ /*border: 1px solid #02733C;*/
+ border-top: 1px #000 solid !important;
+ border-right: 1px #000 solid !important;
+ /*border-left: 1px #E7FEE5 solid !important;*/
+ border-bottom: 1px #000 solid !important;
+/*
+outline: none;
+	outline-style: none;
+*/
+
+}
+
+/*Kes Pantalla 1: Aplicaciones - Color fondo*/
+th.marca{
+  /*Por defecto # 999999 y # 000000*/
+    border-radius: 8px 8px;/*Redondeo de los menus superiores de aplicaciones*/
+}
+
+/*Kes Pantalla 1: Aplicaciones - Fuente */
+table.marca{
+    color:inherit;
+    background-color:transparent;
+    font-size: 10px;/*por defecto 10px*/
+    border: none;
+    border-collapse:separate;
+    border-spacing:3px 3px;/*Separacion horizontal y vertical de los botones de aplicaciones*/
+}
+
+/*Kes Pantalla 1: Titulo Aplicacion*/
+th.titulo{
+	background-image: -moz-linear-gradient(top, #37AD2D, #37AD2D);/*Por defecto # C8C3C3, # 4D4948*/
+    background-image: -ms-linear-gradient(top, #37AD2D, #37AD2D);/*Por defecto # C8C3C3, # 4D4948*/
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#37AD2D), to(#37AD2D));/*Por defecto # C8C3C3, # 4D4948*/
+    background-image: -webkit-linear-gradient(top, #37AD2D, #37AD2D);/*Por defecto # C8C3C3, # 4D4948*/
+    background-image: -o-linear-gradient(top, #37AD2D, #37AD2D);/*Por defecto # C8C3C3, # 4D4948*/
+    background-image: linear-gradient(top, #37AD2D, #37AD2D);/*Por defecto # C8C3C3, # 4D4948*/
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#37AD2D',endColorstr='#37AD2D', gradientType='0');/*Por defecto # C8C3C3, # 4D4948*/
+    font-family: GraviolaSoftBold, arial, tahoma,verdana,helvetica, sans-serif;/*Por defecto arial, tahoma,verdana,helvetica, sans-serif*/
+    font-size: 16px;
+    font-weight: bold;
+    background-color:#A7A7A0;    /*Por defecto A7A7A0*/
+    color:#FFFFFF;/*Por defecto FFFFFF*/
+    vertical-align: middle;/*alineacion vertital del titulo de la aplicacion*/
+}
+
+
+
+/*Separacion en la tabla de filtros de consulta*/
+#tablaAreaConsultas
+{
+ border-collapse:separate;
+ border-spacing:0px 1px;/*Separacion horizontal y vertical de cada celda de la tabla*/
+ width: 100%;
+}
+
+/*Kes Pantalla 1: Opciones de consulta desplegadas - Etiquetas - Redondeo*/
+#formularioConsultas tr th.etiqueta
+{
+ border: 1px solid #000000;
+ border-radius:8px 8px;
+ padding-left: 10px;/*Margen izquierdo*/
+ width: 200px;/*Ancho de la etiqueta*/
+ display:table-cell;
+}
+/*Kes Pantalla 1: Opciones de consulta desplegadas - Controles - Redondeo*/
+
+#formularioConsultas tr th.transparente input[type="text"],
+#formularioConsultas tr th.transparente input[type="text"]:focus,
+#formularioConsultas tr th.transparente select,
+#formularioConsultas tr th.transparente select:focus,
+#formularioConsultas tr th.transparente textarea,
+#formularioConsultas tr th.transparente textarea:focus,
+#formularioConsultas tr th.transparente input
+{
+ box-sizing:border-box !important;
+ border-radius:5px 5px;
+ padding-left: 6px;/*Margen izquierdo*/
+ padding-right: 6px;/*Margen derecha*/
+ background-color: #E7FEE5 !important; /*Color fondo de los cuadros de texto de las consultas*/
+ font-family: verdana,tahoma !important;/*Por defecto es tahoma*/
+ color: #02733C;/*Color fuente cuadros de texto de las consultas*/
+ font-size:11px !important;/*Tamaño fuente cuadros de texto de las consultas*/
+ width: 250px !important;/*Ancho de la etiqueta*/
+ }
+ 
+ #formularioConsultas tr th.transparente input.boton{
+    font-family: arial;
+    font-size: 11px;
+    font-weight:bold;
+    width:18px !important;
+    height:18px;
+    color: #02733C !important;/*Por defecto es negro #000*/
+    background-color:#DBDBD8 !important;/*Por defecto es #E2FFFF*/
+    padding-left:2px !important;
+    padding-right:2px !important;    
+}
+/*Kes Pantalla 2: cajas de texto, selector de arhivos y select*/
+#formularioIncluir input[type="text"], 
+#formularioIncluir input[type="text"]:focus,
+#formularioIncluir textarea,
+#formularioIncluir select, 
+#formularioIncluir input[type="file"]
+{
+	color: #02733C !important;/*Por defecto es negro #000*/
+	font-size:11px !important;/*Por defecto es 11px*/
+	background-color:#E7FEE5 !important;/*Por defecto es #E2FFFF*/
+	font-family: verdana,tahoma !important;/*Por defecto es tahoma*/
+  border-radius: 4px 4px;/*redondeo de las cajas de texto de nuevo registro*/
+  padding-left:1px;/*Margen por el redondeo*/
+  padding-right:0px;/*Margen por el redondeo*/
+  padding-top:1px;/*Margen por el redondeo*/
+  padding-bottom:0px;/*Margen por el redondeo*/
+}
+
+/*Kes Pantalla 2: Controles Deshabilitados*/
+#formularioIncluir input[type="text"]:disabled,
+#formularioIncluir textarea:disabled,
+#formularioIncluir select:disabled,
+#formularioIncluir input[type="text"]:read-only,
+#formularioIncluir textarea:read-only
+{
+	color: #02733C !important;/*Por defecto es negro #000*/
+	background-color:#DBDBD8 !important;/*Por defecto es #E2FFFF*/
+  border: 1px solid #02733C;
+
+}
+/*Kes Opciones desplegadas de los select*/
+#formularioIncluir select option 
+{
+	color: #000000 !important;/*Por defecto es negro #000*/
+	font-size:11px !important;/*Por defecto es 11px*/
+	background-color:#E7FEE5 !important;/*Por defecto es #E2FFFF*/
+	font-family: verdana, Tahoma !important;/*Por defecto es tahoma*/
+}
+/*Kes Opcion seleccionada de los select*/
+#formularioIncluir select option[selected]
+{
+	color: #000000 !important;/*Por defecto es negro #000*/
+	font-size:11px !important;/*Por defecto es 11px*/
+	background-color:#E2FFFF !important;/*Por defecto es #E2FFFF*/
+	font-family: verdana, Tahoma !important;/*Por defecto es tahoma*/
+}
+/*Kes Pantalla 2: Color Boton Fecha*/
+#formularioIncluir button, #formularioIncluir input[type="button"]
+{
+	color: #02733C !important;/*Por defecto es negro #000*/
+	background-color:#DBDBD8 !important;/*Por defecto es #E2FFFF*/
+  padding-left:2px !important;
+  padding-right:2px !important;
+}
+/*Kes Pantalla 1- Boton de Fecha*/
+#formularioConsultas button, #formularioConsultas input[type="button"]
+{
+	color: #02733C !important;/*Por defecto es negro #000*/
+	background-color:#DBDBD8 !important;/*Por defecto es #E2FFFF*/
+  padding-left:2px !important;
+  padding-right:2px !important;
+}
+
+/*Kes Pantalla 2: Color de fondo Formulario*/
+#formularioIncluir table:first-of-type tr td{
+	background-image: -moz-linear-gradient(top, #FFFFFF, #FFFFFF);  /*DBDBD8*/
+    background-image: -ms-linear-gradient(top, #FFFFFF, #FFFFFF);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FFFFFF), to(#FFFFFF));
+    background-image: -webkit-linear-gradient(top, #FFFFFF, #FFFFFF);
+    background-image: -o-linear-gradient(top, #FFFFFF, #FFFFFF);
+    background-image: linear-gradient(top, #FFFFFF, #FFFFFF);
+}
+
+/*Kes Pantalla 2 Barra de titulo formulario: DATOS BASICOS*/
+#formularioIncluir table:first-of-type tr:first-of-type td{
+	font-family: GraviolaSoftBold, Arial !important;/*Por defecto es Arial*/
+	font-size: 16px !important;/*Por defecto es 16px*/
+	color: #02733C !important;/*Por defecto es blanco #fff*/
+  
+  background-color:#E7FEE5;/*Color de fondo*/
+  background-image: none !important;
+}
+
+/*Kes Ajuste de botones del formulario de registro*/
+#formularioIncluir table:first-of-type tr td .Boton{
+	text-align: left;
+	padding-left: 1px;
+}
+
+/*Kes Etiquetas del formulario de registro*/
+table.internaformulario tr th, table.transparente tr th{
+	font-family: GraviolaSoftRegular, Tahoma !important;/*Por defecto es tahoma*/
+	font-size: 12px !important;/*Por defecto es 11px*/
+	color: #000000 !important;/*Por defecto es blanco #fff */
+	/*font-weight: bold  !important; Por defecto bold*/
+}
+
+/*Cuadro de diálogo para advertencias*/
+th.advertencia{
+    color:#000000;
+    background-color:#FDFF00;
+    text-align:center;    
+}
+
+th.tituloadvertencia{
+	background-image: -moz-linear-gradient(top, #FFFF00, #F3F781);
+    background-image: -ms-linear-gradient(top, #FFFF00, #F3F781);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FFFF00), to(#F3F781));
+    background-image: -webkit-linear-gradient(top, #FFFF00, #F3F781);
+    background-image: -o-linear-gradient(top, #FFFF00, #F3F781);
+    background-image: linear-gradient(top, #FFFF00, #F3F781);
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#FFFF00',endColorstr='#F3F781', gradientType='0');
+    color:#00000;
+    background-color:#FDFF00;
+    text-align:center;
+    font-size:13px;    
+}
+
+table.advertencia{
+    color:#000000;
+    background-color:#FBFF8A;
+    font-size: 11px;
+    border:0px solid;
+    width: 400px;    
+    text-align:center;
+    border-collapse: collapse;
+}
+
+/*Cuadro de diálogo para errores*/
+th.error{
+    color:#FFFFFF;
+    background-color:#FF0000;
+    text-align:center;
+}
+
+th.tituloerror{
+	background-image: -moz-linear-gradient(top, #DF0101, #FA5858);
+    background-image: -ms-linear-gradient(top, #DF0101, #FA5858);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#DF0101), to(#FA5858));
+    background-image: -webkit-linear-gradient(top, #DF0101, #FA5858);
+    background-image: -o-linear-gradient(top, #DF0101, #FA5858);
+    background-image: linear-gradient(top, #DF0101, #FA5858);
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#DF0101',endColorstr='#FA5858', gradientType='0');
+    color:#FFFFFF;
+    background-color:#FF0000;
+    text-align:center;
+    font-size:13px;/*Por defecto 13px*/
+    font-weight:bold;
+    font-family: GraviolaSoftBold, tahoma,verdana,helvetica,sans-serif; /*tahoma,verdana,helvetica,sans-serif;*/    
+}
+
+table.error{
+    color:#000000;
+    background-color:#FFC1C6;
+    border:0px solid;
+    width: 400px;
+    text-align:center;
+    border-collapse: collapse;
+    font-size:11px;/*Por defecto 11px*/
+    font-weight:bold;
+    font-family: GraviolaSoftBold, tahoma,verdana,helvetica,sans-serif; /*tahoma,verdana,helvetica,sans-serif;*/    
+}
+
+/*Cuadro de diálogo para mensajes*/
+th.mensaje{
+    color:#FFFFFF;
+    background-color:#02B202;
+    text-align:center;
+}
+
+th.titulomensaje{
+	background-image: -moz-linear-gradient(top, #01DF01, #81F781);
+    background-image: -ms-linear-gradient(top, #01DF01, #81F781);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#01DF01), to(#81F781));
+    background-image: -webkit-linear-gradient(top, #01DF01, #81F781);
+    background-image: -o-linear-gradient(top, #01DF01, #81F781);
+    background-image: linear-gradient(top, #01DF01, #81F781);
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#01DF01',endColorstr='#81F781', gradientType='0');
+    color:#000000;
+    background-color:#01DF01;
+    text-align:center;
+    font-size:13px;/*Por defecto 13px*/
+    font-weight:bold;
+    font-family: GraviolaSoftBold, tahoma,verdana,helvetica,sans-serif; /*tahoma,verdana,helvetica,sans-serif;*/    
+}
+
+table.mensaje{
+    color:#000000;
+    background-color:#D9FFD9;
+    border:0px solid;
+    width: 400px;
+    text-align:center;
+    border-collapse: collapse;
+    font-size:11px;/*Por defecto 11px*/
+    font-weight:bold;
+    font-family: GraviolaSoftBold, tahoma,verdana,helvetica,sans-serif; /*tahoma,verdana,helvetica,sans-serif;*/    
+}
+
+table.botones{
+    color:inherit;
+    background-color:transparent;
+    font-size:11px;
+    border: none;
+    border-collapse: collapse;
+    margin-top:10;
+}
+
+/*Filas de la tabla de los resultados de consulta (1er columna) */
+th.tablaContenidoImagen{
+    background-image: -moz-linear-gradient(top, #FFFFFF, #FFFFFF);/* Por defecto CCFFFF, 99CCFF */
+    background-image: -ms-linear-gradient(top, #FFFFFF, #FFFFFF);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FFFFFF), to(#FFFFFF));
+    background-image: -webkit-linear-gradient(top, #FFFFFF, #FFFFFF);
+    background-image: -o-linear-gradient(top, #FFFFFF, #FFFFFF);
+    background-image: linear-gradient(top, #FFFFFF, #FFFFFF);
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#FFFFFF',endColorstr='#FFFFFF', gradientType='0');    
+    color:#000000;
+    background-color:#FFFFFF;
+    text-align:center;    
+    border-color: black;
+    border-width: 1px;
+    border-style: dotted;
+}
+
+/*Filas de la tabla de los resultados de consulta (1er columna) Alternante */
+th.tablaContenidoImagenAlterno{
+	background-image: -moz-linear-gradient(top, #E7FEE5, #E7FEE5); /* Por defecto 00CCFF, 0099FF */
+    background-image: -ms-linear-gradient(top, #E7FEE5, #E7FEE5);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#E7FEE5), to(#E7FEE5));
+    background-image: -webkit-linear-gradient(top, #E7FEE5, #E7FEE5);
+    background-image: -o-linear-gradient(top, #E7FEE5, #E7FEE5);
+    background-image: linear-gradient(top, #E7FEE5, #E7FEE5);
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#E7FEE5',endColorstr='#E7FEE5', gradientType='0');
+    color:#000000;
+    background-color:#99CCFF;
+    text-align:center;    
+    border-color: black;
+    border-width: 1px;
+    border-style: dotted;
+}
+/*Filas de la tabla de los resultados de consulta (2da y 3er columna) */
+th.tablaContenido{
+	background-image: -moz-linear-gradient(top, #FFFFFF, #FFFFFF);/* Por defecto CCFFFF, 99CCFF */
+    background-image: -ms-linear-gradient(top, #FFFFFF, #FFFFFF);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FFFFFF), to(#FFFFFF));
+    background-image: -webkit-linear-gradient(top, #FFFFFF, #FFFFFF);
+    background-image: -o-linear-gradient(top, #FFFFFF, #FFFFFF);
+    background-image: linear-gradient(top, #FFFFFF, #FFFFFF);
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#FFFFFF',endColorstr='#FFFFFF', gradientType='0');    
+    color:#000000;
+    background-color:#FFFFFF;    
+    font-size:11px;  
+    border-color: black;
+    border-width: 1px;
+    border-style: dotted;
+}
+
+/*Filas de la tabla de los resultados de consulta (2da y 3er columna) Aternante */
+th.tablaContenidoAlterno{
+	background-image: -moz-linear-gradient(top, #E7FEE5, #E7FEE5); /* Por defecto 00CCFF, 0099FF */
+    background-image: -ms-linear-gradient(top, #E7FEE5, #E7FEE5);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#E7FEE5), to(#E7FEE5));
+    background-image: -webkit-linear-gradient(top, #E7FEE5, #E7FEE5);
+    background-image: -o-linear-gradient(top, #E7FEE5, #E7FEE5);
+    background-image: linear-gradient(top, #E7FEE5, #E7FEE5);
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#E7FEE5',endColorstr='#E7FEE5', gradientType='0');
+    color:#000000;
+    background-color:#99CCFF;    
+    font-size:11px;  
+    border-color: black;
+    border-width: 1px;
+    border-style: dotted;
+}
+
+/*Filas de la tabla de los resultados de consulta (4ta columna en adelante) */
+th.tablaContenidoParrafo{
+  background-image: -moz-linear-gradient(top, #FFFFFF, #FFFFFF); /* Por defecto CCFFFF, 99CCFF */
+    background-image: -ms-linear-gradient(top, #FFFFFF, #FFFFFF);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FFFFFF), to(#FFFFFF));
+    background-image: -webkit-linear-gradient(top, #FFFFFF, #FFFFFF);
+    background-image: -o-linear-gradient(top, #FFFFFF, #FFFFFF);
+    background-image: linear-gradient(top, #FFFFFF, #FFFFFF);
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#FFFFFF',endColorstr='#FFFFFF', gradientType='0');
+    color:#000000;
+    background-color:#FFFFFF;
+    font-size:11px;
+    border-color: black;
+    border-width: 1px;
+    border-style: dotted;
+    vertical-align: middle;
+    margin: 0px;
+}
+
+/*Filas de la tabla de los resultados de consulta (4ta columna en adelante) Alternante */
+th.tablaContenidoParrafoAlterno{
+	background-image: -moz-linear-gradient(top, #E7FEE5, #E7FEE5); /* Por defecto 00CCFF, 0099FF */
+    background-image: -ms-linear-gradient(top, #E7FEE5, #E7FEE5);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#E7FEE5), to(#E7FEE5));
+    background-image: -webkit-linear-gradient(top, #E7FEE5, #E7FEE5);
+    background-image: -o-linear-gradient(top, #E7FEE5, #E7FEE5);
+    background-image: linear-gradient(top, #E7FEE5, #E7FEE5);
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#E7FEE5',endColorstr='#E7FEE5', gradientType='0');
+    color:#000000;
+    background-color:#99CCFF;
+    font-size:11px;
+    border-color: black;
+    border-width: 1px;
+    border-style: dotted;
+    vertical-align: middle;
+    margin: 0px;
+}
+
+
+/*Kes Pantalla 1: Fondo Nombres columnas de Resultado*/
+th.tabla{
+	background-image: -moz-linear-gradient(top, #37AD2D, #37AD2D);/*Por defecto C8C3C3, 4D4948*/
+    background-image: -ms-linear-gradient(top, #37AD2D, #37AD2D);/*Por defecto C8C3C3, 4D4948*/
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#37AD2D), to(#37AD2D));/*Por defecto C8C3C3, 4D4948*/
+    background-image: -webkit-linear-gradient(top, #37AD2D, #37AD2D);/*Por defecto C8C3C3, 4D4948*/
+    background-image: -o-linear-gradient(top, #37AD2D, #37AD2D);/*Por defecto C8C3C3, 4D4948*/
+    background-image: linear-gradient(top, #37AD2D, #37AD2D);/*Por defecto C8C3C3, 4D4948*/
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#37AD2D',endColorstr='#37AD2D', gradientType='0');/*Por defecto C8C3C3, 4D4948*/
+    color:#FFFFFF;/*Por defecto #FFFFFF*/
+    background-color:#A7A7A0;    /*Por defecto #A7A7A0*/
+    border-color: #02733C;
+    border-width: 1px; 
+    border-style: solid;
+    text-overflow: clip;/*Para ocultar el texto que no cabe dentro de los titulos*/
+    overflow: hidden;/*Para ocultar el texto que no cabe dentro de los titulos*/
+    
+}
+/*Kes Pantalla 1: Fuente columnas de resultado*/
+table.tabla{
+    color:#000000;
+    background-color:#FFFFFF;
+    font-size:12px;/*Por defecto 11px*/
+    border-color: #02733C;
+    border-width: 1px;
+    border-style: solid;
+    border-collapse:collapse;
+    table-layout: fixed;
+	font-family: GraviolaSoftBold, tahoma,verdana,helvetica,sans-serif;/*Por defecto tahoma,verdana,helvetica,sans-serif*/
+}
+
+th.transparente{
+    color:inherit;
+    background-color:transparent;
+    font-size:11px;    
+	
+	padding: 0px;
+border-top-width: 0px;
+border-top-style: solid;
+	
+	
+}
+/*Kes Pantalla 1: Color Franja titulo OPCIONES DE CONSULTA*/
+th.tituloespecial{
+    color:#inherit; /*Por defecto inherit*/
+    background-color:#E7FEE5;/*Por defecto #A7A7A0*/
+    font-size:11px;
+}
+
+/*Kes Pantalla 1: Borde Franja titulo OPCIONES DE CONSULTA*/
+#tablaMenus.transparente{
+    color:inherit;
+    background-color:transparent;
+    font-size:11px;
+    border: 1px;
+    border-collapse: collapse;
+    table-layout:fixed;
+    border: 1px solid #02733C;
+}
+
+table.transparente h1, table.transparente .transparenteinterna th.tituloespecial{
+    border: none;
+}
+table.transparenteinterna{
+    color:inherit;
+    background-color:transparent;
+    font-size:11px;
+    border: 1px;
+    border-collapse: collapse;
+}
+
+table.formulario{
+    color:inherit;
+    background-color:transparent;
+    font-size:11px;
+    border: 1px;
+    border-collapse: collapse;    
+}
+
+table.internaformulario{
+    color:inherit;
+    background-color:transparent;
+    font-size:11px;
+    border: 1px;
+    border-collapse: collapse;
+    table-layout:fixed;
+}
+
+
+table.titulo{
+    color:inherit;
+    background-color:transparent;
+    font-size:11px;
+    border-spacing: 0px 0px;
+    border: 1px solid #02733C;/*Borde de la tabla de titulo*/
+    
+}
+
+/*Kes Pantalla 1: Texto Usuario y estado */
+th.subtitulo{
+	background-image: -moz-linear-gradient(top, #37AD2D, #37AD2D);/*Por defecto # C8C3C3, # 4D4948*/
+    background-image: -ms-linear-gradient(top, #37AD2D, #37AD2D);/*Por defecto # C8C3C3, # 4D4948*/
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#37AD2D), to(#37AD2D));/*Por defecto # C8C3C3, # 4D4948*/
+    background-image: -webkit-linear-gradient(top, #37AD2D, #37AD2D);/*Por defecto # C8C3C3, # 4D4948*/
+    background-image: -o-linear-gradient(top, #37AD2D, #37AD2D);/*Por defecto # C8C3C3, # 4D4948*/
+    background-image: linear-gradient(top, #37AD2D, #37AD2D);/*Por defecto # C8C3C3, # 4D4948*/
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#37AD2D',endColorstr='#37AD2D', gradientType='0');/*Por defecto # C8C3C3, # 4D4948*/
+    font-family: GraviolaSoftBold, arial, tahoma,verdana,helvetica, sans-serif;/*Por defecto arial, tahoma,verdana,helvetica, sans-serif*/
+    font-size: 11px;
+    font-weight: bold;
+    background-color:#A7A7A0;    /*Por defecto A7A7A0*/
+    color:#FFFFFF;/*Por defecto FFFFFF*/
+}
+
+/*2020-10-07*/
+/*Kes menu de principal - item de menu con submenus */
+.menuprincipal_menu a.menuprincipal_l:link, .menuprincipal_menu a.menuprincipal_l:visited {
+    background: #E7FEE5 /*Por defecto #CECECE*/
+	url(../javascript/menuprincipal/menuprincipal_l.gif) no-repeat right;
+    color: #02733C; /*Por defecto #000000*/
+    border-color: #02733C;/*Por defecto #868684*/
+    font-size: 8pt;/*Por defecto 8pt*/
+    font-family: GraviolaSoftBold,arial,helvetica,sans-serif; /*Por defecto arial,helvetica,sans-serif*/
+}
+
+/*Kes Color del menu cuando se pasa el mouse por encima*/
+.menuprincipal_menu a.menuprincipal_l:hover, 
+.menuprincipal_menu a.menuprincipal_plain:hover
+{
+    color: #FFFFFF !important; /*Por defecto #FFFFFF*/
+    background-color: #37AD2D !important;/*Por defecto #000070*/
+}
+
+/*Kes menu de principal - item de menu sin submenus */
+.menuprincipal_menu .menuprincipal_plain,.menuprincipal_menu a.menuprincipal_plain:link,.menuprincipal_menu a.menuprincipal_plain:visited {
+    background-color: #E7FEE5;/*Por defecto #CECECE*/
+    color: #02733C;/*Por defecto #000000*/
+    border-color: #02733C;/*Por defecto #868684*/
+    font-size: 8pt;/*Por defecto 8pt*/
+    font-family: GraviolaSoftBold,arial,helvetica,sans-serif; /*Por defecto arial,helvetica,sans-serif*/
+}
+
+/*Kes Menu de opciones de consulta*/
+.menubusqueda_menu .menubusqueda_plain,.menubusqueda_menu a.menubusqueda_plain:link,.menubusqueda_menu a.menubusqueda_plain:visited {
+    background-color: #E7FEE5;/*Por defecto #BFC0C0*/
+    color: #02733C;/*Por defecto #000000*/
+    border-color: #02733C;/*Por defecto #949494*/
+    font-size: 9pt;/*Por defecto 9pt*/
+    font-family: GraviolaSoftBold,tahoma,verdana,arial,sans-serif; /*Por defecto tahoma,verdana,arial,sans-serif*/
+}
+/*Kes Color del menu cuando se pasa el mouse por encima en el las opciones de consulta y el de ordenamiento*/
+.menubusqueda_menu a.menubusqueda_plain:hover,
+.menuordenadopor_menu .menuordenadopor_plain:hover
+{
+    background-color: #37AD2D !important;/*Por defecto #000070*/
+    color: #FFFFFF !important;/*Por defecto #FFFFFF*/
+}
+
+/*Kes Menu de opciones de ordenamiento*/
+.menuordenadopor_menu .menuordenadopor_plain,.menuordenadopor_menu a.menuordenadopor_plain:link,.menuordenadopor_menu a.menuordenadopor_plain:visited {
+    background-color: #E7FEE5;/*Por defecto #BFC0C0*/
+    color: #02733C;/*Por defecto #000000*/
+    border-color: #02733C;/*Por defecto #949494*/
+    font-size: 9pt;/*Por defecto 9pt*/
+    font-family: GraviolaSoftBold,tahoma,verdana,arial,sans-serif; /*Por defecto tahoma,verdana,arial,sans-serif*/
+}
+
+
+/*Separacion del formulario de login para que se vea centrado */
+body center img[id=""]
+{
+ display: block;
+ margin-top: 60px;
+}
+
+/*Tamaño botones de menus*/
+#tablaInformacionAplicacion th:nth-child(1) a>img{
+height: 18px;
+/*width:50px;*/
+}
+
+/*Tamaño boton derecho (flecha)*/
+#tablaInformacionAplicacion th:nth-child(4) a>img{
+height: 18px;
+/*width:50px;*/
+}
+
+/*Tamaño imagen de opciones de consulta y ordenado por*/
+#tablaMenus .transparenteinterna a>img{
+height: 18px;
+/*width:50px;*/
+}
+
+/*Tamaño de boton de ejecutar consulta*/
+#submitejecutarconsulta{
+height: 18px;
+}
+
+/*Tamaño del boton de eliminar registro en el grid de consulta*/
+#tablaResultadosConsulta th.tablaContenidoImagen .nounderline img
+{
+height: 12px;
+/*width:50px;*/
+}
+
+/*Tamaño de boton de incluir registro*/
+#tablaResultadosConsulta th.tabla a.nounderline img
+{
+height: 18px;
+/*width:50px;*/
+}
+
+/*Tamaño de botonces de avance de página en resultados de consulta*/
+#tablaNavegacion a img{
+height: 18px;
+/*width:50px;*/
+}
+
+
+/*Tamaño del boton de ir a atras desde la página de incluir registro*/
+th.titulo a img{
+height: 18px;
+/*width:50px;*/
+}
+
+/*Botones de aceptar o cancelar la inclusion del registro*/
+#formularioIncluir .botones a img,#formularioIncluir .botones input[type="image"],
+#formularioIncluir .botones #submitaceptarmodificacion,
+#formularioIncluir .botones #submitaceptarinclusion
+{
+height: 18px;
+/*width:50px;*/
+}
+
+/*Tamaño del boton de incluir registro en el grid de las tablas relacionadas*/
+table.tabla th.tabla a img{
+height: 18px;
+/*width:50px;*/
+}
+
+/*Tamaño del boton eliminar registro y boton ver del las tablas relacionadas, incrementar y decrementar, son 3 botones*/
+table.tabla th.tablaContenidoImagen a img, 
+table.tabla th.tablaContenidoImagenAlterno a img {
+height: 12px;
+/*width:50px;*/
+}
+
+/*Tamaño de los botones del login*/
+#formularioLogin table.botones a img,
+#formularioLogin table.botones input[type="image"],
+#formularioLogin table.botones #submitingresar,
+#formularioLogin table.botones .nounderline{
+height: 18px;
+/*width:50px;*/
+width:auto;
+}
+
+/*Tamaño Botones inferiores de la página de inicio de sesion*/
+table.botones a img,
+table.botones input[type="image"],
+table.botones a.nounderline img
+{
+height: 36px;
+/*width:100px;*/
+}
+
+table.botones a>img[src*="botonoculto.gif"]
+{
+height: 12px;
+/*width:100px;  a>img*/
+}
+
+/*Tamaño de botón de ver dependencias*/
+table.botones a>img[src*="verdependencias.gif"]
+{
+height: 12px;
+/*width:100px;  a>img*/
+}
+
+/*Tamaño de botón de descargar archivo adjunto "Ver" */
+a>img[src*="descargar.gif"], 
+#formularioIncluir table.transparente a img,
+table.botones a>img[src*="descargar.gif"]
+{
+height: 12px;
+/*width:100px;  a>img*/
+}
+
+/*Tamaño de botón de Borrar la consulta*/
+a>img[src*="borraropcionconsulta.gif"]
+{
+height: 15px;
+/*width:100px;  a>img*/
+}
+
+#tablaAreaConsultas th.transparente a img{
+height: 15px;
+/*width:100px;  a>img*/
+}

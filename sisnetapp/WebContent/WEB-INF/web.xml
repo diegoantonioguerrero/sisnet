@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+<!--
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+-->
+  <display-name>sisnetapp</display-name>
+    <servlet>
+        <servlet-name>admnistradorServlet</servlet-name>
+        <servlet-class>com.sisnet.servlets.AdministradorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>admnistradorServlet</servlet-name>
+        <url-pattern>/administrador/administradorServlet</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            10
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+    <mime-mapping>
+        <extension>docm</extension>
+        <mime-type>application/vnd.ms-word.document.macroEnabled.12</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>docx</extension>
+        <mime-type>application/vnd.openxmlformats-officedocument.wordprocessingml.document</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>dotx</extension>
+        <mime-type>application/vnd.openxmlformats-officedocument.wordprocessingml.template</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>potm</extension>
+        <mime-type>application/vnd.ms-powerpoint.template.macroEnabled.12</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>potx</extension>
+        <mime-type>application/vnd.openxmlformats-officedocument.presentationml.template</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>ppam</extension>
+        <mime-type>application/vnd.ms-powerpoint.addin.macroEnabled.12</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>ppsm</extension>
+        <mime-type>application/vnd.ms-powerpoint.slideshow.macroEnabled.12</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>ppsx</extension>
+        <mime-type>application/vnd.openxmlformats-officedocument.presentationml.slideshow</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>pptm</extension>
+        <mime-type>application/vnd.ms-powerpoint.presentation.macroEnabled.12</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>pptx</extension>
+        <mime-type>application/vnd.openxmlformats-officedocument.presentationml.presentation</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>xlam</extension>
+        <mime-type>application/vnd.ms-excel.addin.macroEnabled.12</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>xlsb</extension>
+        <mime-type>application/vnd.ms-excel.sheet.binary.macroEnabled.12</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>xlsm</extension>
+        <mime-type>application/vnd.ms-excel.sheet.macroEnabled.12</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>xlsx</extension>
+        <mime-type>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>xltm</extension>
+        <mime-type>application/vnd.ms-excel.template.macroEnabled.12</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>xltx</extension>
+        <mime-type>application/vnd.openxmlformats-officedocument.spreadsheetml.template</mime-type>
+    </mime-mapping>  
+  
+  
+</web-app>
