@@ -12,6 +12,7 @@ import com.sisnet.constantes.ConstantesGeneral;
 import com.sisnet.objetosManejo.listas.ListaGeneral;
 import com.sisnet.objetosManejo.listas.objetosBaseDatos.ListaCampo;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Iterator;
 public class ConsultasAdministrador
 {
@@ -1873,6 +1874,47 @@ public class ConsultasAdministrador
       consultaSQLListaCampos_local = "select " + pListaCampo.concatenarCamposGrupoInformacion();
       consultaSQLListaCampos_local = mc.concatenarCadena(consultaSQLListaCampos_local, " from " + pNombreGrupoInformacion);
       consultaSQLListaCampos_local = mc.concatenarCadena(consultaSQLListaCampos_local, " where " + nombreLlavePrimaria_local + " = " + pValorLlavePrimaria);
+    }
+    catch (Exception excepcion)
+    {
+      excepcion.printStackTrace();
+    }
+    finally
+    {
+      nombreLlavePrimaria_local = null;
+    }
+    return consultaSQLListaCampos_local;
+  }
+  public String conformarConsultaSQLListaCamposGrupoInformacionNoMultiple(String pNombreGrupoInformacion, ArrayList<Integer> pValorLlavePrimaria, ListaCampo pListaCampo)
+  {
+    String consultaSQLListaCampos_local = "";
+    String nombreLlavePrimaria_local = null;
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i <pValorLlavePrimaria.size() ; i++) {
+      int num = pValorLlavePrimaria.get(i);
+      sb.append(num);
+      if(i+1 < pValorLlavePrimaria.size())
+      {
+    	 sb.append(",");  
+      }
+      
+    }
+    String result = sb.toString();
+    if (pNombreGrupoInformacion == ConstantesGeneral.VALOR_NULO)
+    {
+      return consultaSQLListaCampos_local;
+    }
+    if (pListaCampo == ConstantesGeneral.VALOR_NULO)
+    {
+      return consultaSQLListaCampos_local;
+    }
+    try
+    {
+      nombreLlavePrimaria_local = ap.conformarNombreCampoLlavePrimaria(pNombreGrupoInformacion);
+      //se agrega tambien el campo de la clave 
+      consultaSQLListaCampos_local = "select " + nombreLlavePrimaria_local + " , " + pListaCampo.concatenarCamposGrupoInformacion();
+      consultaSQLListaCampos_local = mc.concatenarCadena(consultaSQLListaCampos_local, " from " + pNombreGrupoInformacion);
+      consultaSQLListaCampos_local = mc.concatenarCadena(consultaSQLListaCampos_local, " where " + nombreLlavePrimaria_local + " in (" + sb + ")");
     }
     catch (Exception excepcion)
     {
