@@ -32,7 +32,6 @@ import java.sql.SQLException;
 import java.util.Iterator;
 public class AdministradorBaseDatos
 {
-	//ajuste
   protected static ManejadorAplicacion ap = ManejadorAplicacion.getManejadorAplicacion();
   private static ConsultasAdministrador ca = ConsultasAdministrador.getConsultasAdministrador();
   private static CamposAdministrador cad = CamposAdministrador.getCamposAdministrador();
