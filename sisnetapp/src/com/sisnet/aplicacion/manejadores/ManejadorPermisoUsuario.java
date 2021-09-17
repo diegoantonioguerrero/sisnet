@@ -1,6 +1,4 @@
 package com.sisnet.aplicacion.manejadores;
-import com.sisnet.aplicacion.manejadores.ManejadorAplicacion;
-import com.sisnet.aplicacion.manejadores.ManejadorCadenas;
 import com.sisnet.baseDatos.AdministradorBaseDatos;
 import com.sisnet.baseDatos.ManejadorConsultaSQL;
 import com.sisnet.baseDatos.consultasBaseDatos.ConsultasAdministrador;
@@ -16,6 +14,7 @@ import com.sisnet.objetosManejo.listas.objetosBaseDatos.ListaCampo;
 import com.sisnet.objetosManejo.listas.objetosBaseDatos.ListaGrupoInformacion;
 import com.sisnet.objetosManejo.manejoBaseDatos.ObjetoManejadorConsultaSQL;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Iterator;
 public class ManejadorPermisoUsuario
 {
@@ -26,7 +25,31 @@ public class ManejadorPermisoUsuario
   private int aTipoUsuario;
   private String aPermisosTipoUsuario;
   private MotorAplicacion aMotorAplicacion;
-  public ManejadorPermisoUsuario(int pTipoUsuario) {
+  
+  private static ArrayList<ManejadorPermisoUsuario> mngPermisoUsuario = null;
+  
+  public static ManejadorPermisoUsuario getManejadorPermisoUsuario(int pTipoUsuario, AdministradorBaseDatos pAdministradorBaseDatosSisnet, MotorAplicacion pMotorAplicacion)
+  {
+	  if(mngPermisoUsuario == null)
+	  {
+		  mngPermisoUsuario = new ArrayList<ManejadorPermisoUsuario>(); 
+	  }
+	  
+	  for (ManejadorPermisoUsuario item : mngPermisoUsuario) { 		      
+           if(item.getTipoUsuario() == pTipoUsuario) {
+        	   return item;
+           } 		
+      }
+	  
+	  //When not found
+	  ManejadorPermisoUsuario mpu = new ManejadorPermisoUsuario(pTipoUsuario);
+	  mpu.setAdministradorBaseDatosSisnet(pAdministradorBaseDatosSisnet);
+	  mpu.setMotorAplicacion(pMotorAplicacion);
+	  mngPermisoUsuario.add(mpu);
+	  return mpu; 
+  }
+  
+  private ManejadorPermisoUsuario(int pTipoUsuario) {
     setTipoUsuario(pTipoUsuario);
   }
   public AdministradorBaseDatos getAdministradorBaseDatosSisnet() {
@@ -42,12 +65,15 @@ public class ManejadorPermisoUsuario
   public void setTipoUsuario(int pTipoUsuario) {
     this.aTipoUsuario = pTipoUsuario;
   }
+  
   public String getPermisosTipoUsuario() {
     return this.aPermisosTipoUsuario;
   }
+  
   public void setPermisosTipoUsuario(String pPermisosTipoUsuario) {
     this.aPermisosTipoUsuario = pPermisosTipoUsuario;
   }
+  
   public MotorAplicacion getMotorAplicacion() {
     return this.aMotorAplicacion;
   }
@@ -1180,7 +1206,8 @@ public class ManejadorPermisoUsuario
     String bloqueVariables_local = null;
     
     try {
-      bloquePermisos_local = obtenerPermisosTipoUsuario();
+      //bloquePermisos_local = obtenerPermisosTipoUsuario();
+      bloquePermisos_local = getPermisosTipoUsuario();
       if (mc.verificarExistenciaSubCadena(bloquePermisos_local, "$V") && mc.verificarExistenciaSubCadena(bloquePermisos_local, "$FINV")) {
         
         posicionInicial_local = mc.obtenerPosicionSubCadena(bloquePermisos_local, "$V") + mc.obtenerLongitudCadena("$V");
@@ -1255,6 +1282,28 @@ public class ManejadorPermisoUsuario
     
     return listaVariablesSistema_local;
   }
+  
+//Overriding equals() to compare two Complex objects
+  @Override
+  public boolean equals(Object o) {
+	// If the object is compared with itself then return true 
+      if (o == this) {
+          return true;
+      }
+
+      /* Check if o is an instance of Complex or not
+        "null instanceof [type]" also returns false */
+      if (!(o instanceof ManejadorPermisoUsuario)) {
+          return false;
+      }
+       
+      // typecast o to ManejadorPermisoUsuario so that we can compare data members
+      ManejadorPermisoUsuario c = (ManejadorPermisoUsuario) o;
+       
+      // Compare the data members and return accordingly
+      return c.getTipoUsuario() == this.getTipoUsuario();
+	  
+  } 
 }
 /* Location:              D:\Personal\sisnet\sisnetMasterApp\sisnetapp.war!\WEB-INF\classes\com\sisnet\aplicacion\manejadores\ManejadorPermisoUsuario.class
  * Java compiler version: 6 (50.0)

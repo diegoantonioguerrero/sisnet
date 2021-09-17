@@ -79,12 +79,14 @@ public class GeneradorPagina
     private ManejadorRequest aManejadorRequest;
     private ManejadorSesion aManejadorSesion;
     private ManejadorHabilitacionCampos aManejadorHabilitacionCampos;
+    private int pTipoUsuario;
     public GeneradorPagina(int pTipoUsuario)
     {
+    	this.setTipoUsuario(pTipoUsuario);
         setGeneradorComponentesHtml(new GeneradorComponentesHtml());
         setResultadoConsultaSQL(new ManejadorResultadoConsultaSQL());
         setManejadorInformacionRecalculable(new ManejadorInformacionRecalculable());
-        setManejadorPermisoUsuario(new ManejadorPermisoUsuario(pTipoUsuario));
+        //setManejadorPermisoUsuario(new ManejadorPermisoUsuario(pTipoUsuario));
         setManejadorHabilitacionCampos(new ManejadorHabilitacionCampos());
     }
     public GeneradorComponentesHtml getGeneradorComponentesHtml()
@@ -104,7 +106,7 @@ public class GeneradorPagina
         this.aAdministradorBaseDatosSisnet = pAdministradorBaseDatosSisnet;
         getResultadoConsultaSQL().setAdministradorBaseDatosSisnet(pAdministradorBaseDatosSisnet);
         getManejadorInformacionRecalculable().setAdministradorBaseDatosSisnet(pAdministradorBaseDatosSisnet);
-        getManejadorPermisoUsuario().setAdministradorBaseDatosSisnet(pAdministradorBaseDatosSisnet);
+        //getManejadorPermisoUsuario().setAdministradorBaseDatosSisnet(pAdministradorBaseDatosSisnet);
         getManejadorHabilitacionCampos().setAdministradorBaseDatosSisnet(pAdministradorBaseDatosSisnet);
     }
     public AdministradorBaseDatos getAdministradorBaseDatosAplicacion()
@@ -136,6 +138,11 @@ public class GeneradorPagina
     }
     public ManejadorPermisoUsuario getManejadorPermisoUsuario()
     {
+    	if(this.aManejadorPermisoUsuario == null)
+    	{
+    		this.aManejadorPermisoUsuario = ManejadorPermisoUsuario.getManejadorPermisoUsuario(this.getTipoUsuario(),
+    				this.getAdministradorBaseDatosSisnet(), this.getManejadorSesion().obtenerMotorAplicacion());
+    	}
         return this.aManejadorPermisoUsuario;
     }
     public void setManejadorPermisoUsuario(ManejadorPermisoUsuario pManejadorPermisoUsuario)
@@ -158,7 +165,7 @@ public class GeneradorPagina
     {
         this.aManejadorSesion = pManejadorSesion;
         getManejadorInformacionRecalculable().setMotorAplicacion(pManejadorSesion.obtenerMotorAplicacion());
-        getManejadorPermisoUsuario().setMotorAplicacion(pManejadorSesion.obtenerMotorAplicacion());
+        //getManejadorPermisoUsuario().setMotorAplicacion(pManejadorSesion.obtenerMotorAplicacion());
     }
     public ManejadorHabilitacionCampos getManejadorHabilitacionCampos()
     {
@@ -7631,6 +7638,12 @@ public Pagina obtenerPaginaConfiguracion() throws IOException
     } 
     
     return pagina_local;
+}
+private int getTipoUsuario() {
+	return pTipoUsuario;
+}
+private void setTipoUsuario(int pTipoUsuario) {
+	this.pTipoUsuario = pTipoUsuario;
 }
 }
 /* Location:              D:\Personal\sisnet\sisnetMasterApp\sisnetapp.war!\WEB-INF\classes\com\sisnet\aplicacion\generadores\GeneradorPagina.class

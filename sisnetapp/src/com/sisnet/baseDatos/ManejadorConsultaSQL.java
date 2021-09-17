@@ -128,6 +128,7 @@ public class ManejadorConsultaSQL
         setPreparedStatement(getConeccionBaseDatos().getConexion().prepareStatement(query));
         asignarNumeroRegistrosActualizacion(getPreparedStatement().executeUpdate());
         getPreparedStatement().setQueryTimeout(getTimeOut());
+        System.out.println("Executed statement: " + query);
       } else {
         setStatement(getConeccionBaseDatos().getConexion().createStatement());
         query = getConsultaSQL();
@@ -143,7 +144,7 @@ public class ManejadorConsultaSQL
       if (mc.esCadenaNumerica(exception.getSQLState(), true)) {
         errorEjecutarConsulta_local = Integer.parseInt(exception.getSQLState());
       }
-      System.out.println(query);
+      System.out.println("Failed query: " + query);
       exception.printStackTrace();
     } finally {
       consultaContarRegistros_local = null;

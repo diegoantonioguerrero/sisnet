@@ -1056,9 +1056,15 @@ public class ConsultaSQLPrincipal
       manejadorVariablesSistema_local.setMotorAplicacion(getMotorAplicacion());
       manejadorVariablesSistema_local.setUsuarioActual(getUsuario());
       manejadorVariablesSistema_local.setIdSesion(getIdSesion());
-      manejadorPermisoUsuario_local = new ManejadorPermisoUsuario(pTipoUsuario);
+      manejadorPermisoUsuario_local = ManejadorPermisoUsuario.getManejadorPermisoUsuario(pTipoUsuario, getAdministradorBaseDatosSisnet(),
+    		  getMotorAplicacion()
+    		  );
+      /*
+       * manejadorPermisoUsuario_local = new ManejadorPermisoUsuario(pTipoUsuario);
+       
       manejadorPermisoUsuario_local.setAdministradorBaseDatosSisnet(getAdministradorBaseDatosSisnet());
       manejadorPermisoUsuario_local.setMotorAplicacion(getMotorAplicacion());
+      */
       listaConsulta_local = new ListaConsulta();
       listaCadenas_local = manejadorPermisoUsuario_local.obtenerListaRestriccionesAplicacion(pAplicacion, pEsSoloRegistrosDonde);
       iterator_local = listaCadenas_local.iterator();

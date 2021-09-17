@@ -400,6 +400,7 @@ public class AdministradorServlet
     
     try {
       manejadorRequest_local = new ManejadorRequest(pRequest);
+      manejadorSesion_local = new ManejadorSesion(manejadorRequest_local.obtenerSesion());
       if (manejadorRequest_local.getListaAtributosRequest() != ConstantesGeneral.VALOR_NULO) {
         if (manejadorRequest_local.obtenerValorAtributoRequest("fldnombreusuario", manejadorSesion_local) != ConstantesGeneral.VALOR_NULO) {
           
@@ -456,8 +457,8 @@ public class AdministradorServlet
               aplicacion_local = pAdministradorBaseDatosSisnet.obtenerAplicacionPorId(Integer.parseInt(manejadorRequest_local.obtenerValorAtributoRequest("fldidaplicacion", manejadorSesion_local).toString()), false);
             } 
             
-            manejadorPermisoUsuario_local = new ManejadorPermisoUsuario(tipoUsuario_local);
-            manejadorPermisoUsuario_local.setAdministradorBaseDatosSisnet(pAdministradorBaseDatosSisnet);
+            manejadorPermisoUsuario_local = ManejadorPermisoUsuario.getManejadorPermisoUsuario(tipoUsuario_local, 
+            		pAdministradorBaseDatosSisnet, manejadorSesion_local.obtenerMotorAplicacion());
             
             if (!manejadorPermisoUsuario_local.verificarPermisoVerRegistrosAplicacion(aplicacion_local)) {
               return 2;
@@ -3308,10 +3309,13 @@ public class AdministradorServlet
           listaCampo_local.copiarValoresListaCampoConsultaSQL(listaCamposConArchivos_local);
           listaCampoArchivo_local.copiarValoresListaCampoConsultaSQL(listaCamposConArchivos_local);
           
-          manejadorPermisoUsuario_local = new ManejadorPermisoUsuario(manejadorSesion_local.obtenerTipoUsuarioActual());
+          manejadorPermisoUsuario_local = ManejadorPermisoUsuario.getManejadorPermisoUsuario(manejadorSesion_local.obtenerTipoUsuarioActual(), 
+        		  administradorBaseDatosSisnet_local, manejadorSesion_local.obtenerMotorAplicacion());
+          
+          /*manejadorPermisoUsuario_local = new ManejadorPermisoUsuario(manejadorSesion_local.obtenerTipoUsuarioActual());
           manejadorPermisoUsuario_local.setAdministradorBaseDatosSisnet(administradorBaseDatosSisnet_local);
           manejadorPermisoUsuario_local.setMotorAplicacion(manejadorSesion_local.obtenerMotorAplicacion());
-          
+          */
           listaCamposModificables_local = manejadorPermisoUsuario_local.extraerCamposPermisoModificar(listaCampo_local);
           revisarCamposHabilitados(pRequest, listaCamposModificables_local);
           manejadorSesion_local.obtenerManejadorEventos().setGrupoInformacion(grupoInformacion_local);
@@ -4713,9 +4717,13 @@ public class AdministradorServlet
       manejadorRequest_local = new ManejadorRequest(pRequest);
       manejadorSesion_local = new ManejadorSesion(manejadorRequest_local.obtenerSesion());
       if (manejadorSesion_local.getSesion() != ConstantesGeneral.VALOR_NULO) {
+    	  manejadorPermisoUsuario_local = ManejadorPermisoUsuario.getManejadorPermisoUsuario(manejadorSesion_local.obtenerTipoUsuarioActual(), 
+    			  manejadorSesion_local.obtenerAdministradorBaseDatosSisnet(), manejadorSesion_local.obtenerMotorAplicacion());
+        /*  
         manejadorPermisoUsuario_local = new ManejadorPermisoUsuario(manejadorSesion_local.obtenerTipoUsuarioActual());
         manejadorPermisoUsuario_local.setAdministradorBaseDatosSisnet(manejadorSesion_local.obtenerAdministradorBaseDatosSisnet());
         manejadorPermisoUsuario_local.setMotorAplicacion(manejadorSesion_local.obtenerMotorAplicacion());
+        */
         listaNombresCamposConsulta_local = manejadorPermisoUsuario_local.obtenerListaCamposOpcionConsultaPredeterminados(manejadorSesion_local.obtenerAplicacionActual());
         
         if (listaNombresCamposConsulta_local != ConstantesGeneral.VALOR_NULO) {
@@ -4773,9 +4781,13 @@ public class AdministradorServlet
       manejadorRequest_local = new ManejadorRequest(pRequest);
       manejadorSesion_local = new ManejadorSesion(manejadorRequest_local.obtenerSesion());
       if (manejadorSesion_local.getSesion() != ConstantesGeneral.VALOR_NULO) {
+    	  manejadorPermisoUsuario_local = ManejadorPermisoUsuario.getManejadorPermisoUsuario(manejadorSesion_local.obtenerTipoUsuarioActual(), 
+    			  manejadorSesion_local.obtenerAdministradorBaseDatosSisnet(), manejadorSesion_local.obtenerMotorAplicacion());
+        /*  
         manejadorPermisoUsuario_local = new ManejadorPermisoUsuario(manejadorSesion_local.obtenerTipoUsuarioActual());
         manejadorPermisoUsuario_local.setAdministradorBaseDatosSisnet(manejadorSesion_local.obtenerAdministradorBaseDatosSisnet());
         manejadorPermisoUsuario_local.setMotorAplicacion(manejadorSesion_local.obtenerMotorAplicacion());
+        */
         manejadorSesion_local.obtenerUsuarioActual().setListaVariablesSistema(manejadorPermisoUsuario_local.obtenerListaVariablesSistemaPerfilUsuario());
       }
     
