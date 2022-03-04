@@ -56,9 +56,13 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 	private static ManejadorFechas mf = ManejadorFechas.getManejadorFechas();
 	private int aNumeroRegistrosConsultaPrincipal;
 	private boolean aHuboAsignacionEventos;
-	// Create a HashMap object called valuesOfExternalTable, to hold referenced values in a external table
+	// Create a HashMap object called valuesOfExternalTable, to hold referenced
+	// values in a external table
 	HashMap<String, HashMap<String, String>> valuesOfExternalTable = new HashMap<String, HashMap<String, String>>();
 
+	// Create a HashMap object called valuesOfRelatedTable, to hold referenced
+	// values in a external table
+	HashMap<Aplicacion, HashMap<String, String>> valuesOfRelatedTable = new HashMap<Aplicacion, HashMap<String, String>>();
 
 	public GeneradorPaginaAplicacion(int pTipoUsuario) {
 		super(pTipoUsuario);
@@ -1635,9 +1639,7 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 											.obtenerPrimerCampoValorUnicoAplicacion(
 													campo_local.getEnlaceCampo().getEnlazado().getIdAplicacion());
 
-									valorCampo_local = getManejadorInformacionRecalculable().getManejadorCampoEnlazado()
-											.obtenerValorCampoEnlazado(campo_local.getEnlaceCampo().getEnlazado(),
-													Integer.parseInt(valorCampo_local));
+									valorCampo_local = getValorEnlazado(valorCampo_local, campo_local);
 								}
 
 								if (campoEnlazado_local != ConstantesGeneral.VALOR_NULO) {
@@ -1756,8 +1758,6 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 		String tipoDato_local = null;
 		int anchoColumna_local = 0;
 		String valorCampo_local = null;
-		Tabla tabla_local = null;
-
 		ListaParametrosRedireccion listaParametrosRedireccion_local = null;
 		Iterator iterator_local = null;
 		Campo campo_local = null;
@@ -1838,10 +1838,14 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 							campoEnlazado_local = getManejadorSesion().obtenerMotorAplicacion()
 									.obtenerPrimerCampoValorUnicoAplicacion(
 											campo_local.getEnlaceCampo().getEnlazado().getIdAplicacion());
-
-							valorCampo_local = getManejadorInformacionRecalculable().getManejadorCampoEnlazado()
-									.obtenerValorCampoEnlazado(campo_local.getEnlaceCampo().getEnlazado(),
-											Integer.parseInt(valorCampo_local));
+							// anterior version de obtener campo enlazado
+							/*
+							 * valorCampo_local =
+							 * getManejadorInformacionRecalculable().getManejadorCampoEnlazado()
+							 * .obtenerValorCampoEnlazado(campo_local.getEnlaceCampo().getEnlazado(),
+							 * Integer.parseInt(valorCampo_local));
+							 */
+							valorCampo_local = getValorEnlazado(valorCampo_local, campo_local);
 						}
 
 						if (campoEnlazado_local != ConstantesGeneral.VALOR_NULO) {
@@ -1921,7 +1925,6 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 		} catch (Exception excepcion_local) {
 			excepcion_local.printStackTrace();
 		} finally {
-			tabla_local = null;
 			campo_local = null;
 			tipoDato_local = null;
 			iterator_local = null;
@@ -1937,35 +1940,62 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 		return datosGrupoInformacionNoMultiple_local;
 	}
 
+	private String getValorEnlazado(String valorCampo_local, Campo campo_local) {
+		// coco
+		Aplicacion aplicacion = campo_local.getEnlaceCampo().getEnlazado();
+		if (this.valuesOfRelatedTable.containsKey(aplicacion)
+				&& this.valuesOfRelatedTable.get(aplicacion).containsKey(valorCampo_local)) {
+			valorCampo_local = this.valuesOfRelatedTable.get(aplicacion).get(valorCampo_local);
+
+		} else {
+			String valorCampo_localReferencia = valorCampo_local;
+			valorCampo_local = getManejadorInformacionRecalculable().getManejadorCampoEnlazado()
+					.obtenerValorCampoEnlazado(aplicacion, Integer.parseInt(valorCampo_local));
+
+			if (!this.valuesOfRelatedTable.containsKey(aplicacion)) {
+				HashMap<String, String> data = new HashMap<String, String>();
+				data.put(valorCampo_localReferencia, valorCampo_local);
+				this.valuesOfRelatedTable.put(aplicacion, data);
+			} else {
+				HashMap<String, String> data = this.valuesOfRelatedTable.get(aplicacion);
+				data.put(valorCampo_localReferencia, valorCampo_local);
+				this.valuesOfRelatedTable.put(aplicacion, data);
+			}
+
+		}
+
+		return valorCampo_local;
+
+	}
+
 	private String getExternalTableValue(String tipoDato_local, String valorCampo_local) {
 		if (mc.esCadenaNumerica(valorCampo_local, true)) {
-			
-			
-			if(this.valuesOfExternalTable.containsKey(tipoDato_local) && 
-					this.valuesOfExternalTable.get(tipoDato_local).containsKey(valorCampo_local) ) {
+
+			if (this.valuesOfExternalTable.containsKey(tipoDato_local)
+					&& this.valuesOfExternalTable.get(tipoDato_local).containsKey(valorCampo_local)) {
 				valorCampo_local = this.valuesOfExternalTable.get(tipoDato_local).get(valorCampo_local);
-				
-			}else {
-			
-			Tabla tabla_local;
-			int tableIDLocal = Integer.parseInt(tipoDato_local);
-			tabla_local = getAdministradorBaseDatosSisnet().obtenerTablaPorId(tableIDLocal);
-			String valorCampo_localReferencia = valorCampo_local;
-			valorCampo_local = getAdministradorBaseDatosAplicacion()
-					.obtenerValorTabla(tabla_local.getNombreTabla(), Integer.parseInt(valorCampo_localReferencia));
-			
-			if(!this.valuesOfExternalTable.containsKey(tipoDato_local)) {
-				HashMap<String,String> data = new HashMap<String,String>();
-				data.put(valorCampo_localReferencia, valorCampo_local );
-				this.valuesOfExternalTable.put(tipoDato_local, data);
-			}else {
-					HashMap<String,String> data = this.valuesOfExternalTable.get(tipoDato_local);
-					data.put(valorCampo_localReferencia, valorCampo_local );
+
+			} else {
+
+				Tabla tabla_local;
+				int tableIDLocal = Integer.parseInt(tipoDato_local);
+				tabla_local = getAdministradorBaseDatosSisnet().obtenerTablaPorId(tableIDLocal);
+				String valorCampo_localReferencia = valorCampo_local;
+				valorCampo_local = getAdministradorBaseDatosAplicacion().obtenerValorTabla(tabla_local.getNombreTabla(),
+						Integer.parseInt(valorCampo_localReferencia));
+
+				if (!this.valuesOfExternalTable.containsKey(tipoDato_local)) {
+					HashMap<String, String> data = new HashMap<String, String>();
+					data.put(valorCampo_localReferencia, valorCampo_local);
+					this.valuesOfExternalTable.put(tipoDato_local, data);
+				} else {
+					HashMap<String, String> data = this.valuesOfExternalTable.get(tipoDato_local);
+					data.put(valorCampo_localReferencia, valorCampo_local);
 					this.valuesOfExternalTable.put(tipoDato_local, data);
 				}
-			
+
 			}
-		
+
 		}
 		return valorCampo_local;
 	}
@@ -1988,7 +2018,6 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 		String nombreCampo_local = null;
 		String tipoDato_local = null;
 		String valorCampo_local = null;
-		//Tabla tabla_local = null;
 		ManejadorConsultaSQL manejadorConsultaSQL_local = null;
 		ListaCampo listaCampo_local = null;
 		ListaParametrosRedireccion listaParametrosRedireccion_local = null;
@@ -2072,10 +2101,7 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 													.obtenerPrimerCampoValorUnicoAplicacion(campo_local.getEnlaceCampo()
 															.getEnlazado().getIdAplicacion());
 
-											valorCampo_local = getManejadorInformacionRecalculable()
-													.getManejadorCampoEnlazado().obtenerValorCampoEnlazado(
-															campo_local.getEnlaceCampo().getEnlazado(),
-															Integer.parseInt(valorCampo_local));
+											valorCampo_local = getValorEnlazado(valorCampo_local, campo_local);
 										}
 
 										if (campoEnlazado_local != ConstantesGeneral.VALOR_NULO) {
@@ -2222,7 +2248,6 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 		} catch (Exception excepcion_local) {
 			excepcion_local.printStackTrace();
 		} finally {
-			tabla_local = null;
 			campo_local = null;
 			tipoDato_local = null;
 			iterator_local = null;

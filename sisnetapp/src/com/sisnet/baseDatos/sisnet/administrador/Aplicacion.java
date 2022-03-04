@@ -167,6 +167,32 @@ public class Aplicacion
   public void setAplicacionImpresionMasiva(com.sisnet.baseDatos.sisnet.administrador.Aplicacion pAplicacionImpresionMasiva) {
     this.aAplicacionImpresionMasiva = pAplicacionImpresionMasiva;
   }
+  
+  @Override
+  public boolean equals(Object o) {
+	  // If the object is compared with itself then return true 
+      if (o == this) {
+          return true;
+      }
+
+      /* Check if o is an instance of Complex or not
+        "null instanceof [type]" also returns false */
+      if (!(o instanceof Aplicacion)) {
+          return false;
+      }
+       
+      // typecast o to Complex so that we can compare data members
+      Aplicacion c = (Aplicacion) o;
+       
+      // Compare the data members and return accordingly
+      return this.getIdAplicacion() == c.getIdAplicacion();
+	  
+  }
+  @Override
+  public String toString() {
+	  
+	  return "[" + this.aIdAplicacion + "]" + this.aNombreAplicacion;
+  }
 }
 /* Location:              D:\Personal\sisnet\sisnetMasterApp\sisnetapp.war!\WEB-INF\classes\com\sisnet\baseDatos\sisnet\administrador\Aplicacion.class
  * Java compiler version: 6 (50.0)
