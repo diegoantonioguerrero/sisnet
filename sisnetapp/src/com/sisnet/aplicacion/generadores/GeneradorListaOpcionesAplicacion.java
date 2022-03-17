@@ -120,9 +120,9 @@ public class GeneradorListaOpcionesAplicacion
       
       listaOptionHTML_local.adicionar("DD", "DOCUMENTO", false);
       
-      listaOptionHTML_local.adicionar("LL", "NUMERACI\u00D3N SEMIAUTOM\u00c1TICA NUMÃ‰RICA", false);
+      listaOptionHTML_local.adicionar("LL", "NUMERACI\u00D3N SEMIAUTOM\u00c1TICA NUM\u00C9RICA", false);
       
-      listaOptionHTML_local.adicionar("MM", "NUMERACI\u00D3N SEMIAUTOM\u00c1TICA ALFANUMÃ‰RICA", false);
+      listaOptionHTML_local.adicionar("MM", "NUMERACI\u00D3N SEMIAUTOM\u00c1TICA ALFANUM\u00C9RICA", false);
       
       listaOptionHTML_local.adicionar("NN", "P\u00c1RRAFO", false);
       

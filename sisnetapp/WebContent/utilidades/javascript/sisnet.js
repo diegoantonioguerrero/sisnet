@@ -3,16 +3,16 @@
 /*                                VARIABLES                               */
 /* ---------------------------------------------------------------------- */
 
-/* Esta variable indica si est� bien dejar las casillas */
+/* Esta variable indica si est\u00E1 bien dejar las casillas */
 /* en blanco como regla general                         */
 var defectoVacioOK = false;
 
-/* listas de caracteres */
+/* listas de caracteres may1 */
 var punto = ".";
-var letrasMinusculas = "abcdefghijklmnopqrstuvwxyz������� ";
-var letrasMayusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ������ ";
+var letrasMinusculas = "abcdefghijklmnopqrstuvwxyz\u00E1\u00E9\u00ED\u00F3\u00FA\u00F1\u00FC ";
+var letrasMayusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ\u00C1\u00C9\u00CD\u00D3\u00FA\u00D1 ";
 var espacioEnBlanco = " \t\n\r";
-var caracteresEspecialesPermitidos= "!@#$%&/()=?�{}*+-._";
+var caracteresEspecialesPermitidos= "!@#$%&/()=?\u00BF{}*+-._";
 var caracteresEspecialesNoPermitidos= "<>'";
 
 /* caracteres admitidos en nos de telefono */
@@ -31,8 +31,8 @@ var alfaNumerico = "ingrese un texto que contenga solo letras y/o numeros";
 var alfabetico   = "ingrese un texto que contenga solo letras";
 var entero = "ingrese un numero entero";
 var numero = "ingrese un numero";
-var numeroTelefonico = "ingrese un n�mero de tel�fono";
-var email = "ingrese una direcci�n de correo electr�nico v�lida";
+var numeroTelefonico = "ingrese un n\u00FAmero de tel\u00E9fono";
+var email = "ingrese una direcci\u00F3n de correo electr\u00F3nico v\u00E1lida";
 var nombre = "ingrese un texto que contenga solo letras, numeros o espacios";
 var parrafo = "ingrese un texto que contenga solo letras, numeros y/o espacios";
 
@@ -298,16 +298,16 @@ function verificarEsNombre (s)
     return( verificarEsAlfanumerico( quitarCaracteresEnCadena( s, espacioEnBlanco ) ) );
 }
 
-/* Modific� ZDOR fecha: 11/02/2008 */
-/* Modific� GEOT fecha: */
+/* Modific\u00F3 ZDOR fecha: 11/02/2008 */
+/* Modific\u00F3 GEOT fecha: */
 
 /* FUNCION QUE VERIFICA SI UN CARACTER ES ENTER */
 function verificarEsEnter(c){
     return (espacioEnBlanco.indexOf(c) != -1);
 }
 
-/* Modific� ZDOR fecha: 11/02/2008 */
-/* Modific� GEOT fecha: */
+/* Modific\u00F3 ZDOR fecha: 11/02/2008 */
+/* Modific\u00F3 GEOT fecha: */
 
 /* FUNCION QUE VERIFICA EL CONTENIDO DE UN PARRAFO */
 function verificarEsParrafo (s)
@@ -398,8 +398,8 @@ function notificarCampoInvalido (pCampo, s)
     return false;
 }
 
-/* Modific� ZDOR fecha: 11/02/2008 */
-/* Modific� GEOT fecha: */
+/* Modific\u00F3 ZDOR fecha: 11/02/2008 */
+/* Modific\u00F3 GEOT fecha: */
 
 /* FUNCION QUE VERIFICA EL CONTENIDO DE UN CAMPO */
 function verificarCampo (pCampo, pFuncion, emptyOK, s)
@@ -432,7 +432,7 @@ function verificarCampo (pCampo, pFuncion, emptyOK, s)
 
 }
 
-/*Obtener digito de verificaci�n del nit*/
+/*Obtener digito de verificaci\u00F3n del nit*/
 function obtenerDigitoVerificacion(nit){
   var tmp, i, residuo, chequeo, digitoVerificacion;
   var numerosPrimos = new Array(3,7,13,17,19,23,29,37,41,43,47,53,59,67,71);
@@ -462,7 +462,7 @@ function validarNIT(nit) {
     return true;
   }
   else{
-    alert('No V�lido');
+    alert('No V\u00E1lido');
     return false;
   }
 }
@@ -539,7 +539,7 @@ function esNumeroRealSoloPositivoDigitacion(e){
 
 /* Cierra una ventana*/
 function cerrarVentana(){
-    if (this.confirm("Desea salir de la aplicaci�n?")){
+    if (this.confirm("Desea salir de la aplicaci\u00F3n?")){
         window.close();  
         return true;
     }
@@ -548,19 +548,19 @@ function cerrarVentana(){
 
 /* Salir de la aplicacion desde la consulta principal*/
 function salirAplicacion() {
-  if (this.confirm('Desea salir de la aplicaci�n?')){
+  if (this.confirm('Desea salir de la aplicaci\u00F3n?')){
      location.href="login.jsp?accion=96&numeroerror=4&tipoerror=3";
   }  
  }
 
 
-/*Compara y confirma la contrase�a*/
+/*Compara y confirma la contrase\u00F1a*/
 function verificarContrasena(pContrasena, pVerificarContrasena){
    if (pContrasena == pVerificarContrasena){
       return true;
    }
    else{
-      alert("La verificaci�n de su contrase�a no coincide con la digitada");
+      alert("La verificaci\u00F3n de su contrase\u00F1a no coincide con la digitada");
       return false;
    }
 }
@@ -570,7 +570,7 @@ function preguntarEliminar(){
     var respuesta_local = null;
 
     try {
-        respuesta_local = (this.confirm('Est� seguro de eliminar el registro?') &&
+        respuesta_local = (this.confirm('Est\u00E1 seguro de eliminar el registro?') &&
             this.confirm('Puede ocasionar una perdida de datos, Desea Continuar?'));
         if (respuesta_local){
             this.mostrarMensajeProcesandoInformacion();
@@ -581,45 +581,45 @@ function preguntarEliminar(){
     return respuesta_local;
 }
 
-/*Mensaje con la restricci�n para usuarios que no son administradores*/
+/*Mensaje con la restricci\u00F3n para usuarios que no son administradores*/
 function mensajeUsuarioAdministrador(){
-    alert("Opci�n v�lida s�lo para el administrador del sistema");
+    alert("Opci\u00F3n v\u00E1lida s\u00F3lo para el administrador del sistema");
 }
 
-/*Mensaje con la restricci�n para usuarios que no tiene permisos para una aplicaci�n*/
+/*Mensaje con la restricci\u00F3n para usuarios que no tiene permisos para una aplicaci\u00F3n*/
 function mensajeAplicacionNoPermitida(){
-    alert("No esta autorizado para ver la aplicaci�n");
+    alert("No esta autorizado para ver la aplicaci\u00F3n");
 }
 
 /*Mensaje con la restriccion para campos de tipo lista dependiente*/
 function restriccionVerDependencias(){
-    alert("Opci�n valida s�lo para campos tipo lista dependiente");
+    alert("Opci\u00F3n valida s\u00F3lo para campos tipo lista dependiente");
 }
 
-/*Mensaje de autorizaci�n para incluir informaci�n*/
+/*Mensaje de autorizaci\u00F3n para incluir informaci\u00F3n*/
 function mensajeAutorizacionInclusion(){
-    alert("Usuario no autorizado para incluir �sta informaci�n");
+    alert("Usuario no autorizado para incluir \u00E9sta informaci\u00F3n");
 }
 
-/*Mensaje de autorizaci�n para modificar informaci�n*/
+/*Mensaje de autorizaci\u00F3n para modificar informaci\u00F3n*/
 function mensajeAutorizacionModificacion(){
-    alert("Usuario no autorizado para modificar �sta informaci�n");
+    alert("Usuario no autorizado para modificar \u00E9sta informaci\u00F3n");
     return false;
 }
 
-/*Mensaje de autorizaci�n para borrar informaci�n*/
+/*Mensaje de autorizaci\u00F3n para borrar informaci\u00F3n*/
 function mensajeAutorizacionBorrar(){
-    alert("Usuario no autorizado para borrar �sta informaci�n");
+    alert("Usuario no autorizado para borrar \u00E9sta informaci\u00F3n");
 }
 
-/*Mensaje de autorizaci�n para realizar una importaci�n*/
+/*Mensaje de autorizaci\u00F3n para realizar una importaci\u00F3n*/
 function mensajeAutorizacionImportacion(){
     alert("Usuario no autorizado para realizar importaciones");
 }
 
-/*Mensaje de opci�n en construcci�n*/
+/*Mensaje de opci\u00F3n en construcci\u00F3n*/
 function mensajeOpcionEnConstruccion(){
-    alert("Esta opci�n est� en construcci�n");
+    alert("Esta opci\u00F3n est\u00E1 en construcci\u00F3n");
 }
 
 /* ---------------------------------------------------------------------- */
@@ -764,7 +764,7 @@ function pantallaCompleta(){
     var vent = null;
     vent = window.open('','vVent','fullscreen=yes');
     /*llenaVentana(vent);*/
-    /* Para direccionar a una p�gina espec�fica, elimine la linea anterior y utilice la siguiente:*/
+    /* Para direccionar a una p\u00E1gina espec\u00EDfica, elimine la linea anterior y utilice la siguiente:*/
     vent.location = "../index.jsp";
     this.write("<input type='button' value='Cerrar' onclick='javascript:window.close()'>");
 }
@@ -773,7 +773,7 @@ function pantallaCompleta(){
 /*               FUNCIONES PARA MANEJO DE CONTROL PARA HORA               */
 /* ---------------------------------------------------------------------- */
 
-/* Valida que la entrada digitada para hora sea n�mero entero o dos puntos (:)*/
+/* Valida que la entrada digitada para hora sea n\u00FAmero entero o dos puntos (:)*/
 function esValorHora(e){
     var charCode;
     if (this.navigator.appName == "Netscape")
@@ -849,7 +849,7 @@ function validarHora(pHora){
             return true;
         }
         if (arrayHora == null) {
-            alert("Formato de hora no v�lido");
+            alert("Formato de hora no v\u00E1lido");
             hora_local = "";
             return false;
         } 
@@ -880,8 +880,8 @@ function validacionHoras(pHora){
 /* Copia el valor de un campo en otro */
 /* @ param pCampoDestino              */
 /* @ param pCampoOrigen               */
-/* Modific� ZDOR fecha: 26/04/2007 */
-/* Modific� GEOT fecha: 11/09/2008 */
+/* Modific\u00F3 ZDOR fecha: 26/04/2007 */
+/* Modific\u00F3 GEOT fecha: 11/09/2008 */
 
 function copiarValorCampo(pCampoDestino, pValorCampoOrigen, pEsNumerico, pNumeroDecimales, pLongitud){
     var respuesta_local = null;
@@ -928,8 +928,8 @@ function copiarValorCampo(pCampoDestino, pValorCampoOrigen, pEsNumerico, pNumero
 /* @ param pCampoDestino              */
 /* @ param pCampoOrigenUno            */
 /* @ param pCampoOrigenDos            */
-/* Modific� ZDOR fecha: 22/01/2008 */
-/* Modific� GEOT fecha: 11/09/2008 */
+/* Modific\u00F3 ZDOR fecha: 22/01/2008 */
+/* Modific\u00F3 GEOT fecha: 11/09/2008 */
 
 function copiarValorPrimerCampoConValor(pCampoDestino, pCampoOrigenUno, pCampoOrigenDos, pEsNumerico, pNumeroDecimales){
     var respuesta_local = null;
@@ -978,38 +978,38 @@ function copiarValorPrimerCampoConValor(pCampoDestino, pCampoOrigenUno, pCampoOr
     }
 }
 
-/* Mensaje de operaci�n no v�lido     */
-/* Modific� ZDOR fecha: 10/05/2007 */
-/* Modific� GEOT fecha: */
+/* Mensaje de operaci\u00F3n no v\u00E1lido     */
+/* Modific\u00F3 ZDOR fecha: 10/05/2007 */
+/* Modific\u00F3 GEOT fecha: */
 
 function operacionNoValida(){
     try {
-        this.alert("Operaci�n no permitida con fechas revise la configuraci�n del campo");
+        this.alert("Operaci\u00F3n no permitida con fechas revise la configuraci\u00F3n del campo");
     } catch(e){
     }
 }
 
 /* Mensaje de advertencia para ejecutar consulta principal  */
-/* Modific� ZDOR fecha: 13/11/2007 */
-/* Modific� GEOT fecha: 19/10/2007 */
+/* Modific\u00F3 ZDOR fecha: 13/11/2007 */
+/* Modific\u00F3 GEOT fecha: 19/10/2007 */
 
 function advertenciaConsultaPrincipal(){
-    return this.confirm('No existen opciones de consulta seleccionadas. \n Es posible que el tiempo empleado en la ejecuci�n de la consulta sea considerable. \n ' +
+    return this.confirm('No existen opciones de consulta seleccionadas. \n Es posible que el tiempo empleado en la ejecuci\u00F3n de la consulta sea considerable. \n ' +
         'Desea Continuar?') && this.confirm('Esta seguro que desea continuar?');
 }
 
 /* Mensaje de advertencia para ejecutar consulta principal sin opciones de consulta */
-/* Modific� ZDOR fecha: */
-/* Modific� GEOT fecha: 21/01/2008 */
+/* Modific\u00F3 ZDOR fecha: */
+/* Modific\u00F3 GEOT fecha: 21/01/2008 */
 
 function advertenciaConsultaPrincipalSinOpciones(){
-    this.alert('Debe seleccionar al menos una opci�n de consulta. \n');    
+    this.alert('Debe seleccionar al menos una opci\u00F3n de consulta. \n');    
     return false;
 }
 
-/* Mensaje de confirmaci�n para incluir un registro */
-/* Modific� ZDOR fecha: */
-/* Modific� GEOT fecha: 21/01/2009 */
+/* Mensaje de confirmaci\u00F3n para incluir un registro */
+/* Modific\u00F3 ZDOR fecha: */
+/* Modific\u00F3 GEOT fecha: 21/01/2009 */
 
 function preguntaIncluirRegistro(){
     var respuesta_local = null;
@@ -1026,9 +1026,9 @@ function preguntaIncluirRegistro(){
     return respuesta_local;
 }
 
-/* Mensaje de confirmaci�n para modificar un registro */
-/* Modific� ZDOR fecha: */
-/* Modific� GEOT fecha: 21/01/2009 */
+/* Mensaje de confirmaci\u00F3n para modificar un registro */
+/* Modific\u00F3 ZDOR fecha: */
+/* Modific\u00F3 GEOT fecha: 21/01/2009 */
 
 function preguntaModificarRegistro(){
     var respuesta_local = null;
@@ -1045,9 +1045,9 @@ function preguntaModificarRegistro(){
     return respuesta_local;
 }
 
-/* Mensaje de confirmaci�n para regresar a pantalla anterior*/
-/* Modific� ZDOR fecha: */
-/* Modific� GEOT fecha: 21/01/2009 */
+/* Mensaje de confirmaci\u00F3n para regresar a pantalla anterior*/
+/* Modific\u00F3 ZDOR fecha: */
+/* Modific\u00F3 GEOT fecha: 21/01/2009 */
 
 function preguntaRegresarPantallaAnterior(){
     var respuesta_local = null;
@@ -1064,15 +1064,15 @@ function preguntaRegresarPantallaAnterior(){
     return respuesta_local;
 }
 
-/* Mensaje de confirmaci�n para cancelar inclusi�n */
-/* Modific� ZDOR fecha: */
-/* Modific� GEOT fecha: 21/01/2009 */
+/* Mensaje de confirmaci\u00F3n para cancelar inclusi\u00F3n */
+/* Modific\u00F3 ZDOR fecha: */
+/* Modific\u00F3 GEOT fecha: 21/01/2009 */
 
 function preguntaCancelarInclusion(){
     var respuesta_local = null;
 
     try {
-        respuesta_local = this.confirm('Desea cancelar la inclusi�n?');
+        respuesta_local = this.confirm('Desea cancelar la inclusi\u00F3n?');
         if (respuesta_local){
             this.mostrarMensajeProcesandoInformacion();
         }
@@ -1083,15 +1083,15 @@ function preguntaCancelarInclusion(){
     return respuesta_local;
 }
 
-/* Mensaje de confirmaci�n para cancelar modificaci�n*/
-/* Modific� ZDOR fecha: */
-/* Modific� GEOT fecha: 21/01/2009 */
+/* Mensaje de confirmaci\u00F3n para cancelar modificaci\u00F3n*/
+/* Modific\u00F3 ZDOR fecha: */
+/* Modific\u00F3 GEOT fecha: 21/01/2009 */
 
 function preguntaCancelarModificacion(){
     var respuesta_local = null;
 
     try {
-        respuesta_local = this.confirm('Desea cancelar la modificaci�n?');
+        respuesta_local = this.confirm('Desea cancelar la modificaci\u00F3n?');
         if (respuesta_local){
             this.mostrarMensajeProcesandoInformacion();
         }
@@ -1103,8 +1103,8 @@ function preguntaCancelarModificacion(){
 }
 
 
-/* Modific� ZDOR fecha: 04/02/2008 */
-/* Modific� GEOT fecha: 08/02/2008 */
+/* Modific\u00F3 ZDOR fecha: 04/02/2008 */
+/* Modific\u00F3 GEOT fecha: 08/02/2008 */
 
 /* FUNCION QUE INHABILITA LA TECLA ENTER */
 function inhabilitarEnter(){
@@ -1113,8 +1113,8 @@ function inhabilitarEnter(){
    else return true;
 }
 
-/* Modific� ZDOR fecha: 11/02/2008 */
-/* Modific� GEOT fecha: 11/09/2008 */
+/* Modific\u00F3 ZDOR fecha: 11/02/2008 */
+/* Modific\u00F3 GEOT fecha: 11/09/2008 */
 
 /* FUNCION QUE COMPLETA UNA CADENA CON LOS CARACTERES INDICADOS */
 function completarCadenaConCaracteres(pCadena, pCaracter, pLongitud, pCompletarDerecha){
@@ -1148,8 +1148,8 @@ function completarCadenaConCaracteres(pCadena, pCaracter, pLongitud, pCompletarD
     return cadena_local;
 }
 
-/* Modific� ZDOR fecha: 11/02/2008 */
-/* Modific� GEOT fecha: */
+/* Modific\u00F3 ZDOR fecha: 11/02/2008 */
+/* Modific\u00F3 GEOT fecha: */
 
 /* FUNCION QUE COMPLETA EL VALOR DE UN OBJETO CON CEROS A IZQUIERDA */
 function completarValorConCeros(pObjeto, pLongitud){
@@ -1168,8 +1168,8 @@ function completarValorConCeros(pObjeto, pLongitud){
     }
 }
 
-/* Modific� ZDOR fecha:  */
-/* Modific� GEOT fecha: 12/09/2008 */
+/* Modific\u00F3 ZDOR fecha:  */
+/* Modific\u00F3 GEOT fecha: 12/09/2008 */
 
 /* FUNCION QUE BORRA LOS CEROS A IZQUIERDA */
 function borrarCerosIzquierda(pNumero, pEsEntero){
@@ -1201,10 +1201,10 @@ function borrarCerosIzquierda(pNumero, pEsEntero){
     return nuevoNumero_local;
 }
 
-/* Modific� ZDOR fecha: 11/02/2008 */
-/* Modific� GEOT fecha: */
+/* Modific\u00F3 ZDOR fecha: 11/02/2008 */
+/* Modific\u00F3 GEOT fecha: */
 
-/* FUNCION QUE COLOCA EL VALOR POR DEFECTO A CAMPOS NUM�RICOS*/
+/* FUNCION QUE COLOCA EL VALOR POR DEFECTO A CAMPOS NUM\u00C9RICOS*/
 function colocarValorPorDefecto(pObjeto, pEsEntero, pBorrarCerosIzquierda){
     var elemento_local = null;
     var valor_local = null;
@@ -1232,10 +1232,10 @@ function colocarValorPorDefecto(pObjeto, pEsEntero, pBorrarCerosIzquierda){
     }
 }
 
-/* Modific� ZDOR fecha:  */
-/* Modific� GEOT fecha: 21/01/2009 */
+/* Modific\u00F3 ZDOR fecha:  */
+/* Modific\u00F3 GEOT fecha: 21/01/2009 */
 
-/* FUNCION QUE MUESTRA EL MENSAJE PROCESANDO INFORMACI�N Y DESAPARECE LAS TABLAS DE CONSULTA GENERAL, NAVEGACI�N Y FORMULARIO*/
+/* FUNCION QUE MUESTRA EL MENSAJE PROCESANDO INFORMACI\u00D3N Y DESAPARECE LAS TABLAS DE CONSULTA GENERAL, NAVEGACI\u00D3N Y FORMULARIO*/
 
 function mostrarMensajeProcesandoInformacion(){
     var tablasPagina_local = null;
@@ -1262,7 +1262,7 @@ function mostrarMensajeProcesandoInformacion(){
     }
 }
 
-/* Modific� GEOT fecha: 15/04/2009 */
+/* Modific\u00F3 GEOT fecha: 15/04/2009 */
 
 /* FUNCION QUE CONTROLA EL MAXIMO DE CARACTERES EN UN TEXTAREA*/
 function controlarMaximaLongitud(pObjetoTextArea){
@@ -1277,9 +1277,9 @@ function controlarMaximaLongitud(pObjetoTextArea){
     }
 }
 
-/* Modific� GEOT fecha: 26/05/2009 */
+/* Modific\u00F3 GEOT fecha: 26/05/2009 */
 
-/* FUNCION QUE OCULTA EL DESTINO DE LOS V�NCULOS EN LA BARRA DE ESTADO*/
+/* FUNCION QUE OCULTA EL DESTINO DE LOS V\u00CDNCULOS EN LA BARRA DE ESTADO*/
 function ocultarEstado(){
     try{
      /*window.status='';*/
@@ -1288,9 +1288,9 @@ function ocultarEstado(){
     }
 }
 
-/* Modific� GEOT fecha: 30/01/2010 */
+/* Modific\u00F3 GEOT fecha: 30/01/2010 */
 
-/* FUNCION QUE VERIFICA SI LA CADENA TIENE AL MENOS UN N�MERO*/
+/* FUNCION QUE VERIFICA SI LA CADENA TIENE AL MENOS UN N\u00FAMERO*/
 function contieneNumeros( pCadena ){
     var contieneNumeros_local = false;
     var i_local;
@@ -1315,7 +1315,7 @@ function contieneNumeros( pCadena ){
     return contieneNumeros_local;
 }
 
-/* Modific� GEOT fecha: 30/01/2010 */
+/* Modific\u00F3 GEOT fecha: 30/01/2010 */
 
 /* FUNCION QUE VERIFICA SI LA CADENA TIENE AL MENOS UNA LETRA*/
 function contieneLetras( pCadena ){
@@ -1342,7 +1342,7 @@ function contieneLetras( pCadena ){
     return contieneLetras_local;
 }
 
-/* Modific� GEOT fecha: 06/02/2010 */
+/* Modific\u00F3 GEOT fecha: 06/02/2010 */
 
 /* FUNCION QUE VERIFICA SI LA CADENA TIENE AL MENOS UNA LETRA MAYUSCULA*/
 function contieneLetraMayusucula( pCadena ){
@@ -1369,7 +1369,7 @@ function contieneLetraMayusucula( pCadena ){
     return contieneLetraMayuscula_local;
 }
 
-/* Modific� GEOT fecha: 06/02/2010 */
+/* Modific\u00F3 GEOT fecha: 06/02/2010 */
 
 /* FUNCION QUE VERIFICA SI LA CADENA TIENE AL MENOS UNA LETRA MINUSCULA*/
 function contieneLetraMinuscula( pCadena ){
@@ -1396,9 +1396,9 @@ function contieneLetraMinuscula( pCadena ){
     return contieneLetraMinuscula_local;
 }
 
-/* Modific� GEOT fecha: 30/01/2010 */
+/* Modific\u00F3 GEOT fecha: 30/01/2010 */
 
-/* FUNCION QUE CUENTA EL N�MERO DE CARACTERES ESPECIALES*/
+/* FUNCION QUE CUENTA EL N\u00FAMERO DE CARACTERES ESPECIALES*/
 function obtenerNumeroCaracteresEspeciales( pCadena ){
     var numeroCaracteresEspeciales_local = 0;
     var i_local;
@@ -1423,10 +1423,10 @@ function obtenerNumeroCaracteresEspeciales( pCadena ){
     return numeroCaracteresEspeciales_local;
 }
 
-/* Modific� GEOT fecha: 30/01/2010 */
+/* Modific\u00F3 GEOT fecha: 30/01/2010 */
 
-/* FUNCION QUE VALIDA UNA CONTRASE�A M�NIMO 8 CARACTERES ALFANUMERICA
- * DEBE EXISTIR AL MENOS UN N�MERO Y UNA LETRA MASYUSCULAS Y MINUSCULAS
+/* FUNCION QUE VALIDA UNA CONTRASE\u00D1A M\u00CDNIMO 8 CARACTERES ALFANUMERICA
+ * DEBE EXISTIR AL MENOS UN N\u00FAMERO Y UNA LETRA MASYUSCULAS Y MINUSCULAS
  * UN CARACTER ESPECIAL SOLO UNO*/
 
 function validarContrasena( pContrasena ){
@@ -1448,7 +1448,7 @@ function validarContrasena( pContrasena ){
             (this.obtenerNumeroCaracteresEspeciales(pContrasena) == 1);
 
         if (!validarContrasena_local){
-            alert("La contrase�a es inv�lida: debe contener m�nimo 8 caracteres, n�meros, letras (al menos una min�scula y una may�scula) y un caracter especial ")
+            alert("La contrase\u00F1a es inv\u00E1lida: debe contener m\u00EDnimo 8 caracteres, n\u00FAmeros, letras (al menos una min\u00FAscula y una may\u00FAscula) y un caracter especial ")
         }
     } catch (excepcion){
         

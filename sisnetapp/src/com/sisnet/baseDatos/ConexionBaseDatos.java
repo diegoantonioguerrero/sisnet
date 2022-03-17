@@ -73,6 +73,7 @@ public class ConexionBaseDatos
   public boolean conectarBaseDatos() {
     String url_local = null;
     try {
+	
       Class.forName(getDriverJdbc());
       url_local = "jdbc:postgresql://" + getUbicacionServidor() + '/' + getNombreBaseDatos();
       

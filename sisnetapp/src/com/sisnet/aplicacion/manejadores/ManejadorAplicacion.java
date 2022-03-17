@@ -140,9 +140,9 @@ public class ManejadorAplicacion
       
       listaGeneral_local.adicionar("DOCUMENTO", "DD", mc.sonCadenasIguales(pTipoDatoSeleccionado, "DD"));
       
-      listaGeneral_local.adicionar("NUMERACI\u00D3N SEMIAUTOM\u00c1TICA NUMÃ‰RICA", "LL", mc.sonCadenasIguales(pTipoDatoSeleccionado, "LL"));
+      listaGeneral_local.adicionar("NUMERACI\u00D3N SEMIAUTOM\u00c1TICA NUM\u00C9RICA", "LL", mc.sonCadenasIguales(pTipoDatoSeleccionado, "LL"));
       
-      listaGeneral_local.adicionar("NUMERACI\u00D3N SEMIAUTOM\u00c1TICA ALFANUMÃ‰RICA", "MM", mc.sonCadenasIguales(pTipoDatoSeleccionado, "MM"));
+      listaGeneral_local.adicionar("NUMERACI\u00D3N SEMIAUTOM\u00c1TICA ALFANUM\u00C9RICA", "MM", mc.sonCadenasIguales(pTipoDatoSeleccionado, "MM"));
       
       listaGeneral_local.adicionar("P\u00c1RRAFO", "NN", mc.sonCadenasIguales(pTipoDatoSeleccionado, "NN"));
       

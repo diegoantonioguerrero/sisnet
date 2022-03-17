@@ -128,12 +128,12 @@ public class ManejadorConsultaSQL
         setPreparedStatement(getConeccionBaseDatos().getConexion().prepareStatement(query));
         asignarNumeroRegistrosActualizacion(getPreparedStatement().executeUpdate());
         getPreparedStatement().setQueryTimeout(getTimeOut());
-        System.out.println("Executed statement: " + query);
+        //System.out.println("Executed statement: " + query);
       } else {
         setStatement(getConeccionBaseDatos().getConexion().createStatement());
         query = getConsultaSQL();
         setResultSet(getStatement().executeQuery(query));
-        System.out.println("Executed query: " + query);
+        //System.out.println("Executed query: " + query);
         consultaContarRegistros_local = ca.conformarConsultaContarRegistros(getConsultaSQL());
         setStatementContador(getConeccionBaseDatos().getConexion().createStatement());
         setResultSetContador(getStatementContador().executeQuery(consultaContarRegistros_local));

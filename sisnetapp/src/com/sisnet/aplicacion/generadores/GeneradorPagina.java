@@ -2542,16 +2542,34 @@ public class GeneradorPagina
         String javascriptCambiarOrigenDos_local = "";
         try
         {
-            javascriptCambiarOrigenDos_local = mc.concatenarCadena(javascriptCambiarOrigenDos_local, "function cambiarOrigenDos(){ \n ");
-            javascriptCambiarOrigenDos_local = mc.concatenarCadena(javascriptCambiarOrigenDos_local, "limpiarLista (document.formularioIncluir." + mc.convertirAMayusculas("fldidcampoorigendos") + ");\n");
-
-            javascriptCambiarOrigenDos_local = mc.concatenarCadena(javascriptCambiarOrigenDos_local, "var seleccion_local = parseInt(document.formularioIncluir." + mc.convertirAMayusculas("fldcampocalculado") + "[document." + "formularioIncluir" + '.' + mc.convertirAMayusculas("fldcampocalculado") + ".selectedIndex].value);\n");
-
-            javascriptCambiarOrigenDos_local = mc.concatenarCadena(javascriptCambiarOrigenDos_local, "var esSumaResta_local = ((seleccion_local == 5) || (seleccion_local == 6));");
-
-            javascriptCambiarOrigenDos_local = mc.concatenarCadena(javascriptCambiarOrigenDos_local, "  if(esSumaResta_local || (seleccion_local == 7) || (seleccion_local == 8) || (seleccion_local == 43)){\n     if(verificarCampoEnGrupoMultiple(document.formularioIncluir." + mc.convertirAMayusculas("fldidcampoorigenuno") + ")){\n" + "       obtenerlistaCamposNumericosGruposNoMultiples(document." + "formularioIncluir" + '.' + mc.convertirAMayusculas("fldidcampoorigendos") + "); \n" + "       obtenerlistaCamposFechasGruposNoMultiples(document." + "formularioIncluir" + '.' + mc.convertirAMayusculas("fldidcampoorigendos") + "); \n" + "       llenarCampoOrigenDos(esSumaResta_local);\n     } else { \n" + "       obtenerlistaCamposNumericosGruposNoMultiples(document." + "formularioIncluir" + '.' + mc.convertirAMayusculas("fldidcampoorigendos") + "); \n" + "       obtenerlistaCamposFechasGruposNoMultiples(document." + "formularioIncluir" + '.' + mc.convertirAMayusculas("fldidcampoorigendos") + "); \n" + "     } \n " + " } else { \n" + "     if(seleccion_local == 13 || " + "        seleccion_local == -13) { \n" + "           obtenerListaCamposAplicacion(document." + "formularioIncluir" + '.' + mc.convertirAMayusculas("fldidcampoorigendos") + "); \n" + "     } else { \n" + "         if(seleccion_local == 25 || " + " seleccion_local == 33) { \n" + "           obtenerlistaCamposMismoGrupoConNoMultiples(document." + "formularioIncluir" + '.' + mc.convertirAMayusculas("fldidcampoorigendos") + "); \n" + "         } \n" + "         if(seleccion_local == 31) { \n" + "           obtenerlistaCamposMismoGrupoConNoMultiples(document." + "formularioIncluir" + '.' + mc.convertirAMayusculas("fldidcampoorigendos") + "); \n" + "         } \n" + "         if(seleccion_local == 32) { \n" + "           obtenerlistaCamposNumericosMismoGrupo(document." + "formularioIncluir" + '.' + mc.convertirAMayusculas("fldidcampoorigendos") + "); \n" + "         } \n" + "     } \n" + " } \n ");
-
-            javascriptCambiarOrigenDos_local = mc.concatenarCadena(javascriptCambiarOrigenDos_local, "}\n");
+            javascriptCambiarOrigenDos_local = "function cambiarOrigenDos(){ \n "
+    		+"const opcioncampoConcatenado = [11,12,21,22,23,24,27,28];\n";
+            javascriptCambiarOrigenDos_local += "limpiarLista (document.formularioIncluir.FLDIDCAMPOORIGENDOS);\n";
+            javascriptCambiarOrigenDos_local += "var seleccion_local = parseInt(document.formularioIncluir." + mc.convertirAMayusculas("fldcampocalculado") + "[document." + "formularioIncluir" + '.' + mc.convertirAMayusculas("fldcampocalculado") + ".selectedIndex].value);\n";
+            javascriptCambiarOrigenDos_local += "var esSumaResta_local = ((seleccion_local == 5) || (seleccion_local == 6));\n";
+            javascriptCambiarOrigenDos_local += "  if(esSumaResta_local || seleccion_local == 7 || seleccion_local == 8 || seleccion_local == 43){\n"
+            +"     if(verificarCampoEnGrupoMultiple(document.formularioIncluir." + mc.convertirAMayusculas("fldidcampoorigenuno") + ")){\n" 
+            + "       obtenerlistaCamposNumericosGruposNoMultiples(document.formularioIncluir.FLDIDCAMPOORIGENDOS); \n" 
+            + "       obtenerlistaCamposFechasGruposNoMultiples(document.formularioIncluir.FLDIDCAMPOORIGENDOS); \n" 
+            + "       llenarCampoOrigenDos(esSumaResta_local);\n     } else { \n" 
+            + "       obtenerlistaCamposNumericosGruposNoMultiples(document.formularioIncluir.FLDIDCAMPOORIGENDOS); \n" 
+            + "       obtenerlistaCamposFechasGruposNoMultiples(document.formularioIncluir.FLDIDCAMPOORIGENDOS); \n" 
+            + "     } \n " 
+            + " } else { \n" 
+            + "     if(seleccion_local == 13 || seleccion_local == -13 || opcioncampoConcatenado.indexOf(seleccion_local) > -1) { \n" 
+            + "           obtenerListaCamposAplicacion(document.formularioIncluir.FLDIDCAMPOORIGENDOS); \n" 
+            + "     } else { \n" 
+            + "         if(seleccion_local == 25 || " 
+            + " seleccion_local == 33) { \n" 
+            + "           obtenerlistaCamposMismoGrupoConNoMultiples(document.formularioIncluir.FLDIDCAMPOORIGENDOS); \n" 
+            + "         } \n" 
+            + "         if(seleccion_local == 31) { \n" 
+            + "           obtenerlistaCamposMismoGrupoConNoMultiples(document.formularioIncluir.FLDIDCAMPOORIGENDOS); \n" 
+            + "         } \n" + "         if(seleccion_local == 32) { \n" 
+            + "           obtenerlistaCamposNumericosMismoGrupo(document." + "formularioIncluir.FLDIDCAMPOORIGENDOS); \n" 
+            + "         } \n" 
+            + "     } \n" + " } \n "
+            +"}\n";
         }
         catch (Exception excepcion)
         {
@@ -4699,7 +4717,7 @@ public class GeneradorPagina
             stringBuffer_local.append(getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "encripcion.js", pNivelesAnterioresDirectorio));
 
             stringBuffer_local.append(getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "jquery-3.6.0.min.js", pNivelesAnterioresDirectorio));
-            stringBuffer_local.append(getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js", pNivelesAnterioresDirectorio));
+            stringBuffer_local.append(getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js?v=1", pNivelesAnterioresDirectorio));
 
             stringBuffer_local.append(getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "operaciones.js", pNivelesAnterioresDirectorio));
 
@@ -5809,7 +5827,7 @@ private String obtenerEncabezadoPaginaSisnet(boolean pExisteConexion)
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().getTituloPagina());
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().getHojaEstiloSisnet(0));
 
-        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js", 0));
+        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js?v=1", 0));
 
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().cerrarHead());
     }
@@ -7563,7 +7581,7 @@ private String obtenerEncabezadoPaginaConfiguracion()
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().getHojaEstiloSisnet(0));
 
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "jquery-3.6.0.min.js", 0));
-        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js", 0));
+        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js?v=1", 0));
 
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().abrirBloqueJavascript());
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, insertarJavascriptVerificarCampos("formularioIncluir", ap.obtenerCamposConfiguracion(), false));

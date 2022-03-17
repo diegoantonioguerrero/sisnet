@@ -349,6 +349,9 @@ public class ManejadorPermisoUsuario
       consulta_local = ca.consultaSQLPermitirUtilizarMenuConfiguracion(getTipoUsuario());
       objetoManejadorConsultaSQL_local = new ObjetoManejadorConsultaSQL(getAdministradorBaseDatosSisnet().getConexionBaseDatos(), consulta_local, "seleccion");
       
+      if(objetoManejadorConsultaSQL_local.getConeccionBaseDatos().getConexion().isClosed()){
+    	  objetoManejadorConsultaSQL_local.getConeccionBaseDatos().conectarBaseDatos();
+      }
       manejadorConsultaSQL_local = new ManejadorConsultaSQL(objetoManejadorConsultaSQL_local);
       if (manejadorConsultaSQL_local.ejecutarConsulta() == 0) {
         resultSet_local = manejadorConsultaSQL_local.getResultSet();
@@ -855,7 +858,12 @@ public class ManejadorPermisoUsuario
     Iterator iterador_local = null;
     
     try {
-      listaGrupoInformacion_local = getMotorAplicacion().obtenerListaGruposInformacionNoMultiplesAplicacion(pIdAplicacion);
+    	MotorAplicacion m = getMotorAplicacion();
+    	if(m == null)
+    	{
+    		m = null;
+    	}
+      listaGrupoInformacion_local = m.obtenerListaGruposInformacionNoMultiplesAplicacion(pIdAplicacion);
       if (listaGrupoInformacion_local != ConstantesGeneral.VALOR_NULO) {
         iterador_local = listaGrupoInformacion_local.iterator();
         while (iterador_local.hasNext()) {

@@ -1560,6 +1560,199 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 	}
 
 	private String dibujarDatosGrupoInformacionNoMultiple(GrupoInformacion pGrupoInformacion,
+			String pNombreGrupoInformacionPrincipal, int pValorLlavePrimaria, boolean pResaltarRegistro) {
+		String datosGrupoInformacionNoMultiple_local = "";
+		boolean esDocumento_local = false;
+		boolean esCampoParrafo_local = false;
+		String alineacionContenido_local = null;
+		String destinoVinculoModificar_local = null;
+		String consultaSQLGrupoInformacion_local = null;
+		String nombreCampo_local = null;
+		String tipoDato_local = null;
+		int anchoColumna_local = 0;
+		String valorCampo_local = null;
+		Tabla tabla_local = null;
+		ListaCampo listaCampo_local = null;
+		ListaParametrosRedireccion listaParametrosRedireccion_local = null;
+		ResultSet resultSet_local = null;
+		Iterator iterator_local = null;
+		Campo campo_local = null;
+		Campo campoEnlazado_local = null;
+		ManejadorSesion ms_local;
+
+		if (pGrupoInformacion == ConstantesGeneral.VALOR_NULO) {
+			return datosGrupoInformacionNoMultiple_local;
+		}
+		if (pNombreGrupoInformacionPrincipal == ConstantesGeneral.VALOR_NULO) {
+			return datosGrupoInformacionNoMultiple_local;
+		}
+
+		try {
+			ms_local = getManejadorSesion();
+			esDocumento_local = getAdministradorBaseDatosSisnet().verificarGrupoInformacionContieneCampoDocumento(
+					ms_local.obtenerMotorAplicacion().obtenerGrupoInformacionPrincipalAplicacion(
+							pGrupoInformacion.getAplicacion().getIdAplicacion()));
+
+			alineacionContenido_local = "left";
+			listaCampo_local = ms_local.obtenerMotorAplicacion()
+					.obtenerListaCamposVisiblesGrupoInformacion(pGrupoInformacion.getIdGrupoInformacion(), true);
+
+			consultaSQLGrupoInformacion_local = ca.conformarConsultaSQLListaCamposGrupoInformacionNoMultiple(
+					pNombreGrupoInformacionPrincipal, pValorLlavePrimaria, listaCampo_local);
+
+			listaParametrosRedireccion_local = new ListaParametrosRedireccion();
+			listaParametrosRedireccion_local.adicionar("accion", String.valueOf(87));
+
+			listaParametrosRedireccion_local.adicionar("valorllaveprimaria", String.valueOf(pValorLlavePrimaria));
+
+			if (esDocumento_local) {
+				listaParametrosRedireccion_local.adicionar("esdocumento", String.valueOf(true));
+			}
+
+			destinoVinculoModificar_local = listaParametrosRedireccion_local.concatenarParametros();
+
+			resultSet_local = getResultadoConsultaSQL()
+					.obtenerResultadoConsultaAplicacion(consultaSQLGrupoInformacion_local);
+			if (resultSet_local == ConstantesGeneral.VALOR_NULO) {
+				return datosGrupoInformacionNoMultiple_local;
+			}
+
+			while (resultSet_local.next()) {
+				iterator_local = listaCampo_local.iterator();
+				while (iterator_local.hasNext()) {
+					campo_local = (Campo) iterator_local.next();
+					campoEnlazado_local = null;
+					if (getManejadorPermisoUsuario().verificarPermisoVerCampo(campo_local)) {
+						nombreCampo_local = campo_local.getNombreCampo();
+						tipoDato_local = campo_local.getFormatoCampo().getTipoDato();
+						esCampoParrafo_local = campo_local.esTipoDatoParrafo();
+						anchoColumna_local = campo_local.getAnchoColumna();
+						alineacionContenido_local = campo_local.obtenerAlineacionContenidoCelda();
+						if (!campo_local.esTipoDatoDocumento() && !campo_local.esTipoDatoArchivo()) {
+							valorCampo_local = "";
+							if (resultSet_local.getObject(nombreCampo_local) != ConstantesGeneral.VALOR_NULO) {
+								valorCampo_local = resultSet_local.getObject(nombreCampo_local).toString();
+								if (campo_local.esCampoEnlazado() && mc.esCadenaNumerica(valorCampo_local, true)) {
+
+									campoEnlazado_local = ms_local.obtenerMotorAplicacion()
+											.obtenerPrimerCampoValorUnicoAplicacion(
+													campo_local.getEnlaceCampo().getEnlazado().getIdAplicacion());
+
+									valorCampo_local = getManejadorInformacionRecalculable().getManejadorCampoEnlazado()
+											.obtenerValorCampoEnlazado(campo_local.getEnlaceCampo().getEnlazado(),
+													Integer.parseInt(valorCampo_local));
+								}
+
+								if (campoEnlazado_local != ConstantesGeneral.VALOR_NULO) {
+									if (mc.esCadenaNumerica(valorCampo_local,
+											campoEnlazado_local.esTipoDatoNumeroEntero())) {
+										campoEnlazado_local.setValorCampo(valorCampo_local);
+										valorCampo_local = campoEnlazado_local.aplicarFormatoNumeros();
+										campoEnlazado_local.setValorCampo(ConstantesGeneral.VALOR_NULO);
+										alineacionContenido_local = "right";
+									} else {
+										alineacionContenido_local = "left";
+									}
+
+								} else if (mc.sonCadenasIguales(tipoDato_local, "XX")) {
+									valorCampo_local = mc.completarCadena(valorCampo_local, false, '0',
+											campo_local.getFormatoCampo().getLongitudCampo());
+
+								} else if (mc.esCadenaNumerica(valorCampo_local,
+										campo_local.esTipoDatoNumeroEntero())) {
+									campo_local.setValorCampo(valorCampo_local);
+									valorCampo_local = campo_local.aplicarFormatoNumeros();
+									campo_local.setValorCampo(ConstantesGeneral.VALOR_NULO);
+								}
+
+								if (mc.sonCadenasIguales(tipoDato_local, "H")) {
+									valorCampo_local = ap.obtenerHoraConFormato("H24", valorCampo_local);
+								}
+							}
+						}
+
+						if (campo_local.getRestriccionCampo().esLlaveForanea()) {
+							tabla_local = getAdministradorBaseDatosSisnet()
+									.obtenerTablaPorId(Integer.parseInt(tipoDato_local));
+							if (mc.esCadenaNumerica(valorCampo_local, true)) {
+								valorCampo_local = getAdministradorBaseDatosAplicacion().obtenerValorTabla(
+										tabla_local.getNombreTabla(), Integer.parseInt(valorCampo_local));
+							}
+
+							datosGrupoInformacionNoMultiple_local = mc.concatenarCadena(
+									datosGrupoInformacionNoMultiple_local,
+									getGeneradorComponentesHtml().crearCeldaHipervinculo(valorCampo_local,
+											alineacionContenido_local, destinoVinculoModificar_local,
+											anchoColumna_local, pResaltarRegistro,
+											"onClick=\"mostrarMensajeProcesandoInformacion();\" ",
+											esCampoParrafo_local));
+
+							continue;
+						}
+
+						if (campo_local.esTipoDatoArchivo()) {
+							if (campo_local.esImagen()) {
+								valorCampo_local = descargarArchivo(pValorLlavePrimaria, campo_local);
+								if (!mc.esCadenaVacia(valorCampo_local)) {
+									datosGrupoInformacionNoMultiple_local = mc.concatenarCadena(
+											datosGrupoInformacionNoMultiple_local,
+											getGeneradorComponentesHtml().crearCeldaHipervinculoImagen(valorCampo_local,
+													"center", destinoVinculoModificar_local, anchoColumna_local,
+													campo_local.getAltoImagenPantallaPresentacion(), pResaltarRegistro,
+													"onClick=\"mostrarMensajeProcesandoInformacion();\" ", ""));
+
+									continue;
+								}
+
+								datosGrupoInformacionNoMultiple_local = mc.concatenarCadena(
+										datosGrupoInformacionNoMultiple_local,
+										getGeneradorComponentesHtml().crearCeldaHipervinculo("",
+												alineacionContenido_local, destinoVinculoModificar_local,
+												anchoColumna_local, pResaltarRegistro, "", esCampoParrafo_local));
+
+								continue;
+							}
+
+							datosGrupoInformacionNoMultiple_local = mc.concatenarCadena(
+									datosGrupoInformacionNoMultiple_local,
+									insertarCeldaDescargarArchivo(campo_local, pValorLlavePrimaria, pResaltarRegistro));
+
+							continue;
+						}
+						datosGrupoInformacionNoMultiple_local = mc.concatenarCadena(
+								datosGrupoInformacionNoMultiple_local,
+								getGeneradorComponentesHtml().crearCeldaHipervinculo(valorCampo_local,
+										alineacionContenido_local, destinoVinculoModificar_local, anchoColumna_local,
+										pResaltarRegistro, "onClick=\"mostrarMensajeProcesandoInformacion();\" ",
+										esCampoParrafo_local));
+
+					}
+
+				}
+
+			}
+
+		} catch (Exception excepcion_local) {
+			excepcion_local.printStackTrace();
+		} finally {
+			tabla_local = null;
+			campo_local = null;
+			tipoDato_local = null;
+			iterator_local = null;
+			resultSet_local = null;
+			listaCampo_local = null;
+			valorCampo_local = null;
+			nombreCampo_local = null;
+			campoEnlazado_local = null;
+			alineacionContenido_local = null;
+			destinoVinculoModificar_local = null;
+			listaParametrosRedireccion_local = null;
+			consultaSQLGrupoInformacion_local = null;
+		}
+		return datosGrupoInformacionNoMultiple_local;
+	}
+
+	private String dibujarDatosGrupoInformacionNoMultipleNew(GrupoInformacion pGrupoInformacion,
 			String pNombreGrupoInformacionPrincipal, int pValorLlavePrimaria, boolean pResaltarRegistro,
 			boolean esDocumento_local, ListaCampo pListaCamposParaMostrar) {
 		String datosGrupoInformacionNoMultiple_local = "";
@@ -1579,6 +1772,7 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 		Iterator iterator_local = null;
 		Campo campo_local = null;
 		Campo campoEnlazado_local = null;
+		ManejadorSesion ms_local;
 
 		if (pGrupoInformacion == ConstantesGeneral.VALOR_NULO) {
 			return datosGrupoInformacionNoMultiple_local;
@@ -1588,6 +1782,7 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 		}
 
 		try {
+			ms_local = getManejadorSesion();
 			/*
 			 * esDocumento_local = getAdministradorBaseDatosSisnet().
 			 * verificarGrupoInformacionContieneCampoDocumento(
@@ -1635,7 +1830,7 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 								valorCampo_local = resultSet_local.getObject(nombreCampo_local).toString();
 								if (campo_local.esCampoEnlazado() && mc.esCadenaNumerica(valorCampo_local, true)) {
 
-									campoEnlazado_local = getManejadorSesion().obtenerMotorAplicacion()
+									campoEnlazado_local = ms_local.obtenerMotorAplicacion()
 											.obtenerPrimerCampoValorUnicoAplicacion(
 													campo_local.getEnlaceCampo().getEnlazado().getIdAplicacion());
 
@@ -1762,6 +1957,7 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 		Iterator iterator_local = null;
 		Campo campo_local = null;
 		Campo campoEnlazado_local = null;
+		ManejadorSesion ms_local;
 
 		if (pGrupoInformacion == ConstantesGeneral.VALOR_NULO) {
 			return datosGrupoInformacionNoMultiple_local;
@@ -1771,6 +1967,7 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 		}
 
 		try {
+			ms_local = getManejadorSesion();
 			/*
 			 * esDocumento_local = getAdministradorBaseDatosSisnet().
 			 * verificarGrupoInformacionContieneCampoDocumento(
@@ -1835,14 +2032,16 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 						valorCampo_local = hmReference.get(nombreCampo_local).toString();
 						if (campo_local.esCampoEnlazado() && mc.esCadenaNumerica(valorCampo_local, true)) {
 
-							campoEnlazado_local = getManejadorSesion().obtenerMotorAplicacion()
+							campoEnlazado_local = ms_local.obtenerMotorAplicacion()
 									.obtenerPrimerCampoValorUnicoAplicacion(
 											campo_local.getEnlaceCampo().getEnlazado().getIdAplicacion());
 							// anterior version de obtener campo enlazado
 							/*
 							 * valorCampo_local =
-							 * getManejadorInformacionRecalculable().getManejadorCampoEnlazado()
-							 * .obtenerValorCampoEnlazado(campo_local.getEnlaceCampo().getEnlazado(),
+							 * getManejadorInformacionRecalculable().
+							 * getManejadorCampoEnlazado()
+							 * .obtenerValorCampoEnlazado(campo_local.
+							 * getEnlaceCampo().getEnlazado(),
 							 * Integer.parseInt(valorCampo_local));
 							 */
 							valorCampo_local = getValorEnlazado(valorCampo_local, campo_local);
@@ -2026,6 +2225,7 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 		Campo campo_local = null;
 		Campo campoEnlazado_local = null;
 		int valorLlavePrimariaGrupoInformacion_local = -1;
+		ManejadorSesion ms_local;
 
 		if (pGrupoInformacion == ConstantesGeneral.VALOR_NULO) {
 			return datosGrupoInformacionMultiple_local;
@@ -2035,216 +2235,197 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 		}
 
 		try {
+			ms_local = getManejadorSesion();
 			nombreGrupoInformacion_local = pGrupoInformacion.getNombreGrupoInformacion();
 			alineacionContenido_local = "left";
-			if (pGrupoInformacion != ConstantesGeneral.VALOR_NULO) {
-				idAplicacion_local = pGrupoInformacion.getAplicacion().getIdAplicacion();
-				listaCampo_local = getManejadorSesion().obtenerMotorAplicacion()
-						.obtenerListaCamposVisiblesGrupoInformacion(pGrupoInformacion.getIdGrupoInformacion(), true);
+			if (nombreGrupoInformacion_local == ConstantesGeneral.VALOR_NULO) {
+				return datosGrupoInformacionMultiple_local;
+			}
 
-				if (listaCampo_local.contarElementos() > 0) {
-					nombreLlaveGrupoInformacion_local = getAdministradorBaseDatosSisnet()
-							.obtenerNombreLlavePrimariaGrupoInformacion(pGrupoInformacion, false);
+			idAplicacion_local = pGrupoInformacion.getAplicacion().getIdAplicacion();
+			listaCampo_local = ms_local.obtenerMotorAplicacion()
+					.obtenerListaCamposVisiblesGrupoInformacion(pGrupoInformacion.getIdGrupoInformacion(), true);
 
-					nombreLlavePrimariaPrincipal_local = getAdministradorBaseDatosSisnet()
-							.obtenerNombreLlavePrimariaGrupoInformacion(getManejadorSesion().obtenerMotorAplicacion()
-									.obtenerGrupoInformacionPrincipalAplicacion(idAplicacion_local), false);
+			if (listaCampo_local.contarElementos() <= 0) {
+				return datosGrupoInformacionMultiple_local;
+			}
+			nombreLlaveGrupoInformacion_local = getAdministradorBaseDatosSisnet()
+					.obtenerNombreLlavePrimariaGrupoInformacion(pGrupoInformacion, false);
 
-					consultaSQLGrupoInformacion_local = ca.conformarConsultaSQLListaCamposGrupoInformacionMultiple(
-							nombreGrupoInformacion_local, nombreLlavePrimariaPrincipal_local,
-							nombreLlaveGrupoInformacion_local, pValorLlavePrimaria, listaCampo_local);
+			nombreLlavePrimariaPrincipal_local = getAdministradorBaseDatosSisnet()
+					.obtenerNombreLlavePrimariaGrupoInformacion(ms_local.obtenerMotorAplicacion()
+							.obtenerGrupoInformacionPrincipalAplicacion(idAplicacion_local), false);
 
-					manejadorConsultaSQL_local = getResultadoConsultaSQL()
-							.obtenerManejadorConsultaAplicacion(consultaSQLGrupoInformacion_local);
+			consultaSQLGrupoInformacion_local = ca.conformarConsultaSQLListaCamposGrupoInformacionMultiple(
+					nombreGrupoInformacion_local, nombreLlavePrimariaPrincipal_local, nombreLlaveGrupoInformacion_local,
+					pValorLlavePrimaria, listaCampo_local);
 
-					resultSet_local = manejadorConsultaSQL_local.getResultSet();
-					listaParametrosRedireccion_local = new ListaParametrosRedireccion();
-					if (resultSet_local != ConstantesGeneral.VALOR_NULO) {
-						existenRegistrosGrupo_local = (manejadorConsultaSQL_local.getNumeroRegistros() > 0);
-						listaParametrosRedireccion_local.adicionar("accion", String.valueOf(87));
+			manejadorConsultaSQL_local = getResultadoConsultaSQL()
+					.obtenerManejadorConsultaAplicacion(consultaSQLGrupoInformacion_local);
+
+			resultSet_local = manejadorConsultaSQL_local.getResultSet();
+			listaParametrosRedireccion_local = new ListaParametrosRedireccion();
+			if (resultSet_local == ConstantesGeneral.VALOR_NULO) {
+				return datosGrupoInformacionMultiple_local;
+			}
+			existenRegistrosGrupo_local = (manejadorConsultaSQL_local.getNumeroRegistros() > 0);
+			listaParametrosRedireccion_local.adicionar("accion", String.valueOf(87));
+
+			listaParametrosRedireccion_local.adicionar("valorllaveprimaria", String.valueOf(pValorLlavePrimaria));
+
+			destinoVinculoModificar_local = listaParametrosRedireccion_local.concatenarParametros();
+			if (resultSet_local.next()) {
+				valorLlavePrimariaGrupoInformacion_local = resultSet_local.getInt(nombreLlaveGrupoInformacion_local);
+				iterator_local = listaCampo_local.iterator();
+				while (iterator_local.hasNext()) {
+					campo_local = (Campo) iterator_local.next();
+					campoEnlazado_local = null;
+					// si no tiene permiso de ver el campo continua
+					if (!getManejadorPermisoUsuario().verificarPermisoVerCampo(campo_local)) {
+						continue;
+					}
+					nombreCampo_local = campo_local.getNombreCampo();
+					tipoDato_local = campo_local.getFormatoCampo().getTipoDato();
+					anchoColumna_local = campo_local.getAnchoColumna();
+					valorCampo_local = "";
+					esCampoDocumento_local = campo_local.esTipoDatoDocumento();
+					esCampoArchivo_local = campo_local.esTipoDatoArchivo();
+					esCampoParrafo_local = campo_local.esTipoDatoParrafo();
+
+					alineacionContenido_local = campo_local.obtenerAlineacionContenidoCelda();
+
+					if (!esCampoDocumento_local && !esCampoArchivo_local) {
+						if (resultSet_local.getObject(nombreCampo_local) != ConstantesGeneral.VALOR_NULO) {
+							valorCampo_local = resultSet_local.getObject(nombreCampo_local).toString();
+						}
+						if (campo_local.getRestriccionCampo().esLlaveForanea()) {
+							if (mc.sonCadenasIguales(valorCampo_local, "")) {
+								valorCampo_local = String.valueOf(-1);
+							}
+							valorCampo_local = getExternalTableValue(tipoDato_local, valorCampo_local);
+						} else if (campo_local.esCampoEnlazado() && !mc.esCadenaVacia(valorCampo_local)) {
+							campoEnlazado_local = ms_local.obtenerMotorAplicacion()
+									.obtenerPrimerCampoValorUnicoAplicacion(
+											campo_local.getEnlaceCampo().getEnlazado().getIdAplicacion());
+
+							valorCampo_local = getValorEnlazado(valorCampo_local, campo_local);
+						}
+
+						if (campoEnlazado_local != ConstantesGeneral.VALOR_NULO) {
+							if (mc.esCadenaNumerica(valorCampo_local, campoEnlazado_local.esTipoDatoNumeroEntero())) {
+								campoEnlazado_local.setValorCampo(valorCampo_local);
+								valorCampo_local = campoEnlazado_local.aplicarFormatoNumeros();
+								campoEnlazado_local.setValorCampo(ConstantesGeneral.VALOR_NULO);
+								alineacionContenido_local = "right";
+							} else {
+								alineacionContenido_local = "left";
+							}
+
+						} else if (mc.sonCadenasIguales(tipoDato_local, "XX")) {
+							valorCampo_local = mc.completarCadena(valorCampo_local, false, '0',
+									campo_local.getFormatoCampo().getLongitudCampo());
+
+						} else if (mc.esCadenaNumerica(valorCampo_local, campo_local.esTipoDatoNumeroEntero())) {
+							campo_local.setValorCampo(valorCampo_local);
+							valorCampo_local = campo_local.aplicarFormatoNumeros();
+							campo_local.setValorCampo(ConstantesGeneral.VALOR_NULO);
+						}
+					}
+
+					if (!esCampoDocumento_local && !esCampoArchivo_local) {
+						datosGrupoInformacionMultiple_local = mc.concatenarCadena(datosGrupoInformacionMultiple_local,
+								getGeneradorComponentesHtml().crearCeldaHipervinculo(valorCampo_local,
+										alineacionContenido_local, destinoVinculoModificar_local, anchoColumna_local,
+										pResaltarRegistro, "onClick=\"mostrarMensajeProcesandoInformacion();\" ",
+										esCampoParrafo_local));
+
+						if (existenRegistrosGrupo_local) {
+							listaParametrosRedireccion_local.borrarElementos();
+							listaParametrosRedireccion_local.adicionar("accion", String.valueOf(63));
+
+							listaParametrosRedireccion_local.adicionar("grupoinformacionactual",
+									String.valueOf(pGrupoInformacion.getIdGrupoInformacion()));
+
+							listaParametrosRedireccion_local.adicionar("valorllaveprimaria",
+									String.valueOf(pValorLlavePrimaria));
+
+							datosGrupoInformacionMultiple_local = mc.concatenarCadena(
+									datosGrupoInformacionMultiple_local,
+									getGeneradorComponentesHtml().insertarCeldaVerDetalles(
+											listaParametrosRedireccion_local.concatenarParametros(),
+											pResaltarRegistro));
+
+							continue;
+						}
+						datosGrupoInformacionMultiple_local = mc.concatenarCadena(datosGrupoInformacionMultiple_local,
+								getGeneradorComponentesHtml().crearCeldaHipervinculo("", "right", "", 18,
+										pResaltarRegistro, "onClick=\"mostrarMensajeProcesandoInformacion();\" ",
+										esCampoParrafo_local));
+
+						continue;
+					}
+
+					if (campo_local.esTipoDatoArchivo()) {
+						if (campo_local.esImagen()) {
+							valorCampo_local = descargarArchivo(valorLlavePrimariaGrupoInformacion_local, campo_local);
+							if (!mc.esCadenaVacia(valorCampo_local)) {
+								datosGrupoInformacionMultiple_local = mc.concatenarCadena(
+										datosGrupoInformacionMultiple_local,
+										getGeneradorComponentesHtml().crearCeldaHipervinculoImagen(valorCampo_local,
+												"center", destinoVinculoModificar_local, anchoColumna_local,
+												campo_local.getAltoImagenPantallaPresentacion(), pResaltarRegistro,
+												"onClick=\"mostrarMensajeProcesandoInformacion();\" ", ""));
+
+							} else {
+
+								datosGrupoInformacionMultiple_local = mc
+										.concatenarCadena(datosGrupoInformacionMultiple_local,
+												getGeneradorComponentesHtml().crearCeldaHipervinculo("", "center", "",
+														anchoColumna_local, pResaltarRegistro, "",
+														esCampoParrafo_local));
+
+							}
+
+						} else {
+
+							datosGrupoInformacionMultiple_local = mc.concatenarCadena(
+									datosGrupoInformacionMultiple_local, insertarCeldaDescargarArchivo(campo_local,
+											valorLlavePrimariaGrupoInformacion_local, pResaltarRegistro));
+						}
+
+						listaParametrosRedireccion_local.borrarElementos();
+						listaParametrosRedireccion_local.adicionar("accion", String.valueOf(63));
+
+						listaParametrosRedireccion_local.adicionar("grupoinformacionactual",
+								String.valueOf(pGrupoInformacion.getIdGrupoInformacion()));
 
 						listaParametrosRedireccion_local.adicionar("valorllaveprimaria",
 								String.valueOf(pValorLlavePrimaria));
 
-						destinoVinculoModificar_local = listaParametrosRedireccion_local.concatenarParametros();
-						if (resultSet_local.next()) {
-							valorLlavePrimariaGrupoInformacion_local = resultSet_local
-									.getInt(nombreLlaveGrupoInformacion_local);
-							iterator_local = listaCampo_local.iterator();
-							while (iterator_local.hasNext()) {
-								campo_local = (Campo) iterator_local.next();
-								campoEnlazado_local = null;
-								if (getManejadorPermisoUsuario().verificarPermisoVerCampo(campo_local)) {
-									nombreCampo_local = campo_local.getNombreCampo();
-									tipoDato_local = campo_local.getFormatoCampo().getTipoDato();
-									anchoColumna_local = campo_local.getAnchoColumna();
-									valorCampo_local = "";
-									esCampoDocumento_local = campo_local.esTipoDatoDocumento();
-									esCampoArchivo_local = campo_local.esTipoDatoArchivo();
-									esCampoParrafo_local = campo_local.esTipoDatoParrafo();
-
-									alineacionContenido_local = campo_local.obtenerAlineacionContenidoCelda();
-
-									if (!esCampoDocumento_local && !esCampoArchivo_local) {
-										if (resultSet_local
-												.getObject(nombreCampo_local) != ConstantesGeneral.VALOR_NULO) {
-											valorCampo_local = resultSet_local.getObject(nombreCampo_local).toString();
-										}
-										if (campo_local.getRestriccionCampo().esLlaveForanea()) {
-											if (mc.sonCadenasIguales(valorCampo_local, "")) {
-												valorCampo_local = String.valueOf(-1);
-											}
-											valorCampo_local = getExternalTableValue(tipoDato_local, valorCampo_local);
-										} else if (campo_local.esCampoEnlazado()
-												&& !mc.esCadenaVacia(valorCampo_local)) {
-											campoEnlazado_local = getManejadorSesion().obtenerMotorAplicacion()
-													.obtenerPrimerCampoValorUnicoAplicacion(campo_local.getEnlaceCampo()
-															.getEnlazado().getIdAplicacion());
-
-											valorCampo_local = getValorEnlazado(valorCampo_local, campo_local);
-										}
-
-										if (campoEnlazado_local != ConstantesGeneral.VALOR_NULO) {
-											if (mc.esCadenaNumerica(valorCampo_local,
-													campoEnlazado_local.esTipoDatoNumeroEntero())) {
-												campoEnlazado_local.setValorCampo(valorCampo_local);
-												valorCampo_local = campoEnlazado_local.aplicarFormatoNumeros();
-												campoEnlazado_local.setValorCampo(ConstantesGeneral.VALOR_NULO);
-												alineacionContenido_local = "right";
-											} else {
-												alineacionContenido_local = "left";
-											}
-
-										} else if (mc.sonCadenasIguales(tipoDato_local, "XX")) {
-											valorCampo_local = mc.completarCadena(valorCampo_local, false, '0',
-													campo_local.getFormatoCampo().getLongitudCampo());
-
-										} else if (mc.esCadenaNumerica(valorCampo_local,
-												campo_local.esTipoDatoNumeroEntero())) {
-											campo_local.setValorCampo(valorCampo_local);
-											valorCampo_local = campo_local.aplicarFormatoNumeros();
-											campo_local.setValorCampo(ConstantesGeneral.VALOR_NULO);
-										}
-									}
-
-									if (!esCampoDocumento_local && !esCampoArchivo_local) {
-										datosGrupoInformacionMultiple_local = mc.concatenarCadena(
-												datosGrupoInformacionMultiple_local,
-												getGeneradorComponentesHtml().crearCeldaHipervinculo(valorCampo_local,
-														alineacionContenido_local, destinoVinculoModificar_local,
-														anchoColumna_local, pResaltarRegistro,
-														"onClick=\"mostrarMensajeProcesandoInformacion();\" ",
-														esCampoParrafo_local));
-
-										if (existenRegistrosGrupo_local) {
-											listaParametrosRedireccion_local.borrarElementos();
-											listaParametrosRedireccion_local.adicionar("accion", String.valueOf(63));
-
-											listaParametrosRedireccion_local.adicionar("grupoinformacionactual",
-													String.valueOf(pGrupoInformacion.getIdGrupoInformacion()));
-
-											listaParametrosRedireccion_local.adicionar("valorllaveprimaria",
-													String.valueOf(pValorLlavePrimaria));
-
-											datosGrupoInformacionMultiple_local = mc.concatenarCadena(
-													datosGrupoInformacionMultiple_local,
-													getGeneradorComponentesHtml().insertarCeldaVerDetalles(
-															listaParametrosRedireccion_local.concatenarParametros(),
-															pResaltarRegistro));
-
-											continue;
-										}
-										datosGrupoInformacionMultiple_local = mc.concatenarCadena(
-												datosGrupoInformacionMultiple_local,
-												getGeneradorComponentesHtml().crearCeldaHipervinculo("", "right", "",
-														18, pResaltarRegistro,
-														"onClick=\"mostrarMensajeProcesandoInformacion();\" ",
-														esCampoParrafo_local));
-
-										continue;
-									}
-
-									if (campo_local.esTipoDatoArchivo()) {
-										if (campo_local.esImagen()) {
-											valorCampo_local = descargarArchivo(
-													valorLlavePrimariaGrupoInformacion_local, campo_local);
-											if (!mc.esCadenaVacia(valorCampo_local)) {
-												datosGrupoInformacionMultiple_local = mc.concatenarCadena(
-														datosGrupoInformacionMultiple_local,
-														getGeneradorComponentesHtml().crearCeldaHipervinculoImagen(
-																valorCampo_local, "center",
-																destinoVinculoModificar_local, anchoColumna_local,
-																campo_local.getAltoImagenPantallaPresentacion(),
-																pResaltarRegistro,
-																"onClick=\"mostrarMensajeProcesandoInformacion();\" ",
-																""));
-
-											} else {
-
-												datosGrupoInformacionMultiple_local = mc.concatenarCadena(
-														datosGrupoInformacionMultiple_local,
-														getGeneradorComponentesHtml().crearCeldaHipervinculo("",
-																"center", "", anchoColumna_local, pResaltarRegistro, "",
-																esCampoParrafo_local));
-
-											}
-
-										} else {
-
-											datosGrupoInformacionMultiple_local = mc.concatenarCadena(
-													datosGrupoInformacionMultiple_local,
-													insertarCeldaDescargarArchivo(campo_local,
-															valorLlavePrimariaGrupoInformacion_local,
-															pResaltarRegistro));
-										}
-
-										listaParametrosRedireccion_local.borrarElementos();
-										listaParametrosRedireccion_local.adicionar("accion", String.valueOf(63));
-
-										listaParametrosRedireccion_local.adicionar("grupoinformacionactual",
-												String.valueOf(pGrupoInformacion.getIdGrupoInformacion()));
-
-										listaParametrosRedireccion_local.adicionar("valorllaveprimaria",
-												String.valueOf(pValorLlavePrimaria));
-
-										datosGrupoInformacionMultiple_local = mc.concatenarCadena(
-												datosGrupoInformacionMultiple_local,
-												getGeneradorComponentesHtml().insertarCeldaVerDetalles(
-														listaParametrosRedireccion_local.concatenarParametros(),
-														pResaltarRegistro));
-									}
-
-								}
-
-							}
-						} else {
-
-							iterator_local = listaCampo_local.iterator();
-							while (iterator_local.hasNext()) {
-								campo_local = (Campo) iterator_local.next();
-								anchoColumna_local = campo_local.getAnchoColumna() + 18;
-								datosGrupoInformacionMultiple_local = mc.concatenarCadena(
-										datosGrupoInformacionMultiple_local,
-										getGeneradorComponentesHtml().crearCeldaHipervinculo("", "right", "",
-												anchoColumna_local, pResaltarRegistro,
-												"onClick=\"mostrarMensajeProcesandoInformacion();\" ",
-												esCampoParrafo_local));
-
-								datosGrupoInformacionMultiple_local = mc.concatenarCadena(
-										datosGrupoInformacionMultiple_local,
-										getGeneradorComponentesHtml().crearCeldaHipervinculo("", "right", "", 18,
-												pResaltarRegistro,
-												"onClick=\"mostrarMensajeProcesandoInformacion();\" ",
-												esCampoParrafo_local));
-							}
-
-						}
-
+						datosGrupoInformacionMultiple_local = mc.concatenarCadena(datosGrupoInformacionMultiple_local,
+								getGeneradorComponentesHtml().insertarCeldaVerDetalles(
+										listaParametrosRedireccion_local.concatenarParametros(), pResaltarRegistro));
 					}
 
 				}
+			} else {
+
+				iterator_local = listaCampo_local.iterator();
+				while (iterator_local.hasNext()) {
+					campo_local = (Campo) iterator_local.next();
+					anchoColumna_local = campo_local.getAnchoColumna() + 18;
+					datosGrupoInformacionMultiple_local = mc.concatenarCadena(datosGrupoInformacionMultiple_local,
+							getGeneradorComponentesHtml().crearCeldaHipervinculo("", "right", "", anchoColumna_local,
+									pResaltarRegistro, "onClick=\"mostrarMensajeProcesandoInformacion();\" ",
+									esCampoParrafo_local));
+
+					datosGrupoInformacionMultiple_local = mc.concatenarCadena(datosGrupoInformacionMultiple_local,
+							getGeneradorComponentesHtml().crearCeldaHipervinculo("", "right", "", 18, pResaltarRegistro,
+									"onClick=\"mostrarMensajeProcesandoInformacion();\" ", esCampoParrafo_local));
+				}
 
 			}
+
 		} catch (Exception excepcion_local) {
 			excepcion_local.printStackTrace();
 		} finally {
@@ -2287,25 +2468,26 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 			ManejadorInformacionRecalculable mir_local = getManejadorInformacionRecalculable();
 			nombreLlavePrimaria_local = ap.conformarNombreCampoLlavePrimaria(pAplicacion.getNombreAplicacion());
 			consultaSQLPrincipal_local = conformarConsultaPrincipal(pAplicacion);
-			if (!mc.esCadenaVacia(consultaSQLPrincipal_local)) {
-				resultSet_local = getResultadoConsultaSQL()
-						.obtenerResultadoConsultaAplicacion(consultaSQLPrincipal_local);
+			if (mc.esCadenaVacia(consultaSQLPrincipal_local)) {
+				return 0;
+			}
+			resultSet_local = getResultadoConsultaSQL().obtenerResultadoConsultaAplicacion(consultaSQLPrincipal_local);
 
-				mir_local.setAdministradorBaseDatosSisnet(getAdministradorBaseDatosSisnet());
-				mir_local.setAdministradorBaseDatosAplicacion(getAdministradorBaseDatosAplicacion());
+			mir_local.setAdministradorBaseDatosSisnet(getAdministradorBaseDatosSisnet());
+			mir_local.setAdministradorBaseDatosAplicacion(getAdministradorBaseDatosAplicacion());
 
-				if (resultSet_local != ConstantesGeneral.VALOR_NULO) {
-					listaCadenas_local = new ListaCadenas();
-					while (resultSet_local.next()) {
-						valorLlavePrimaria_local = resultSet_local.getInt(nombreLlavePrimaria_local);
+			if (resultSet_local != ConstantesGeneral.VALOR_NULO) {
+				listaCadenas_local = new ListaCadenas();
+				while (resultSet_local.next()) {
+					valorLlavePrimaria_local = resultSet_local.getInt(nombreLlavePrimaria_local);
 
-						if (!listaCadenas_local.verificarExistenciaCadena(String.valueOf(valorLlavePrimaria_local))) {
-							contarRegistrosConsultaPrincipal_local++;
-							listaCadenas_local.adicionar(String.valueOf(valorLlavePrimaria_local));
-						}
+					if (!listaCadenas_local.verificarExistenciaCadena(String.valueOf(valorLlavePrimaria_local))) {
+						contarRegistrosConsultaPrincipal_local++;
+						listaCadenas_local.adicionar(String.valueOf(valorLlavePrimaria_local));
 					}
 				}
 			}
+
 		} catch (Exception excepcion_local) {
 			excepcion_local.printStackTrace();
 		} finally {
@@ -2366,7 +2548,154 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 		return insertarImagenProcesandoInformacion_local;
 	}
 
-	private String dibujarDatosConsultaPrincipal(Aplicacion pAplicacion, ListaGrupoInformacion pListaGrupoInformacion) {
+	private String dibujarDatosConsultaPrincipalOld(Aplicacion pAplicacion, ListaGrupoInformacion pListaGrupoInformacion) {
+		String datosConsultaPrincipal_local = "";
+		int valorLlavePrimaria_local = -1;
+		int numeroRegistrosConsulta_local = 0;
+		boolean alternar_local = false;
+		String nombreLlavePrimaria_local = null;
+		String consultaSQLPrincipal_local = null;
+		String destinoBorrar_local = null;
+		ResultSet resultSet_local = null;
+		ListaParametrosRedireccion listaParametrosRedireccion_local = null;
+		Iterator iterator_local = null;
+		GrupoInformacion grupoInformacion_local = null;
+		ListaCadenas listaCadenas_local = null;
+		String condiciones_local = null;
+		String nombreAplicacion = null;
+		int numeroPaginaNavegacion_local = 0;
+		int numeroRegistrosPagina_local = 0;
+		int numeroPrimerRegistro_local = 0;
+		int numeroUltimoRegistro_local = 0;
+		ManejadorSesion ms_local;
+
+		if (pAplicacion == ConstantesGeneral.VALOR_NULO) {
+			return datosConsultaPrincipal_local;
+		}
+		if (pListaGrupoInformacion == ConstantesGeneral.VALOR_NULO) {
+			return datosConsultaPrincipal_local;
+		}
+
+		try {
+			nombreAplicacion = pAplicacion.getNombreAplicacion();
+			ms_local = getManejadorSesion();
+			ManejadorInformacionRecalculable mir_local = getManejadorInformacionRecalculable();
+			ManejadorPermisoUsuario mpu_local = getManejadorPermisoUsuario();
+			GeneradorComponentesHtml gch_local = getGeneradorComponentesHtml();
+			int idRegistroVisitado = ms_local.obtenerIdRegistroVisitado();
+			int counter = this.contarRegistrosConsultaPrincipal(pAplicacion, pListaGrupoInformacion);
+			this.setNumeroRegistrosConsultaPrincipal(counter);
+			nombreLlavePrimaria_local = ap.conformarNombreCampoLlavePrimaria(nombreAplicacion);
+			consultaSQLPrincipal_local = conformarConsultaPrincipal(pAplicacion);
+			ms_local.actualizarConsultaPrincipal(consultaSQLPrincipal_local);
+
+			if (mc.esCadenaVacia(consultaSQLPrincipal_local)) {
+				return datosConsultaPrincipal_local;
+			}
+
+			resultSet_local = getResultadoConsultaSQL().obtenerResultadoConsultaAplicacion(consultaSQLPrincipal_local);
+			mir_local.setAdministradorBaseDatosSisnet(getAdministradorBaseDatosSisnet());
+			mir_local.setAdministradorBaseDatosAplicacion(getAdministradorBaseDatosAplicacion());
+
+			if (resultSet_local == ConstantesGeneral.VALOR_NULO) {
+				return datosConsultaPrincipal_local;
+			}
+			numeroPaginaNavegacion_local = ms_local.obtenerNumeroPaginaNavegacion();
+			if (numeroPaginaNavegacion_local > obtenerNumeroPaginasNavegacion()) {
+				numeroPaginaNavegacion_local = obtenerNumeroPaginasNavegacion();
+				ms_local.actualizarNumeroPaginaNavegacion(numeroPaginaNavegacion_local);
+			}
+			numeroRegistrosPagina_local = ms_local.obtenerAplicacionActual().getNumeroRegistrosPagina();
+			numeroPrimerRegistro_local = (numeroPaginaNavegacion_local - 1) * numeroRegistrosPagina_local + 1;
+
+			numeroUltimoRegistro_local = numeroPaginaNavegacion_local * numeroRegistrosPagina_local;
+			if (numeroRegistrosPagina_local == 0) {
+				numeroUltimoRegistro_local = this.getNumeroRegistrosConsultaPrincipal();
+			}
+
+			listaCadenas_local = new ListaCadenas();
+			while (resultSet_local.next()) {
+				valorLlavePrimaria_local = resultSet_local.getInt(nombreLlavePrimaria_local);
+				alternar_local = (idRegistroVisitado == valorLlavePrimaria_local);
+
+				condiciones_local = ap.conformarNombreCampoLlavePrimaria(nombreAplicacion) + " = "
+						+ valorLlavePrimaria_local;
+
+				if (pAplicacion.esActualizarInformacionEnlazada()) {
+					mir_local.actualizarInformacionRecalculableAplicacion(pAplicacion, -1, condiciones_local);
+					mir_local.actualizarInformacionRecalculableAplicacion(pAplicacion, -1, condiciones_local);
+				}
+
+				numeroRegistrosConsulta_local++;
+				if (!listaCadenas_local.verificarExistenciaCadena(String.valueOf(valorLlavePrimaria_local))
+						&& numeroRegistrosConsulta_local >= numeroPrimerRegistro_local
+						&& numeroRegistrosConsulta_local <= numeroUltimoRegistro_local) {
+					if (mpu_local.verificarPermisoBorrarRegistrosAplicacion(pAplicacion)
+							|| mpu_local.verificarExistenciaGrupoInformacionNoMultiplePermisoBorrar(
+									pAplicacion.getIdAplicacion())) {
+
+						listaCadenas_local.adicionar(String.valueOf(valorLlavePrimaria_local));
+						listaParametrosRedireccion_local = new ListaParametrosRedireccion();
+						listaParametrosRedireccion_local.adicionar("accion", String.valueOf(94));
+
+						listaParametrosRedireccion_local.adicionar("valorllaveprimaria",
+								String.valueOf(valorLlavePrimaria_local));
+
+						destinoBorrar_local = listaParametrosRedireccion_local.concatenarParametros();
+					} else {
+						destinoBorrar_local = "javascript: mensajeAutorizacionBorrar();";
+					}
+					datosConsultaPrincipal_local = mc.concatenarCadena(datosConsultaPrincipal_local,
+							gch_local.abrirFilaTabla());
+
+					datosConsultaPrincipal_local = mc.concatenarCadena(datosConsultaPrincipal_local,
+							gch_local.insertarCeldaBorrarRegistro(destinoBorrar_local, 0, alternar_local,
+									!mc.sonCadenasIguales(destinoBorrar_local,
+											"javascript: mensajeAutorizacionBorrar();")));
+
+					iterator_local = pListaGrupoInformacion.iterator();
+					while (iterator_local.hasNext()) {
+						grupoInformacion_local = (GrupoInformacion) iterator_local.next();
+
+						if (mpu_local.verificarPermisoVerGrupoInformacion(grupoInformacion_local) || mpu_local
+								.verificarExistenciaCampoPermisoVer(grupoInformacion_local.getIdGrupoInformacion())) {
+
+							if (grupoInformacion_local.esGrupoInformacionMultiple()) {
+								datosConsultaPrincipal_local += dibujarDatosGrupoInformacionMultiple(
+										grupoInformacion_local, nombreAplicacion, valorLlavePrimaria_local,
+										alternar_local);
+
+								continue;
+							}
+							datosConsultaPrincipal_local += dibujarDatosGrupoInformacionNoMultiple(
+									grupoInformacion_local, nombreAplicacion, valorLlavePrimaria_local, alternar_local);
+						}
+					}
+
+					datosConsultaPrincipal_local += gch_local.cerrarFilaTabla();
+
+					alternar_local = !alternar_local;
+				}
+
+			}
+
+		} catch (Exception excepcion_local) {
+			excepcion_local.printStackTrace();
+		} finally {
+			iterator_local = null;
+			resultSet_local = null;
+			listaCadenas_local = null;
+			grupoInformacion_local = null;
+			nombreLlavePrimaria_local = null;
+			consultaSQLPrincipal_local = null;
+			listaParametrosRedireccion_local = null;
+			condiciones_local = null;
+		}
+		return datosConsultaPrincipal_local;
+	}
+
+	private String dibujarDatosConsultaPrincipal(Aplicacion pAplicacion,
+			ListaGrupoInformacion pListaGrupoInformacion) {
 		StringBuilder datosConsultaPrincipal_local = new StringBuilder();
 		Hashtable<Integer, Boolean> contenedorEsDocumentoLocal = new Hashtable<Integer, Boolean>();
 		Hashtable<Integer, ListaCampo> contenedorListaCampo = new Hashtable<Integer, ListaCampo>();
@@ -2471,14 +2800,15 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 					contenedorListaCampo.put(grupoInformacion_local.getIdGrupoInformacion(),
 							listaCamposParaMostrar_local);
 				}
-				List fullData = this.getData(nombreAplicacion, listaCamposParaMostrar_local, subItems);
+				List fullData = this.getData(grupoInformacion_local, listaCamposParaMostrar_local, subItems);
 				fullGroupData.put(grupoInformacion_local.getIdGrupoInformacion(), fullData);
 			}
 
 			listaCadenas_local = new ListaCadenas();
 			// while (resultSet_local.next()) {
 			for (Integer subValorLlavePrimaria_local : items) {
-				// valorLlavePrimaria_local = resultSet_local.getInt(nombreLlavePrimaria_local);
+				// valorLlavePrimaria_local =
+				// resultSet_local.getInt(nombreLlavePrimaria_local);
 				valorLlavePrimaria_local = subValorLlavePrimaria_local.intValue();
 				alternar_local = (idRegistroVisitado == valorLlavePrimaria_local);
 
@@ -2491,14 +2821,16 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 				}
 
 				numeroRegistrosConsulta_local++;
-				// si se completa el numero de registros de la página se detiene el listado
+				// si se completa el numero de registros de la página se detiene
+				// el listado
 				if (numeroRegistrosConsulta_local > numeroUltimoRegistro_local) {
 					break;
 				}
 
 				/*
-				 * && numeroRegistrosConsulta_local >= numeroPrimerRegistro_local &&
-				 * numeroRegistrosConsulta_local <= numeroUltimoRegistro_local
+				 * && numeroRegistrosConsulta_local >=
+				 * numeroPrimerRegistro_local && numeroRegistrosConsulta_local
+				 * <= numeroUltimoRegistro_local
 				 */
 				// Si el registro ya está desplegado no se tiene en cuenta
 				if (listaCadenas_local.verificarExistenciaCadena(String.valueOf(valorLlavePrimaria_local))
@@ -2574,8 +2906,9 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 					}
 
 					/*
-					 * celdasDatos = dibujarDatosGrupoInformacionNoMultiple(grupoInformacion_local,
-					 * nombreAplicacion, valorLlavePrimaria_local, alternar_local,
+					 * celdasDatos = dibujarDatosGrupoInformacionNoMultiple(
+					 * grupoInformacion_local, nombreAplicacion,
+					 * valorLlavePrimaria_local, alternar_local,
 					 * esDocumento_local, listaCamposParaMostrar_local);
 					 */
 					List<HashMap> groupData = (List<HashMap>) fullGroupData
@@ -2613,13 +2946,17 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 	}
 
 	/*
-	 * GrupoInformacion pGrupoInformacion, String pNombreGrupoInformacionPrincipal,
-	 * int pValorLlavePrimaria, boolean pResaltarRegistro, boolean
-	 * esDocumento_local, pListaCamposParaMostrar
+	 * GrupoInformacion pGrupoInformacion, String
+	 * pNombreGrupoInformacionPrincipal, int pValorLlavePrimaria, boolean
+	 * pResaltarRegistro, boolean esDocumento_local, pListaCamposParaMostrar
 	 */
-	private List getData(String pNombreGrupoInformacionPrincipal, ListaCampo pListaCamposParaMostrar,
+	private List getData(GrupoInformacion gr, ListaCampo pListaCamposParaMostrar,
 			ArrayList<Integer> pitemsValorLlavePrimaria) {
 
+		if(gr.esGrupoInformacionMultiple()){
+			return new ArrayList();
+		}
+		String pNombreGrupoInformacionPrincipal = gr.getAplicacion().getNombreAplicacion();
 		String consultaSQLGrupoInformacion_local = ca.conformarConsultaSQLListaCamposGrupoInformacionNoMultiple(
 				pNombreGrupoInformacionPrincipal, pitemsValorLlavePrimaria, pListaCamposParaMostrar);
 
@@ -5324,8 +5661,9 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 					listaCampo_local.asignarValorCampo("fldidvalormaestro", Integer
 							.valueOf(Integer.parseInt(listacampoConsultaSQL.obtenerValorCampo("fldidvalormaestro"))));
 
-					listaCampo_local.asignarValorCampo("fldhabilitacion", Boolean.valueOf(
-							(listacampoConsultaSQL.obtenerValorCampo("fldhabilitacion") != ConstantesGeneral.VALOR_NULO
+					listaCampo_local.asignarValorCampo("fldhabilitacion",
+							Boolean.valueOf((listacampoConsultaSQL
+									.obtenerValorCampo("fldhabilitacion") != ConstantesGeneral.VALOR_NULO
 									&& mc.sonCadenasIguales(listacampoConsultaSQL.obtenerValorCampo("fldhabilitacion"),
 											"true"))));
 
@@ -5806,13 +6144,14 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 					if (grupoInformacion_local.esMostrarDetalle()) {
 						tablaVinculosGruposInformacionMultiples_local = mc.concatenarCadena(
 								tablaVinculosGruposInformacionMultiples_local,
-								getGeneradorComponentesHtml().crearCeldaAnchoMarca(
-										getGeneradorComponentesHtml().insertarVinculoMarca(
-												mc.darFormatoTitulo(
-														grupoInformacion_local.getDescripcionGrupoInformacion()),
-												'#' + mc.convertirCadenaFormatoNombre(
-														grupoInformacion_local.getDescripcionGrupoInformacion())),
-										"200"));
+								getGeneradorComponentesHtml()
+										.crearCeldaAnchoMarca(
+												getGeneradorComponentesHtml().insertarVinculoMarca(
+														mc.darFormatoTitulo(grupoInformacion_local
+																.getDescripcionGrupoInformacion()),
+														'#' + mc.convertirCadenaFormatoNombre(grupoInformacion_local
+																.getDescripcionGrupoInformacion())),
+												"200"));
 
 						contador_local++;
 					}

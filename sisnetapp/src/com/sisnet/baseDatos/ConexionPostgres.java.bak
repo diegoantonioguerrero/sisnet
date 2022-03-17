@@ -8,7 +8,6 @@ public class ConexionPostgres
   private int aNumeroPuertoConexion;
   public ConexionPostgres() {
     setSuperUsuario("postgres");
-    //setContrasenaSuperUsuario("Dag2014+++!!");
     setContrasenaSuperUsuario("postgres");
     setNumeroPuertoConexion(Integer.parseInt("5432"));
   }

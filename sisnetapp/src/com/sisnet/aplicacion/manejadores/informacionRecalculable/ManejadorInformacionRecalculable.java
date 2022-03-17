@@ -15,7 +15,11 @@ import com.sisnet.constantes.ConstantesGeneral;
 import com.sisnet.motorAplicacion.MotorAplicacion;
 import com.sisnet.objetosManejo.listas.objetosBaseDatos.ListaCampo;
 import com.sisnet.objetosManejo.listas.objetosBaseDatos.ListaGrupoInformacion;
+
+import java.io.InputStream;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.HashMap;
 import java.util.Iterator;
 public class ManejadorInformacionRecalculable
 {
@@ -479,19 +483,48 @@ public class ManejadorInformacionRecalculable
     if (pResultSet == ConstantesGeneral.VALOR_NULO) {
       return;
     }
-    
+    /*
+ // Create a HashMap object called capitalCities
+    HashMap<String, Integer> fieldXType = new HashMap<String, Integer>();
+    try{
+  	    //Retrieving the ResultSetMetaData object
+        ResultSetMetaData rsmd = pResultSet.getMetaData();
+        //getting the column type
+        int column_count = rsmd.getColumnCount();
+        for(int i=1; i<= column_count; i++ )
+        {
+      	  String ss= rsmd.getColumnName(i).toLowerCase();
+      	  fieldXType.put(ss, rsmd.getColumnType(i) );
+      	  System.out.println(  ss + " -> " + rsmd.getColumnType(i) + " = "  + rsmd.getColumnClassName(i) );
+        }
+  	  
+    }	catch (Exception rsmdExcepcion) {
+  	  rsmdExcepcion.printStackTrace();
+    }*/
     try {
+   	
       iterator_local = pListaCampo.iterator();
       while (iterator_local.hasNext()) {
         campo_local = (Campo)iterator_local.next();
         nombreCampo_local = campo_local.getNombreCampo();
-        valorCampo_local = "";
-        if (pResultSet.getObject(nombreCampo_local) != ConstantesGeneral.VALOR_NULO) {
-          valorCampo_local = pResultSet.getObject(nombreCampo_local).toString();
-        }
-        campo_local.setValorCampo(mc.borrarEspaciosLaterales(valorCampo_local));
+        valorCampo_local = "";/*
+        if(fieldXType.get(nombreCampo_local.toLowerCase()) == -2){
+        	
+        	byte[] ipnt = null;
+        	ipnt = pResultSet.getBytes(nombreCampo_local);
+        	
+        
+        else{*/
+	        if (pResultSet.getObject(nombreCampo_local) != ConstantesGeneral.VALOR_NULO) {
+	          valorCampo_local = pResultSet.getObject(nombreCampo_local).toString();
+	        }
+	        campo_local.setValorCampo(mc.borrarEspaciosLaterales(valorCampo_local));
+        //}
+        
       } 
     } catch (Exception excepcion) {
+      System.out.println("Error reading: " + nombreCampo_local + " field");
+      
       excepcion.printStackTrace();
     } finally {
       

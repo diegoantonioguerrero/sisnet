@@ -456,9 +456,13 @@ public class AdministradorServlet
               
               aplicacion_local = pAdministradorBaseDatosSisnet.obtenerAplicacionPorId(Integer.parseInt(manejadorRequest_local.obtenerValorAtributoRequest("fldidaplicacion", manejadorSesion_local).toString()), false);
             } 
-            
+            MotorAplicacion motorAplicacion_local = manejadorSesion_local.obtenerMotorAplicacion();
+            if(motorAplicacion_local == null){
+            	motorAplicacion_local = new MotorAplicacion();
+            }
+            		
             manejadorPermisoUsuario_local = ManejadorPermisoUsuario.getManejadorPermisoUsuario(tipoUsuario_local, 
-            		pAdministradorBaseDatosSisnet, manejadorSesion_local.obtenerMotorAplicacion());
+            		pAdministradorBaseDatosSisnet, motorAplicacion_local);
             
             if (!manejadorPermisoUsuario_local.verificarPermisoVerRegistrosAplicacion(aplicacion_local)) {
               return 2;

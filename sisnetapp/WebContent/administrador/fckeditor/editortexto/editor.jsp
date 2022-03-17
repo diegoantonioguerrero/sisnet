@@ -6,11 +6,16 @@
 <%@page import="com.sisnet.constantes.ConstantesAdministrador"%>
 <%@page import="com.sisnet.objetosManejo.manejoPaginaJsp.Pagina"%>
 <%@page import="com.sisnet.aplicacion.manejadores.ManejadorCadenas"%>
+<%@page import="com.sisnet.servlets.EditorJSP"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<%  boolean esModificacion_local = ConstantesGeneral.VALOR_FALSO;
+<%  
+EditorJSP editorJSP = new EditorJSP(out, request);
+editorJSP.renderPage();
+/*
+boolean esModificacion_local = ConstantesGeneral.VALOR_FALSO;
     Pagina pagina_local = null;
     ManejadorRequest manejadorRequest_local = null;
     ManejadorSesion manejadorSesion_local = null;
@@ -53,6 +58,6 @@
         manejadorCadenas_local = null;
         administradorBaseDatosSisnet_local = null;
         administradorBaseDatosAplicacion_local = null;
-    }
+    }*/
     %>
 </html>
