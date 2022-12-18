@@ -223,8 +223,9 @@ public class AdministradorServlet
       manejadorSesion_local = new ManejadorSesion(manejadorRequest_local.obtenerNuevaSesion());
       if (manejadorSesion_local.getSesion() != ConstantesGeneral.VALOR_NULO) {
         manejadorSesion_local.adicionarAtributoSesion(new AtributoSesion("atributoSisnetLtda", "SISNET"));
-        
-        administradorBaseDatosSisnet_local = new AdministradorBaseDatos(ap.obtenerConexionBaseDatosSisnet(manejadorRequest_local.obtenerNombreRecursoAplicacion()));
+        String rutaArchivo_local = manejadorSesion_local.obtenerRutaRealArchivoSesion(mc.concatenarCadena("/administrador/conf/", "sisnet.conf"));
+
+        administradorBaseDatosSisnet_local = new AdministradorBaseDatos(ap.obtenerConexionBaseDatosSisnet(manejadorRequest_local.obtenerNombreRecursoAplicacion(), rutaArchivo_local));
         
         manejadorSesion_local.adicionarAtributoSesion(new AtributoSesion("basedatossisnet", administradorBaseDatosSisnet_local));
         
@@ -240,7 +241,8 @@ public class AdministradorServlet
         } 
         
         if (aplicacion_local != ConstantesGeneral.VALOR_NULO) {
-          administradorBaseDatosAplicacion_local = new AdministradorBaseDatos(ap.obtenerConexionBaseDatosAplicacion(manejadorRequest_local.obtenerNombreRecursoAplicacionWeb()));
+
+          administradorBaseDatosAplicacion_local = new AdministradorBaseDatos(ap.obtenerConexionBaseDatosAplicacion(manejadorRequest_local.obtenerNombreRecursoAplicacionWeb(), rutaArchivo_local));
           
           manejadorSesion_local.adicionarAtributoSesion(new AtributoSesion("basedatosaplicacion", administradorBaseDatosAplicacion_local));
           
@@ -5412,9 +5414,11 @@ public class AdministradorServlet
         }
         
         if (accion_local != 42) {
-          administradorBaseDatosSisnet_local = new AdministradorBaseDatos(ap.obtenerConexionBaseDatosSisnet(manejadorRequest_local.obtenerNombreRecursoAplicacion()));
+        	
+        	String rutaArchivo_local = getServletContext().getRealPath(com.sisnet.constantes.ConstantesBaseDatos.const_rutaConfigPostgres);
+          administradorBaseDatosSisnet_local = new AdministradorBaseDatos(ap.obtenerConexionBaseDatosSisnet(manejadorRequest_local.obtenerNombreRecursoAplicacion(), rutaArchivo_local));
           
-          administradorBaseDatosAplicacion_local = new AdministradorBaseDatos(ap.obtenerConexionBaseDatosAplicacion(manejadorRequest_local.obtenerNombreRecursoAplicacionWeb()));
+          administradorBaseDatosAplicacion_local = new AdministradorBaseDatos(ap.obtenerConexionBaseDatosAplicacion(manejadorRequest_local.obtenerNombreRecursoAplicacionWeb(), rutaArchivo_local));
           
           tipoAutorizacion_local = entrarAplicacion(request, response, administradorBaseDatosSisnet_local, administradorBaseDatosAplicacion_local);
           

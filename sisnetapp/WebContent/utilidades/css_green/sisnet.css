@@ -1,0 +1,210 @@
+/* 
+    Document   : sisnet
+    Created on : 1 de agosto de 2006, 09:02 AM
+    Author     : Sisnet
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+@import "elementotabla.css";
+@import "elementocajadetexto.css";
+@import "elementolista.css";
+
+/*Cuerpo de la pagina web*/
+body{    
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 14px;
+    color:#EEF5FA;
+    background-color:#fff;/*Color de fondo principal de la pagina #DBDBD8*/
+    margin:0px;    
+}
+
+pre{
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    scrollbar-base-color: #DBDBD8;
+    width: 100%;
+    margin: 0px;
+}
+/*Kes Pantalla 1: Texto fijo RESULTADO CONSULTA, OPCIONES DE CONSULTA*/
+h1{
+    font-family: GraviolaSoftBold, tahoma,verdana,helvetica, sans-serif;/*Por defecto tahoma,verdana,helvetica, sans-serif*/
+    font-size: 14px;
+    background-color:#E7FEE5;/*Por defecto #A7A7A0*/
+    color:#02733C;/*FFFFFF*/
+    margin:0px;
+    text-align:center;
+    font-weight:bold;
+    border: 1px solid #02733C
+
+}
+
+h2{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 12px;
+    background-color:#A7A7A0;
+    color:#FFFFFF;
+    margin:0px;
+    text-align:center;
+    font-weight:bold;
+}
+
+h3{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 10px;
+    background-color:#A7A7A0;
+    color:#FFFFFF;
+    margin:0px;
+    text-align:center;
+    font-weight:bold;
+}
+
+h4{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 9px;
+    background-color:#000000;
+    color:#FFFFFF;
+    margin:0px;
+    text-align:center;
+    font-weight:bold;
+}
+
+h5{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 14px;
+    background-color:transparent;
+    color:#000000;
+    margin:0px;
+    text-align:center;
+    font-weight:bold;
+}
+
+/*Kes Pantalla 1: Hipervinculos*/
+a{
+font-size:9px;/*Tamaño de la fuente de los links*/ 
+font-family: verdana, arial;
+font-weight:bold;
+}
+a.nounderline{text-decoration:none}
+a:link    {color:#02733C; background-color:transparent}
+a:visited {color:#02733C; background-color:transparent}
+a:active  {color:#02733C; background-color:transparent}
+a:hover   {color:#000000; background-color:transparent}/*cuando pasa el mouse por encima*/
+
+/*Hipervìnculo marca*/
+/*Kes Pantalla 1: Aplicaciones Fuente */
+a.marca{
+	text-decoration:none; 
+	background-color:transparent;
+	font-size:12px;/*por defecto 12px*/
+	font-family: GraviolaSoftBold, arial, tahoma,verdana,helvetica,sans-serif;
+  border-radius: 8px 8px;
+  display: block;
+  background-color: #02733C;
+  background-image: -moz-linear-gradient(top, #02733C, #02733C); 
+  background-image: -ms-linear-gradient(top, #02733C, #02733C);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#02733C), to(#02733C));
+  background-image: -webkit-linear-gradient(top, #02733C, #02733C);
+  background-image: -o-linear-gradient(top, #02733C, #02733C);
+  background-image: linear-gradient(top, #02733C, #02733C);
+  filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#02733C',endColorstr='#02733C', gradientType='0');    
+
+}
+/*Kes Color de la fuente del menu superior de aplicaciones*/
+a.marca:link, a.marca:visited, a.marca:active
+{
+		color:#FFFFFF; /*Por defecto #FFFFFF*/ 
+    width:100%;
+}
+/* Color de fondo de las aplicaciones cuando se pasa el mouse por encima*/
+a.marca:hover    
+{
+		color:#3ED928; /*Por defecto #FFFFFF*/ 
+    background-color:#02733C;
+    width:100%;
+    background-image: -moz-linear-gradient(top, #02733C, #02733C); 
+    background-image: -ms-linear-gradient(top, #02733C, #02733C);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#02733C), to(#02733C));
+    background-image: -webkit-linear-gradient(top, #02733C, #02733C);
+    background-image: -o-linear-gradient(top, #02733C, #02733C);
+    background-image: linear-gradient(top, #02733C, #02733C);
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#02733C',endColorstr='#02733C', gradientType='0');    
+}
+
+/********************************************************************************/
+/*                           CAJAS DE SELECCION                                 */
+/********************************************************************************/
+
+/*Opciones de selección*/
+input.radio {
+    background-color : #E0E0DE;
+    vertical-align:middle;
+    border : solid;
+    border-bottom-color : #575757;
+    border-bottom-width : 1px;
+    border-left-color : #575757;
+    border-left-width : 1px;
+    border-right-color : #575757;
+    border-right-width : 1px;
+    border-top-color : #575757;
+    border-top-width : 1px;
+    border-spacing : 2px;
+    margin-bottom : 5px;
+}
+
+/*Marquee para avisos*/
+marquee {
+    font-family: arial,Verdana, Helvetica, sans-serif; 
+    font-size: 16px;
+    border: #ffffff;
+    background-color : #E20000;
+    border-style: solid; 
+    border-top-width: 1px; 
+    border-right-width: 1px; 
+    border-bottom-width: 1px; 
+    border-left-width: 1px;
+}
+
+/*Imagenes*/
+img{
+    border: 0;
+    background-color: transparent;
+}
+
+.imagen{
+    border-style:solid;
+    border-width:1px;
+    border-color:black;
+    margin: 1px;
+}
+
+footer {	
+    margin: 0px auto;
+    position: relative;
+    background-color: #4D4948;
+    border-top: 9px solid #F7F7F6;
+    width: 800px;
+    padding: 5px 0;
+    clear: both;
+}
+
+input.boton{
+    font-family: arial;
+    font-size: 11px;
+    font-weight:bold;
+    width:18px;
+    height:18px;    
+}
+
+/*Caja de selección*/
+input.checkbox {
+    background-color : transparent;
+    vertical-align:middle;        
+}
+
+/*Caja de selección ocultas*/
+input.checkboxOculto {
+    display: none;
+}

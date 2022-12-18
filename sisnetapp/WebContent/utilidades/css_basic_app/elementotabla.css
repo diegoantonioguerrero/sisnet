@@ -1,0 +1,279 @@
+/* 
+    Document   : elementotabla
+    Created on : 22 de mayo de 2008, 11:20 AM
+    Author     : Sisnet
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/*Cuadro de diálogo para advertencias*/
+th.advertencia{
+    color:#000000;
+    background-color:#FDFF00;
+    text-align:center;    
+}
+
+th.tituloadvertencia{
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#FFFF00',endColorstr='#F3F781', gradientType='0');
+    color:#00000;
+    background-color:#FDFF00;
+    text-align:center;
+    font-size:13px;    
+}
+
+table.advertencia{
+    color:#000000;
+    background-color:#FBFF8A;
+    font-size: 11px;
+    border:0px solid;
+    width: 400px;    
+    text-align:center;
+    border-collapse: collapse;
+}
+
+/*Cuadro de diálogo para errores*/
+th.error{
+    color:#FFFFFF;
+    background-color:#FF0000;
+    text-align:center;
+}
+
+th.tituloerror{
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#DF0101',endColorstr='#FA5858', gradientType='0');
+    color:#FFFFFF;
+    background-color:#FF0000;
+    text-align:center;
+    font-size:13px;
+}
+
+table.error{
+    color:#000000;
+    background-color:#FFC1C6;
+    font-size: 11px;
+    border:0px solid;
+    width: 400px;
+    text-align:center;
+    border-collapse: collapse;
+}
+
+/*Cuadro de diálogo para mensajes*/
+th.mensaje{
+    color:#FFFFFF;
+    background-color:#02B202;
+    text-align:center;
+}
+
+th.titulomensaje{
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#01DF01',endColorstr='#81F781', gradientType='0');
+    color:#000000;
+    background-color:#01DF01;
+    text-align:center;
+    font-size:13px;
+}
+
+table.mensaje{
+    color:#000000;
+    background-color:#D9FFD9;
+    font-size:11px;
+    border:0px solid;
+    width: 400px;
+    text-align:center;
+    border-collapse: collapse;
+}
+
+table.botones{
+    color:inherit;
+    background-color:transparent;
+    font-size:11px;
+    border: none;
+    border-collapse: collapse;
+    margin-top:10;
+}
+
+/*Tabla para usos varios*/
+th.etiqueta{
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#C8C3C3',endColorstr='#4D4948', gradientType='0');
+    color:#FFFFFF;
+    background-color:#A7A7A0;
+    text-align:left;    
+    font-size:11px;
+    font-weight:bold;    
+}
+
+th.tablaContenidoImagen{
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#CCFFFF',endColorstr='#99CCFF', gradientType='0');    
+    color:#000000;
+    background-color:#99CCFF;
+    text-align:center;    
+    border-color: black;
+    border-width: 1px;
+    border-style: dotted;
+}
+
+th.tablaContenidoImagenAlterno{
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#00CCFF',endColorstr='#0099FF', gradientType='0');
+    color:#000000;
+    background-color:#99CCFF;
+    text-align:center;    
+    border-color: black;
+    border-width: 1px;
+    border-style: dotted;
+}
+
+th.tablaContenido{
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#CCFFFF',endColorstr='#99CCFF', gradientType='0');    
+    color:#000000;
+    background-color:#99CCFF;    
+    font-size:11px;  
+    border-color: black;
+    border-width: 1px;
+    border-style: dotted;
+}
+
+th.tablaContenidoParrafo{
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#CCFFFF',endColorstr='#99CCFF', gradientType='0');
+    color:#000000;
+    background-color:#99CCFF;
+    font-size:11px;
+    border-color: black;
+    border-width: 1px;
+    border-style: dotted;
+    vertical-align: middle;
+    margin: 0px;
+}
+
+th.tablaContenidoParrafoAlterno{
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#00CCFF',endColorstr='#0099FF', gradientType='0');
+    color:#000000;
+    background-color:#99CCFF;
+    font-size:11px;
+    border-color: black;
+    border-width: 1px;
+    border-style: dotted;
+    vertical-align: middle;
+    margin: 0px;
+}
+
+th.tablaContenidoAlterno{
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#00CCFF',endColorstr='#0099FF', gradientType='0');
+    color:#000000;
+    background-color:#99CCFF;    
+    font-size:11px;  
+    border-color: black;
+    border-width: 1px;
+    border-style: dotted;
+}
+
+th.tabla{
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#C8C3C3',endColorstr='#4D4948', gradientType='0');
+    color:#FFFFFF;
+    background-color:#A7A7A0;    
+    border-color: black;
+    border-width: 1px; 
+    border-style: solid;
+}
+
+table.tabla{
+    color:#000000;
+    background-color:#FFFFFF;
+    font-size:11px;
+    border-color: black;
+    border-width: 1px;
+    border-style: solid;
+    border-collapse:collapse;
+    table-layout: fixed;
+}
+
+th.transparente{
+    color:inherit;
+    background-color:transparent;
+    font-size:11px;    
+}
+
+th.tituloespecial{
+    color:inherit;
+    background-color:#A7A7A0;
+    font-size:11px;
+}
+
+table.transparente{
+    color:inherit;
+    background-color:transparent;
+    font-size:11px;
+    border: 1px;
+    border-collapse: collapse;
+    table-layout:fixed;
+}
+
+table.transparenteinterna{
+    color:inherit;
+    background-color:transparent;
+    font-size:11px;
+    border: 1px;
+    border-collapse: collapse;
+}
+
+table.formulario{
+    color:inherit;
+    background-color:transparent;
+    font-size:11px;
+    border: 1px;
+    border-collapse: collapse;    
+}
+
+table.internaformulario{
+    color:inherit;
+    background-color:transparent;
+    font-size:11px;
+    border: 1px;
+    border-collapse: collapse;
+    table-layout:fixed;
+}
+
+/* Celda Fecha Version*/
+th.celdaVersion{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 9px;
+    font-weight: bold;
+    color:#FFFFFF;
+    text-align:center;
+}
+
+table.titulo{
+    color:inherit;
+    background-color:transparent;
+    font-size:11px;
+    border: none;
+}
+
+/* Celda para títulos */
+th.titulo{
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#C8C3C3',endColorstr='#4D4948', gradientType='0');
+    font-family: arial, tahoma,verdana,helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    background-color:#A7A7A0;    
+    color:#FFFFFF;
+}
+
+/* Celda para títulos */
+th.subtitulo{
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#C8C3C3',endColorstr='#4D4948', gradientType='0');
+    font-family: arial, tahoma,verdana,helvetica, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    background-color:#A7A7A0;    
+    color:#FFFFFF;
+}
+
+table.marca{
+    color:inherit;
+    background-color:transparent;
+    font-size: 10px;
+    border: none;
+}
+
+th.marca{
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#999999',endColorstr='#000000', gradientType='0');    
+    background-color:#999999; 
+}

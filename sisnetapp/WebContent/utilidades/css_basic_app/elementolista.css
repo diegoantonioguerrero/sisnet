@@ -1,0 +1,143 @@
+/* 
+    Document   : elementolista
+    Created on : 22 de mayo de 2008, 11:55 AM
+    Author     : Sisnet
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/*Lista desplegable de 100 pixeles*/
+select.select100 { 
+    background-color : #E0E0DE;
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px; 
+    width:105px;
+}
+
+/*Lista desplegable de 125 pixeles*/
+select.select125 { 
+    background-color : #E0E0DE;
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px; 
+    width:130px;
+}
+
+/*Lista desplegable de 150 pixeles*/
+select.select150 { 
+    background-color : #E0E0DE;
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px; 
+    width:155px;
+}
+
+/*Lista desplegable de 175 pixeles*/
+select.select175 { 
+    background-color : #E0E0DE;
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px; 
+    width:180px;
+}
+
+/*Lista desplegable de 200 pixeles*/
+select.select200 { 
+    background-color : #E0E0DE;
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px; 
+    width:205px;
+}
+
+/*Lista desplegable de 225 pixeles*/
+select.select225 { 
+    background-color : #E0E0DE;
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px; 
+    width:230px;
+}
+
+/*Lista desplegable de 250 pixeles*/
+select.select250 { 
+    background-color : #E0E0DE;
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px; 
+    width:255px;
+}
+
+/*Lista desplegable de 275 pixeles*/
+select.select275 { 
+    background-color : #E0E0DE;
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px; 
+    width:280px;
+}
+
+/*Lista desplegable de 300 pixeles*/
+select.select300 { 
+    background-color : #E0E0DE;
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px; 
+    width:299px;
+}
+
+/*Lista desplegable de 325 pixeles*/
+select.select325 { 
+    background-color : #E0E0DE;
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px; 
+    width:330px;
+}
+
+/*Lista desplegable de 350 pixeles*/
+select.select350 { 
+    background-color : #E0E0DE;
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px; 
+    width:355px;
+}
+
+/*Lista desplegable de 375 pixeles*/
+select.select375 { 
+    background-color : #E0E0DE;
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px; 
+    width:380px;
+}
+
+/*Lista desplegable de 400 pixeles*/
+select.select400 { 
+    background-color : #E0E0DE;
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px; 
+    width:405px;
+} 
+
+/*Lista desplegable de 425 pixeles*/
+select.select425 { 
+    background-color : #E0E0DE;
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px; 
+    width:430px;
+}
+
+/*Lista desplegable de 450 pixeles*/
+select.select450 { 
+    background-color : #E0E0DE;
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px; 
+    width:455px;
+}
+
+/*Lista desplegable de 475 pixeles*/
+select.select475 { 
+    background-color : #E0E0DE;
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px; 
+    width:480px;
+}
+
+/*Lista desplegable de 500 pixeles*/
+select.select500 { 
+    background-color : #E0E0DE;
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px; 
+    width:505px;
+} 

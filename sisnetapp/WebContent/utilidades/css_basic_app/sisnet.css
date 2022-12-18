@@ -1,0 +1,171 @@
+/* 
+    Document   : sisnet
+    Created on : 1 de agosto de 2006, 09:02 AM
+    Author     : Sisnet
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+@import "elementotabla.css";
+@import "elementocajadetexto.css";
+@import "elementolista.css";
+
+/*Cuerpo de la pagina web*/
+body{    
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 14px;
+    color:#EEF5FA;
+    background-color:#DBDBD8;
+    margin:0px;    
+}
+
+pre{
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    scrollbar-base-color: #DBDBD8;
+    width: 100%;
+    margin: 0px;
+}
+/*titulos*/
+h1{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 14px;
+    background-color:#A7A7A0;
+    color:#FFFFFF;
+    margin:0px;
+    text-align:center;
+    font-weight:bold;    
+}
+
+h2{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 12px;
+    background-color:#A7A7A0;
+    color:#FFFFFF;
+    margin:0px;
+    text-align:center;
+    font-weight:bold;
+}
+
+h3{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 10px;
+    background-color:#A7A7A0;
+    color:#FFFFFF;
+    margin:0px;
+    text-align:center;
+    font-weight:bold;
+}
+
+h4{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 9px;
+    background-color:#000000;
+    color:#FFFFFF;
+    margin:0px;
+    text-align:center;
+    font-weight:bold;
+}
+
+h5{
+    font-family: tahoma,verdana,helvetica, sans-serif;
+    font-size: 14px;
+    background-color:transparent;
+    color:#000000;
+    margin:0px;
+    text-align:center;
+    font-weight:bold;
+}
+
+/*Hipervinculos*/
+a{font-size:10px; font-family: arial;}
+a.nounderline{text-decoration:none}
+a:link    {color:#000000; background-color:transparent}
+a:visited {color:#000000; background-color:transparent}
+a:active  {color:#0000F0; background-color:transparent}
+a:hover   {color:#0000FF; background-color:transparent}
+
+/*Hipervìnculo marca*/
+a.marca{text-decoration:none; font-size:12px}
+a.marca:link    {color:#FFFFFF; background-color:transparent}
+a.marca:visited {color:#FFFFFF; background-color:transparent}
+a.marca:active  {color:#FFFFFF; background-color:transparent}
+a.marca:hover   {color:#FFFFFF; background-color:transparent}
+
+/********************************************************************************/
+/*                           CAJAS DE SELECCION                                 */
+/********************************************************************************/
+
+/*Opciones de selección*/
+input.radio {
+    background-color : #E0E0DE;
+    vertical-align:middle;
+    border : solid;
+    border-bottom-color : #575757;
+    border-bottom-width : 1px;
+    border-left-color : #575757;
+    border-left-width : 1px;
+    border-right-color : #575757;
+    border-right-width : 1px;
+    border-top-color : #575757;
+    border-top-width : 1px;
+    border-spacing : 2px;
+    margin-bottom : 5px;
+}
+
+/*Marquee para avisos*/
+marquee {
+    font-family: arial,Verdana, Helvetica, sans-serif; 
+    font-size: 16px;
+    border: #ffffff;
+    background-color : #E20000;
+    border-style: solid; 
+    border-top-width: 1px; 
+    border-right-width: 1px; 
+    border-bottom-width: 1px; 
+    border-left-width: 1px;
+}
+
+/*Imagenes*/
+img{
+    border: 0;
+    background-color: transparent;
+}
+
+.imagen{
+    border-style:solid;
+    border-width:1px;
+    border-color:black;
+    margin: 1px;
+}
+
+footer {	
+    margin: 0px auto;
+    position: relative;
+    background-color: #4D4948;
+    border-top: 9px solid #F7F7F6;
+    width: 800px;
+    padding: 5px 0;
+    clear: both;
+}
+
+input.boton{
+    font-family: arial;
+    font-size: 11px;
+    font-weight:bold;
+    width:18px;
+    height:18px;    
+}
+
+/*Caja de selección*/
+input.checkbox {
+    background-color : transparent;
+    vertical-align:middle;        
+}
+
+/*Caja de selección ocultas*/
+input.checkboxOculto {
+    display: none;
+}

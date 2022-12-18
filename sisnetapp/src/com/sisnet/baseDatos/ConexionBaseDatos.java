@@ -73,14 +73,16 @@ public class ConexionBaseDatos
   public boolean conectarBaseDatos() {
     String url_local = null;
     try {
-	
       Class.forName(getDriverJdbc());
-      url_local = "jdbc:postgresql://" + getUbicacionServidor() + '/' + getNombreBaseDatos();
-      
+      url_local = "jdbc:postgresql://" + getUbicacionServidor() + ":" + getPuertoConexion() + '/' + getNombreBaseDatos();
+      //url_local = "jdbc:postgresql://127.0.0.1:" + getPuertoConexion() + '/' + getNombreBaseDatos();
+      //url_local = "jdbc:postgresql://" + getUbicacionServidor() + '/' + getNombreBaseDatos();
+
       setConexion(DriverManager.getConnection(url_local, getUsuario(), getContrasena()));
       return true;
     }
     catch (Exception e) {
+    	System.err.println("Error connecting: " + url_local );
       e.printStackTrace();
       setErrorConexion(6);
       return false;

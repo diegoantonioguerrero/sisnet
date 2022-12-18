@@ -892,7 +892,7 @@ public class ManejadorAplicacion
     
     return conexionPostgres_local;
   }
-  public ObjetoConexionBaseDatos obtenerConexionBaseDatosSisnet(String pNombreBaseDatos) {
+  public ObjetoConexionBaseDatos obtenerConexionBaseDatosSisnet(String pNombreBaseDatos, String rutaArchivo) {
     ObjetoConexionBaseDatos objetoConexionBaseDatos_local = null;
     
     if (pNombreBaseDatos == ConstantesGeneral.VALOR_NULO) {
@@ -900,7 +900,9 @@ public class ManejadorAplicacion
     }
     
     try {
-      objetoConexionBaseDatos_local = new ObjetoConexionBaseDatos("org.postgresql.Driver", "localhost", "5432", pNombreBaseDatos, "postgres", "postgres");
+    	ConexionPostgres conexionPostgres_local = this.obtenerConexionPostgres(rutaArchivo);
+      objetoConexionBaseDatos_local = new ObjetoConexionBaseDatos("org.postgresql.Driver", "localhost", String.valueOf(conexionPostgres_local.getNumeroPuertoConexion()) 
+    		  /*"5432"*/, pNombreBaseDatos, "postgres", "postgres");
     
     }
     catch (Exception excepcion) {
@@ -925,7 +927,7 @@ public class ManejadorAplicacion
     
     return objetoConexionBaseDatos_local;
   }
-  public ObjetoConexionBaseDatos obtenerConexionBaseDatosAplicacion(String pNombreAplicacion) {
+  public ObjetoConexionBaseDatos obtenerConexionBaseDatosAplicacion(String pNombreAplicacion, String rutaArchivo) {
     ObjetoConexionBaseDatos objetoConexionBaseDatos_local = null;
     
     if (pNombreAplicacion == ConstantesGeneral.VALOR_NULO) {
@@ -933,7 +935,10 @@ public class ManejadorAplicacion
     }
     
     try {
-      objetoConexionBaseDatos_local = new ObjetoConexionBaseDatos("org.postgresql.Driver", "localhost", "5432", pNombreAplicacion, "postgres", "postgres");
+    	ConexionPostgres conexionPostgres_local = this.obtenerConexionPostgres(rutaArchivo);
+
+      objetoConexionBaseDatos_local = new ObjetoConexionBaseDatos("org.postgresql.Driver", "localhost",String.valueOf(conexionPostgres_local.getNumeroPuertoConexion()) 
+    		  /*"5432"*/, pNombreAplicacion, "postgres", "postgres");
     
     }
     catch (Exception excepcion) {

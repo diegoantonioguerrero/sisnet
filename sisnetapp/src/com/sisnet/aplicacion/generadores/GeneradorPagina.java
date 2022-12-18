@@ -9,6 +9,7 @@ import com.sisnet.aplicacion.manejadores.ManejadorResultadoConsultaSQL;
 import com.sisnet.aplicacion.manejadores.ManejadorSesion;
 import com.sisnet.aplicacion.manejadores.informacionRecalculable.ManejadorInformacionRecalculable;
 import com.sisnet.baseDatos.AdministradorBaseDatos;
+import com.sisnet.baseDatos.ConexionBaseDatos;
 import com.sisnet.baseDatos.ConexionPostgres;
 import com.sisnet.baseDatos.consultasBaseDatos.ConsultasAdministrador;
 import com.sisnet.baseDatos.sisnet.administrador.Aplicacion;
@@ -4808,8 +4809,8 @@ return pagina_local;
 
     try
     {
-        rutaArchivo_local = getManejadorSesion().obtenerRutaRealArchivoSesion(mc.concatenarCadena("/administrador/conf/", "sisnet.conf"));
-
+    	/*coco*/
+        rutaArchivo_local = getManejadorSesion().obtenerRutaRealArchivoSesion(com.sisnet.constantes.ConstantesBaseDatos.const_rutaConfigPostgres);
         conexionPostgres_local = ap.obtenerConexionPostgres(rutaArchivo_local);
         administradorBaseDatos_local = new AdministradorBaseDatos(ap.obtenerConexionBaseDatosPostgres(conexionPostgres_local));
         existeSisnet_local = administradorBaseDatos_local.verificarExistenciaBaseDatos(getManejadorRequest().obtenerNombreRecursoAplicacion());
@@ -5609,18 +5610,19 @@ private void actualizarVersion()
 
     try
     {
+    	/*coco*/
+         rutaArchivo_local = getManejadorSesion().obtenerRutaRealArchivoSesion(com.sisnet.constantes.ConstantesBaseDatos.const_rutaConfigPostgres);
+         conexionPostgres_local = ap.obtenerConexionPostgres(rutaArchivo_local);
+
         if (!verificarExistenciaBaseDatosSisnet())
         {
-            rutaArchivo_local = getManejadorSesion().obtenerRutaRealArchivoSesion(mc.concatenarCadena("/administrador/conf/", "sisnet.conf"));
-
-            conexionPostgres_local = ap.obtenerConexionPostgres(rutaArchivo_local);
             administradorBaseDatos_local = new AdministradorBaseDatos(ap.obtenerConexionBaseDatosPostgres(conexionPostgres_local));
             administradorBaseDatos_local.crearBaseDatosSisnet(getManejadorRequest().obtenerNombreRecursoAplicacion());
             administradorBaseDatos_local.getConexionBaseDatos().cerrarConeccionBaseDatos();
-            objetoConexionBaseDatos_local = ap.obtenerConexionBaseDatosSisnet(getManejadorRequest().obtenerNombreRecursoAplicacion());
+            objetoConexionBaseDatos_local = ap.obtenerConexionBaseDatosSisnet(getManejadorRequest().obtenerNombreRecursoAplicacion(), rutaArchivo_local);
             actualizarVersionUno(objetoConexionBaseDatos_local);
         }
-        objetoConexionBaseDatos_local = ap.obtenerConexionBaseDatosSisnet(getManejadorRequest().obtenerNombreRecursoAplicacion());
+        objetoConexionBaseDatos_local = ap.obtenerConexionBaseDatosSisnet(getManejadorRequest().obtenerNombreRecursoAplicacion(), rutaArchivo_local);
         version01_local = new Version01(objetoConexionBaseDatos_local);
         switch (numeroVersion_local)
         {
@@ -5777,17 +5779,21 @@ private void actualizarVersion()
 private boolean verificarRealizaTransaccion()
 {
     boolean realizaTransaccion_local = false;
-    boolean existeSisnet_local = false;
+    boolean existeSisnet_local = false;//false debe devolverse
     boolean actualizarVersion_local = false;
     ObjetoConexionBaseDatos objetoConexionBaseDatos_local = null;
     Version01 version01_local = null;
+    String rutaArchivo_local = null;
 
     try
     {
         existeSisnet_local = verificarExistenciaBaseDatosSisnet();
         if (existeSisnet_local)
         {
-            objetoConexionBaseDatos_local = ap.obtenerConexionBaseDatosSisnet(getManejadorRequest().obtenerNombreRecursoAplicacion());
+        	/*coco*/
+            rutaArchivo_local = getManejadorSesion().obtenerRutaRealArchivoSesion(com.sisnet.constantes.ConstantesBaseDatos.const_rutaConfigPostgres);
+            /**/
+            objetoConexionBaseDatos_local = ap.obtenerConexionBaseDatosSisnet(getManejadorRequest().obtenerNombreRecursoAplicacion() , rutaArchivo_local);
             version01_local = new Version01(objetoConexionBaseDatos_local);
             actualizarVersion_local = version01_local.verificarActualizarVersion();
             version01_local.getConexionBaseDatos().cerrarConeccionBaseDatos();
@@ -5884,10 +5890,10 @@ private boolean verificarConexionBaseDatosPostgres()
 
     try
     {
-        rutaArchivo_local = getManejadorSesion().obtenerRutaRealArchivoSesion(mc.concatenarCadena("/administrador/conf/", "sisnet.conf"));
-
-        conexionPostgres_local = ap.obtenerConexionPostgres(rutaArchivo_local);
-        administradorBaseDatos_local = new AdministradorBaseDatos(ap.obtenerConexionBaseDatosPostgres(conexionPostgres_local));
+    	/*coco*/
+    	rutaArchivo_local = getManejadorSesion().obtenerRutaRealArchivoSesion(com.sisnet.constantes.ConstantesBaseDatos.const_rutaConfigPostgres);
+    	conexionPostgres_local = ap.obtenerConexionPostgres(rutaArchivo_local);
+    	administradorBaseDatos_local = new AdministradorBaseDatos(ap.obtenerConexionBaseDatosPostgres(conexionPostgres_local));
         conectado_local = (administradorBaseDatos_local.getConexionBaseDatos().getConexion() != ConstantesGeneral.VALOR_NULO);
         if (conectado_local)
         {
