@@ -1,2 +1,2 @@
 # Sisnet
-Sisnet is a JAVA web project
+Sisnet is a JAVA web project to admin data
