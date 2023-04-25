@@ -4501,135 +4501,137 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 				return pagina_local;
 			}
 
-			if (getManejadorSesion().getSesion() != ConstantesGeneral.VALOR_NULO) {
-				pagina_local = new Pagina();
-				ListaBotones listaBotones_local = new ListaBotones();
-				listaParametrosRedireccion_local = new ListaParametrosRedireccion();
-				listaParametrosRedireccion_local.adicionar("accion", String.valueOf(92));
-
-				existenCamposDocumentoConPlantilla_local = getManejadorSesion().obtenerMotorAplicacion()
-						.comprobarCamposDocumentosConPlantilla(pGrupoInformacion);
-
-				if (!getManejadorPermisoUsuario()
-						.verificarPermisoModificarRegistrosAplicacion(pGrupoInformacion.getAplicacion())
-						&& !getManejadorPermisoUsuario().verificarExistenciaGrupoInformacionNoMultiplePermisoModificar(
-								pGrupoInformacion.getAplicacion().getIdAplicacion())
-						&& !getManejadorPermisoUsuario().verificarExistenciaCampoGrupoNoMultiplePermisoModificar(
-								pGrupoInformacion.getAplicacion().getIdAplicacion())) {
-
-					eventosFormulario_local = "return mensajeAutorizacionModificacion();";
-				} else {
-					eventosFormulario_local = "return (verificarCampos() && preguntaModificarRegistro());";
-					if (existenCamposDocumentoConPlantilla_local
-							&& !verificarDocumentoConPlantillaVacio(pGrupoInformacion,
-									getManejadorSesion().obtenerValorLlavePrimaria())) {
-						eventosFormulario_local = "return (verificarCampos() && recordarCambioPlantilla() && preguntaModificarRegistro());";
-					}
-				}
-
-				listaCampo_local = getManejadorSesion().obtenerMotorAplicacion()
-						.obtenerListaCamposGruposInformacionNoMultiplesConArchivos(
-								pGrupoInformacion.getAplicacion().getIdAplicacion());
-
-				listaCampoValoresAnteriores_local = getManejadorSesion().obtenerMotorAplicacion()
-						.obtenerCopiaListaCamposGruposInformacionNoMultiplesConArchivos(
-								pGrupoInformacion.getAplicacion().getIdAplicacion());
-
-				if (existenCamposDocumentoConPlantilla_local) {
-					campoPlantilla_local = cad.obtenerCampoPlantillaUtilizar(pGrupoInformacion);
-					campoPlantilla_local.setEstiloCampo(getManejadorSesion().obtenerMotorAplicacion()
-							.obtenerPrimerCampoTipoDocumento(pGrupoInformacion).getEstiloCampo());
-
-					listaCampo_local.adicionar(campoPlantilla_local);
-				}
-				getManejadorInformacionRecalculable().asignarValoresConsultaRegistroCampos(pGrupoInformacion,
-						listaCampo_local, pValorLlavePrimaria);
-
-				getManejadorInformacionRecalculable().asignarValoresConsultaRegistroCampos(pGrupoInformacion,
-						listaCampoValoresAnteriores_local, pValorLlavePrimaria);
-
-				getManejadorSesion().asignarValoresAtributosSesionACampos(listaCampo_local);
-
-				huboErrorEventos_local = (!mc.esCadenaVacia(getManejadorSesion().obtenerMensajeEventos())
-						&& getManejadorSesion().obtenerTipoMensajeEventos() == 2);
-
-				if (!getManejadorSesion().esRecargarPagina() && !huboErrorEventos_local) {
-					getManejadorSesion().obtenerManejadorEventos().setNombreEvento("INICIOMODIFICARPRINCIPAL");
-
-					getManejadorSesion().obtenerManejadorEventos()
-							.setGrupoInformacion(getManejadorSesion().obtenerGrupoInformacionActual());
-
-					getManejadorSesion().obtenerManejadorEventos()
-							.setValorLlaveGrupoPrincipal(getManejadorSesion().obtenerValorLlavePrimariaAnterior());
-
-					getManejadorSesion().obtenerManejadorEventos()
-							.setValorLlaveGrupoInformacion(getManejadorSesion().obtenerValorLlavePrimaria());
-
-					getManejadorSesion().obtenerManejadorEventos().setListaCampo(listaCampo_local);
-					getManejadorSesion().obtenerManejadorEventos()
-							.setListaCampoValoresAnteriores(listaCampoValoresAnteriores_local);
-
-					getManejadorSesion().obtenerManejadorEventos().setRealizarAccionUsuario(true);
-
-					getManejadorSesion().actualizarExistenEventosEnEjecucion(true);
-					getManejadorSesion().obtenerManejadorEventos().ejecutarEvento();
-					getManejadorSesion().actualizarExistenEventosEnEjecucion(
-							!getManejadorSesion().obtenerManejadorEventos().haFinalizadoEjecucion());
-
-					getManejadorSesion().actualizarMensajeEventos(
-							getManejadorSesion().obtenerManejadorEventos().getMensajeEventos());
-
-					getManejadorSesion().actualizarTipoMensajeEventos(
-							getManejadorSesion().obtenerManejadorEventos().getTipoMensajeEventos());
-
-					getManejadorSesion().obtenerManejadorEventos().setMensajeEventos("");
-				}
-
-				insertarMensajePagina(pagina_local);
-
-				formulario_local = new Formulario();
-				formulario_local.setNombre("formularioIncluir");
-				formulario_local.setAction(listaParametrosRedireccion_local.concatenarParametros());
-				formulario_local.setEventoOnSubmit(eventosFormulario_local);
-				formulario_local.setEsMultipart(getAdministradorBaseDatosSisnet()
-						.verificarGrupoInformacionContieneCampoArchivo(pGrupoInformacion));
-
-				formulario_local.setListaCampo(listaCampo_local);
-
-				asignarValoresListaCampoFormulario(formulario_local, true, true);
-
-				pagina_local.setEncabezadoPagina(obtenerBloqueHeadPagina(formulario_local.getListaCampo(),
-						formulario_local.getNombre(), 0, false, false));
-
-				pagina_local.setInicioCuerpoPagina(getGeneradorComponentesHtml().abrirBody(
-						conformarEventosBody(formulario_local.getListaCampo(), formulario_local.getNombre())));
-
-				pagina_local.setTitulo(insertarEncabezadoPagina(getManejadorSesion().obtenerTituloAplicacionActual(),
-						getManejadorSesion().obtenerInformacionActual(), obtenerBotonAtras(String.valueOf(95), 0), 0));
-
-				listaBotones_local.adicionar("aceptarmodificacion", true, "", "Aceptar Modificaci\u00f3n", "", 0,
-						false);
-
-				listaParametrosRedireccion_local.borrarElementos();
-				listaParametrosRedireccion_local.adicionar("accion", String.valueOf(95));
-
-				listaBotones_local.adicionar("cancelarmodificacion", false,
-						" onClick=\"return (preguntaCancelarModificacion());\" ", "Cancelar Modificaci\u00f3n",
-						listaParametrosRedireccion_local.concatenarParametros(), 0, false);
-
-				formulario_local
-						.setContenido(insertarFormulario(formulario_local, -1, listaBotones_local, true, 1, "center"));
-
-				pagina_local.setContenidoFormulario(formulario_local.dibujar());
-
-				pagina_local.setContenidoDatos(dibujarConsultaGruposInformacionMultiplesAplicacion(
-						pGrupoInformacion.getAplicacion().getIdAplicacion(), pValorLlavePrimaria, 0));
-
-				pagina_local.setFinCuerpoPagina(mc.concatenarCadena(insertarImagenProcesandoInformacion(false),
-						getGeneradorComponentesHtml().cerrarBody()));
-
-				getManejadorSesion().actualizarRecargarPagina(false);
+			if (getManejadorSesion().getSesion() == ConstantesGeneral.VALOR_NULO) {
+				return pagina_local;
 			}
+			pagina_local = new Pagina();
+			ListaBotones listaBotones_local = new ListaBotones();
+			listaParametrosRedireccion_local = new ListaParametrosRedireccion();
+			listaParametrosRedireccion_local.adicionar("accion", String.valueOf(92));
+	
+			existenCamposDocumentoConPlantilla_local = getManejadorSesion().obtenerMotorAplicacion()
+					.comprobarCamposDocumentosConPlantilla(pGrupoInformacion);
+	
+			if (!getManejadorPermisoUsuario()
+					.verificarPermisoModificarRegistrosAplicacion(pGrupoInformacion.getAplicacion())
+					&& !getManejadorPermisoUsuario().verificarExistenciaGrupoInformacionNoMultiplePermisoModificar(
+							pGrupoInformacion.getAplicacion().getIdAplicacion())
+					&& !getManejadorPermisoUsuario().verificarExistenciaCampoGrupoNoMultiplePermisoModificar(
+							pGrupoInformacion.getAplicacion().getIdAplicacion())) {
+	
+				eventosFormulario_local = "return mensajeAutorizacionModificacion();";
+			} else {
+				eventosFormulario_local = "return (verificarCampos() && preguntaModificarRegistro());";
+				if (existenCamposDocumentoConPlantilla_local
+						&& !verificarDocumentoConPlantillaVacio(pGrupoInformacion,
+								getManejadorSesion().obtenerValorLlavePrimaria())) {
+					eventosFormulario_local = "return (verificarCampos() && recordarCambioPlantilla() && preguntaModificarRegistro());";
+				}
+			}
+	
+			listaCampo_local = getManejadorSesion().obtenerMotorAplicacion()
+					.obtenerListaCamposGruposInformacionNoMultiplesConArchivos(
+							pGrupoInformacion.getAplicacion().getIdAplicacion());
+	
+			listaCampoValoresAnteriores_local = getManejadorSesion().obtenerMotorAplicacion()
+					.obtenerCopiaListaCamposGruposInformacionNoMultiplesConArchivos(
+							pGrupoInformacion.getAplicacion().getIdAplicacion());
+	
+			if (existenCamposDocumentoConPlantilla_local) {
+				campoPlantilla_local = cad.obtenerCampoPlantillaUtilizar(pGrupoInformacion);
+				campoPlantilla_local.setEstiloCampo(getManejadorSesion().obtenerMotorAplicacion()
+						.obtenerPrimerCampoTipoDocumento(pGrupoInformacion).getEstiloCampo());
+	
+				listaCampo_local.adicionar(campoPlantilla_local);
+			}
+			getManejadorInformacionRecalculable().asignarValoresConsultaRegistroCampos(pGrupoInformacion,
+					listaCampo_local, pValorLlavePrimaria);
+	
+			getManejadorInformacionRecalculable().asignarValoresConsultaRegistroCampos(pGrupoInformacion,
+					listaCampoValoresAnteriores_local, pValorLlavePrimaria);
+	
+			getManejadorSesion().asignarValoresAtributosSesionACampos(listaCampo_local);
+	
+			huboErrorEventos_local = (!mc.esCadenaVacia(getManejadorSesion().obtenerMensajeEventos())
+					&& getManejadorSesion().obtenerTipoMensajeEventos() == 2);
+	
+			if (!getManejadorSesion().esRecargarPagina() && !huboErrorEventos_local) {
+				getManejadorSesion().obtenerManejadorEventos().setNombreEvento("INICIOMODIFICARPRINCIPAL");
+	
+				getManejadorSesion().obtenerManejadorEventos()
+						.setGrupoInformacion(getManejadorSesion().obtenerGrupoInformacionActual());
+	
+				getManejadorSesion().obtenerManejadorEventos()
+						.setValorLlaveGrupoPrincipal(getManejadorSesion().obtenerValorLlavePrimariaAnterior());
+	
+				getManejadorSesion().obtenerManejadorEventos()
+						.setValorLlaveGrupoInformacion(getManejadorSesion().obtenerValorLlavePrimaria());
+	
+				getManejadorSesion().obtenerManejadorEventos().setListaCampo(listaCampo_local);
+				getManejadorSesion().obtenerManejadorEventos()
+						.setListaCampoValoresAnteriores(listaCampoValoresAnteriores_local);
+	
+				getManejadorSesion().obtenerManejadorEventos().setRealizarAccionUsuario(true);
+	
+				getManejadorSesion().actualizarExistenEventosEnEjecucion(true);
+				getManejadorSesion().obtenerManejadorEventos().ejecutarEvento();
+				getManejadorSesion().actualizarExistenEventosEnEjecucion(
+						!getManejadorSesion().obtenerManejadorEventos().haFinalizadoEjecucion());
+	
+				getManejadorSesion().actualizarMensajeEventos(
+						getManejadorSesion().obtenerManejadorEventos().getMensajeEventos());
+	
+				getManejadorSesion().actualizarTipoMensajeEventos(
+						getManejadorSesion().obtenerManejadorEventos().getTipoMensajeEventos());
+	
+				getManejadorSesion().obtenerManejadorEventos().setMensajeEventos("");
+			}
+	
+			insertarMensajePagina(pagina_local);
+	
+			formulario_local = new Formulario();
+			formulario_local.setNombre("formularioIncluir");
+			formulario_local.setAction(listaParametrosRedireccion_local.concatenarParametros());
+			formulario_local.setEventoOnSubmit(eventosFormulario_local);
+			formulario_local.setEsMultipart(getAdministradorBaseDatosSisnet()
+					.verificarGrupoInformacionContieneCampoArchivo(pGrupoInformacion));
+	
+			formulario_local.setListaCampo(listaCampo_local);
+	
+			asignarValoresListaCampoFormulario(formulario_local, true, true);
+	
+			pagina_local.setEncabezadoPagina(obtenerBloqueHeadPagina(formulario_local.getListaCampo(),
+					formulario_local.getNombre(), 0, false, false));
+	
+			pagina_local.setInicioCuerpoPagina(getGeneradorComponentesHtml().abrirBody(
+					conformarEventosBody(formulario_local.getListaCampo(), formulario_local.getNombre())));
+	
+			pagina_local.setTitulo(insertarEncabezadoPagina(getManejadorSesion().obtenerTituloAplicacionActual(),
+					getManejadorSesion().obtenerInformacionActual(), obtenerBotonAtras(String.valueOf(95), 0), 0));
+	
+			listaBotones_local.adicionar("aceptarmodificacion", true, "", "Aceptar Modificaci\u00f3n", "", 0,
+					false);
+	
+			listaParametrosRedireccion_local.borrarElementos();
+			listaParametrosRedireccion_local.adicionar("accion", String.valueOf(95));
+	
+			listaBotones_local.adicionar("cancelarmodificacion", false,
+					" onClick=\"return (preguntaCancelarModificacion());\" ", "Cancelar Modificaci\u00f3n",
+					listaParametrosRedireccion_local.concatenarParametros(), 0, false);
+	
+			formulario_local
+					.setContenido(insertarFormulario(formulario_local, -1, listaBotones_local, true, 1, "center"));
+	
+			pagina_local.setContenidoFormulario(formulario_local.dibujar());
+	
+			pagina_local.setContenidoDatos(dibujarConsultaGruposInformacionMultiplesAplicacion(
+					pGrupoInformacion.getAplicacion().getIdAplicacion(), pValorLlavePrimaria, 0));
+	
+			pagina_local.setFinCuerpoPagina(mc.concatenarCadena(insertarImagenProcesandoInformacion(false),
+					getGeneradorComponentesHtml().cerrarBody()));
+	
+			getManejadorSesion().actualizarRecargarPagina(false);
+			
 		} catch (Throwable excepcion_local) {
 			excepcion_local.printStackTrace();
 		} finally {

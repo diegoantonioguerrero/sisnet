@@ -13,6 +13,7 @@ public final class ConstantesConversorCaracteresHtml {
     public static final char const_CaracterTildeu = 'ú';    
     public static final char const_CaracterTilden = 'ñ';    
     public static final char const_CaracterTildeN = 'Ñ';
+    public static final char const_CaracterQuotation  = '"';
     public static final String const_EquivalenteCaracterA = "A";    
     public static final String const_EquivalenteCaracterE = "E";    
     public static final String const_EquivalenteCaracterI = "I";    
@@ -38,7 +39,8 @@ public final class ConstantesConversorCaracteresHtml {
     public static final String const_EquivalenteHtmlTildeo = "&oacute;";    
     public static final String const_EquivalenteHtmlTildeu = "&uacute;";    
     public static final String const_EquivalenteHtmln = "&ntilde;";    
-    public static final String const_EquivalenteHtmlN = "&Ntilde;";       
+    public static final String const_EquivalenteHtmlN = "&Ntilde;";
+    public static final String const_EquivalenteHtmlQuotation = "&quot;";    
     public static final String const_EquivalenteHtmlEspacio = "&nbsp;";       
     public static final String const_EquivalenteMenorQue = "&lt;"; 
     public static final String const_EquivalenteMayorQue = "&gt;";

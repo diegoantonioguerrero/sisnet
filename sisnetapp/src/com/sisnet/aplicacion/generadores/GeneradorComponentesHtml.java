@@ -4,6 +4,7 @@ import com.sisnet.aplicacion.manejadores.ManejadorCadenas;
 import com.sisnet.baseDatos.sisnet.administrador.Campo;
 import com.sisnet.baseDatos.sisnet.administrador.EstiloCampo;
 import com.sisnet.baseDatos.sisnet.administrador.GrupoInformacion;
+import com.sisnet.constantes.ConstantesConversorCaracteresHtml;
 import com.sisnet.constantes.ConstantesGeneral;
 import com.sisnet.constantes.ConstantesMensajesAplicacion;
 import com.sisnet.constantes.ConstantesVersion;
@@ -1636,7 +1637,11 @@ public class GeneradorComponentesHtml
     	  pPlaceHolder = " placeholder=\"" + pPlaceHolder + "\" ";
       }
 
-      cajaTexto_local = mc.concatenarCadena(cajaTexto_local, "\" value=\"" + getConversorCaracteresHtml().getCadenaHtml(pContenido) + "\"");
+      pContenido = getConversorCaracteresHtml().getCadenaHtml(pContenido);
+      pContenido = mc.reemplazarCadena(pContenido, String.valueOf(ConstantesConversorCaracteresHtml.const_CaracterQuotation),
+              ConstantesConversorCaracteresHtml.const_EquivalenteHtmlQuotation);
+
+      cajaTexto_local = mc.concatenarCadena(cajaTexto_local, "\" value=\"" + pContenido + "\"");
       
       cajaTexto_local = mc.concatenarCadena(cajaTexto_local, longitudPermitida_local + pPlaceHolder + pEventos + " \n>");
     } catch (Exception excepcion) {
@@ -1682,7 +1687,12 @@ public class GeneradorComponentesHtml
       cajaTexto_local = mc.concatenarCadena(cajaTexto_local, "<input type=\"text\" style=\"" + estilo_local);
       cajaTexto_local = mc.concatenarCadena(cajaTexto_local, "width:" + ancho_local + "px\"");
       cajaTexto_local = mc.concatenarCadena(cajaTexto_local, " id=\"" + pCampo.getNombreCampo() + "\" name=\"" + pCampo.getNombreCampo());
-      cajaTexto_local = mc.concatenarCadena(cajaTexto_local, "\" value=\"" + getConversorCaracteresHtml().getCadenaHtml(pContenido) + "\"");
+      
+      pContenido = getConversorCaracteresHtml().getCadenaHtml(pContenido);
+      pContenido = mc.reemplazarCadena(pContenido, String.valueOf(ConstantesConversorCaracteresHtml.const_CaracterQuotation),
+              ConstantesConversorCaracteresHtml.const_EquivalenteHtmlQuotation);
+
+      cajaTexto_local = mc.concatenarCadena(cajaTexto_local, "\" value=\"" + pContenido + "\"");
       
       cajaTexto_local = mc.concatenarCadena(cajaTexto_local, longitudPermitida_local + pEventos + " \n>");
     } catch (Exception excepcion) {
@@ -1857,11 +1867,12 @@ public class GeneradorComponentesHtml
     }
     
     try {
-      eventos_local = " onKeyPress=\"return esNumeroEnteroDigitacion(event);\" ";
+      eventos_local = " onKeyPress=\"return esNumeroEnteroDigitacion(event);\" onpaste=\"esNumeroEnteroDigitacionPaste(event, " + pSoloPositivo + ");\" ondrop=\"esNumeroEnteroDigitacionDrop(event, " + pSoloPositivo + ");\" ";
       if (pSoloPositivo) {
-        eventos_local = " onKeyPress=\"return esNumeroEnteroSoloPositivoDigitacion(event);\" ";
+        eventos_local = " onKeyPress=\"return esNumeroEnteroSoloPositivoDigitacion(event);\" onpaste=\"esNumeroEnteroDigitacionPaste(event, " + pSoloPositivo + ");\" ondrop=\"esNumeroEnteroDigitacionDrop(event, " + pSoloPositivo + ");\" ";
       }
-      if (pCampo.getFormatoCampo().getLongitudCampo() < 1 || pCampo.getFormatoCampo().getLongitudCampo() > 10)
+      int longitudCampo = pCampo.getFormatoCampo().getLongitudCampo();
+      if (longitudCampo < 1 || longitudCampo > 10)
       {
         pCampo.getFormatoCampo().setLongitudCampo(10);
       }
@@ -1917,9 +1928,9 @@ public class GeneradorComponentesHtml
     }
     
     try {
-      eventos_local = " onKeyPress=\"return esNumeroRealDigitacion(event);\" ";
+      eventos_local = " onKeyPress=\"return esNumeroRealDigitacion(event);\" onpaste=\"esNumeroRealDigitacionPaste(event, " + pSoloPositivo + ");\" ondrop=\"esNumeroRealDigitacionDrop(event, " + pSoloPositivo + ");\" ";
       if (pSoloPositivo) {
-        eventos_local = " onKeyPress=\"return esNumeroRealSoloPositivoDigitacion(event);\" ";
+        eventos_local = " onKeyPress=\"return esNumeroRealSoloPositivoDigitacion(event);\" onpaste=\"esNumeroRealDigitacionPaste(event, " + pSoloPositivo + "); \" ondrop=\"esNumeroRealDigitacionDrop(event, " + pSoloPositivo + ");\" ";
       }
       cajaTextoNumeroReal_local = insertarCajaTexto(pCampo, pContenido, pEvento + eventos_local, pEsCampoOculto, pEsCampoCalculado);
     }

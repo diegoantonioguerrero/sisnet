@@ -474,14 +474,55 @@ function establecerFoco(Control){
 }
 
 /* Valida que la entrada digitada sea un numero*/
+function esNumeroEnteroDigitacionPaste(e, positive){
+ // Cancela el evento de pegar
+  e.preventDefault();
+  // Obtiene el texto que se está intentando pegar
+  var data = e.clipboardData.getData("text/plain");
+  if(positive){
+  	data = data.replace(/[^0-9]+/g, '');
+  }
+  else{
+  	data = data.replace(/[^-0-9]+/g, '');
+  }
+  e.target.value = data;  
+  
+}
+
+/* Valida que la entrada digitada sea un numero*/
+function esNumeroEnteroDigitacionDrop(e, positive){
+ // Cancela el evento de drop
+  e.preventDefault();
+  // Obtiene el texto que se está intentando pegar
+  var data = e.dataTransfer.getData("Text");
+  console.log('Data', data, e);
+  if(positive){
+  	data = data.replace(/[^0-9]+/g, '');
+  }
+  else{
+  	data = data.replace(/[^-0-9]+/g, '');
+  }
+  e.target.value = data;
+}
+
+    
+/* Valida que la entrada digitada sea un numero*/
 function esNumeroEnteroDigitacion(e){
   var charCode;
-
+  var currentValue = e.target.value;
+    
   if (this.navigator.appName == "Netscape")
      charCode = e.which;
   else
      charCode = e.keyCode;  
-   
+  
+  console.log(currentValue, currentValue.indexOf('-'),  charCode);
+  var indexOfFirst = currentValue.indexOf('-');
+  //solo un negativo cuando es entero (45)=-
+  if(indexOfFirst >= 0 && charCode == 45 ){
+  	return false;
+  }
+      
   if (charCode > 31 && charCode != 45 && (charCode < 48 || charCode > 57)){
      return false;
   }
@@ -503,20 +544,90 @@ function esNumeroEnteroSoloPositivoDigitacion(e){
   return true;
 }
 
+/* Valida que la entrada digitada sea un numero*/
+function esNumeroRealDigitacionPaste(e, positive){
+ // Cancela el evento de pegar
+  e.preventDefault();
+  // Obtiene el texto que se está intentando pegar
+  var data = e.clipboardData.getData("text/plain");
+  
+ 
+  // Split and rejoin, keeping only first occurence of `.`
+  var splitStr = data.split('.');
+  if (splitStr.length > 1){
+  	data = splitStr[0] + '.' ;
+  	for (var i = 1; i < splitStr.length; i++) {
+  		data += splitStr[i];
+  	}
+  }
+
+  
+  if(positive){
+  	data = data.replace(/[^.0-9]+/g, '');
+  }
+  else{
+  	data = data.replace(/[^-.0-9]+/g, '');
+  }
+  e.target.value = data;  
+  
+}
+
+/* Valida que la entrada digitada sea un numero*/
+function esNumeroRealDigitacionDrop(e, positive){
+ // Cancela el evento de drop
+  e.preventDefault();
+  // Obtiene el texto que se está intentando pegar
+  var data = e.dataTransfer.getData("Text");
+
+  // Split and rejoin, keeping only first occurence of `.`
+  var splitStr = data.split('.');
+  if (splitStr.length > 1){
+  	data = splitStr[0] + '.' ;
+  	for (var i = 1; i < splitStr.length; i++) {
+  		data += splitStr[i];
+  	}
+  }
+
+
+  if(positive){
+  	data = data.replace(/[^0-9]+/g, '');
+  }
+  else{
+  	data = data.replace(/[^-.0-9]+/g, '');
+  }
+  e.target.value = data;
+}
+
 /* Valida que la entrada digitada sea un numero real*/
 function esNumeroRealDigitacion(e){
   var charCode;
-
+  var currentValue = e.target.value;
+  
   if (this.navigator.appName == "Netscape")
      charCode = e.which;
   else
      charCode = e.keyCode;
-    
+  
+  var indexOfFirst = currentValue.indexOf('-');
+  //solo un negativo cuando es entero (45)=-
+  if(indexOfFirst >= 0 && charCode == 45 ){
+  	return false;
+  }
+  
+  indexOfFirst = currentValue.indexOf('.');
+  //solo un punto cuando es decimal (46)=.
+  if(indexOfFirst >= 0 && charCode == 46 ){
+  	return false;
+  }
+  
   if ((charCode > 31 && charCode != 45 && charCode != 46) && (charCode < 48 || charCode > 57)){
      return false;
   }
   return true;
 }
+
+
+
 
 /* Valida que la entrada digitada sea un numero real positivo*/
 function esNumeroRealSoloPositivoDigitacion(e){
