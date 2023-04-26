@@ -476,47 +476,80 @@ function establecerFoco(Control){
 /* Valida que la entrada digitada sea un numero*/
 function esNumeroEnteroDigitacionPaste(e, positive){
  // Cancela el evento de pegar
-  e.preventDefault();
+
+ try{
+  if(e.preventDefault){
+   e.preventDefault();
+  }
+  else{
+   e.returnValue = false;
+  }
+
+  var data = "";
+  
   // Obtiene el texto que se está intentando pegar
-  var data = e.clipboardData.getData("text/plain");
+  if (window.clipboardData && window.clipboardData.getData) { // IE
+     data = window.clipboardData.getData('Text');
+  }
+  else if(e.clipboardData && e.clipboardData.getData) {
+     data = e.clipboardData.getData('text/plain');
+  }
+
   if(positive){
   	data = data.replace(/[^0-9]+/g, '');
   }
   else{
   	data = data.replace(/[^-0-9]+/g, '');
   }
+  e.target = e.target ? e.target : window.event.srcElement;
   e.target.value = data;  
-  
+ }catch(error)
+ {
+ 	alert(error);
+ }
 }
 
 /* Valida que la entrada digitada sea un numero*/
 function esNumeroEnteroDigitacionDrop(e, positive){
  // Cancela el evento de drop
-  e.preventDefault();
+try{
+  if(e.preventDefault){
+   e.preventDefault();
+  }
+  else{
+   e.returnValue = false;
+  }
+
   // Obtiene el texto que se está intentando pegar
   var data = e.dataTransfer.getData("Text");
-  console.log('Data', data, e);
+
+
   if(positive){
   	data = data.replace(/[^0-9]+/g, '');
   }
   else{
   	data = data.replace(/[^-0-9]+/g, '');
   }
-  e.target.value = data;
+  e.target = e.target ? e.target : window.event.srcElement;
+  e.target.value = data;  
+ }catch(error)
+ {
+ 	alert(error);
+ }
 }
 
     
 /* Valida que la entrada digitada sea un numero*/
 function esNumeroEnteroDigitacion(e){
   var charCode;
+  e.target = e.target ? e.target : window.event.srcElement;
   var currentValue = e.target.value;
-    
+
   if (this.navigator.appName == "Netscape")
      charCode = e.which;
   else
      charCode = e.keyCode;  
   
-  console.log(currentValue, currentValue.indexOf('-'),  charCode);
   var indexOfFirst = currentValue.indexOf('-');
   //solo un negativo cuando es entero (45)=-
   if(indexOfFirst >= 0 && charCode == 45 ){
@@ -547,10 +580,23 @@ function esNumeroEnteroSoloPositivoDigitacion(e){
 /* Valida que la entrada digitada sea un numero*/
 function esNumeroRealDigitacionPaste(e, positive){
  // Cancela el evento de pegar
-  e.preventDefault();
-  // Obtiene el texto que se está intentando pegar
-  var data = e.clipboardData.getData("text/plain");
+ try{
+  if(e.preventDefault){
+   e.preventDefault();
+  }
+  else{
+   e.returnValue = false;
+  }
+
+  var data = "";
   
+  // Obtiene el texto que se está intentando pegar
+  if (window.clipboardData && window.clipboardData.getData) { // IE
+     data = window.clipboardData.getData('Text');
+  }
+  else if(e.clipboardData && e.clipboardData.getData) {
+     data = e.clipboardData.getData('text/plain');
+  }
  
   // Split and rejoin, keeping only first occurence of `.`
   var splitStr = data.split('.');
@@ -568,14 +614,26 @@ function esNumeroRealDigitacionPaste(e, positive){
   else{
   	data = data.replace(/[^-.0-9]+/g, '');
   }
+  e.target = e.target ? e.target : window.event.srcElement;
   e.target.value = data;  
+  }catch(error)
+  {
   
+  alert(error);
+
+  }  
 }
 
 /* Valida que la entrada digitada sea un numero*/
 function esNumeroRealDigitacionDrop(e, positive){
  // Cancela el evento de drop
-  e.preventDefault();
+try{
+  if(e.preventDefault){
+   e.preventDefault();
+  }
+  else{
+   e.returnValue = false;
+  }
   // Obtiene el texto que se está intentando pegar
   var data = e.dataTransfer.getData("Text");
 
@@ -595,12 +653,20 @@ function esNumeroRealDigitacionDrop(e, positive){
   else{
   	data = data.replace(/[^-.0-9]+/g, '');
   }
-  e.target.value = data;
-}
+e.target = e.target ? e.target : window.event.srcElement;
+  e.target.value = data;  
+  }catch(error)
+  {
+  
+  alert(error);
+
+  }
+  }
 
 /* Valida que la entrada digitada sea un numero real*/
 function esNumeroRealDigitacion(e){
   var charCode;
+  e.target = e.target ? e.target : window.event.srcElement;
   var currentValue = e.target.value;
   
   if (this.navigator.appName == "Netscape")
