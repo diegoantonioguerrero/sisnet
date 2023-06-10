@@ -14,6 +14,8 @@ public final class ConstantesConversorCaracteresHtml {
     public static final char const_CaracterTilden = 'ñ';    
     public static final char const_CaracterTildeN = 'Ñ';
     public static final char const_CaracterQuotation  = '"';
+    public static final char const_CaracterQuotationSingle  = '\'';
+    public static final char const_CaracterQuotationSingleCustom  = '"';
     public static final String const_EquivalenteCaracterA = "A";    
     public static final String const_EquivalenteCaracterE = "E";    
     public static final String const_EquivalenteCaracterI = "I";    

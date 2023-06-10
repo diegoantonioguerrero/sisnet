@@ -2264,7 +2264,7 @@ public class AdministradorBaseDatos
               if (mc.sonCadenasIguales(tipoDato_local, "F")) {
                 valorCampo_local = mc.convertirFormatoFechaDDMMAAAA(valorCampo_local);
               }
-              valorCampo_local = mc.reemplazarCadena(valorCampo_local, "'", "’");
+              valorCampo_local = mc.reemplazarCadena(valorCampo_local, "'", "\"");
               cadenaSQLInsercion_local = mc.concatenarCadena(cadenaSQLInsercion_local, mc.colocarEntreComillas(valorCampo_local));
             } else {
               cadenaSQLInsercion_local = mc.concatenarCadena(cadenaSQLInsercion_local, valorCampo_local);
@@ -2362,7 +2362,7 @@ public class AdministradorBaseDatos
           }
           if (campo_local.esTipoDatoTexto()) {
             valorCampo_local = mc.borrarEspaciosLaterales(valorCampo_local);
-            valorCampo_local = mc.reemplazarCadena(valorCampo_local, "'", "''");
+            valorCampo_local = mc.reemplazarCadena(valorCampo_local, "'", "\"");
 
             if (mc.sonCadenasIguales(tipoDato_local, "F") || mc.sonCadenasIguales(tipoDato_local, "H")) {
               

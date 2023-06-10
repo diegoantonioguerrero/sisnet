@@ -1636,6 +1636,7 @@ public class GeneradorComponentesHtml
       {
     	  pPlaceHolder = " placeholder=\"" + pPlaceHolder + "\" ";
       }
+      
 
       pContenido = getConversorCaracteresHtml().getCadenaHtml(pContenido);
       pContenido = mc.reemplazarCadena(pContenido, String.valueOf(ConstantesConversorCaracteresHtml.const_CaracterQuotation),
@@ -1691,6 +1692,9 @@ public class GeneradorComponentesHtml
       pContenido = getConversorCaracteresHtml().getCadenaHtml(pContenido);
       pContenido = mc.reemplazarCadena(pContenido, String.valueOf(ConstantesConversorCaracteresHtml.const_CaracterQuotation),
               ConstantesConversorCaracteresHtml.const_EquivalenteHtmlQuotation);
+      
+      pContenido = mc.reemplazarCadena(pContenido, String.valueOf(ConstantesConversorCaracteresHtml.const_CaracterQuotationSingle),
+    		  String.valueOf(ConstantesConversorCaracteresHtml.const_CaracterQuotationSingleCustom));
 
       cajaTexto_local = mc.concatenarCadena(cajaTexto_local, "\" value=\"" + pContenido + "\"");
       
@@ -2609,11 +2613,14 @@ public class GeneradorComponentesHtml
     }
     
     try {
+    	
       if (!pEsCampoOculto && pCampo.getEstiloCampo().getAnchoEtiqueta() > 0) {
         campoTexto_local = crearCeldaEtiqueta(pCampo.getEstiloCampo(), pCampo.getEtiquetaCampo());
       }
+      //coco
       if (pCampo.getEstiloCampo().getAnchoControl() > 0) {
-        campoTexto_local = mc.concatenarCadena(campoTexto_local, crearCeldaCampoDistribucion(pCampo.getEstiloCampo(), insertarCajaTexto(pCampo, pContenido, pEventos, pEsCampoOculto, pEsCampoCalculado)));
+        String eventos_local = " onKeyPress=\"return replaceSingleQuote(event);\" onPaste=\"return replaceSingleQuotePaste(event);\" onDrop=\"return replaceSingleQuotePaste(event);\" ";
+        campoTexto_local = mc.concatenarCadena(campoTexto_local, crearCeldaCampoDistribucion(pCampo.getEstiloCampo(), insertarCajaTexto(pCampo, pContenido, pEventos + eventos_local, pEsCampoOculto, pEsCampoCalculado)));
       }
     }
     catch (Exception excepcion) {
@@ -3619,7 +3626,8 @@ public class GeneradorComponentesHtml
         campoParrafo_local = crearCeldaEtiqueta(pCampo.getEstiloCampo(), pCampo.getEtiquetaCampo());
       }
       if (pCampo.getEstiloCampo().getAnchoControl() > 0) {
-        campoParrafo_local = mc.concatenarCadena(campoParrafo_local, crearCeldaCampoDistribucion(pCampo.getEstiloCampo(), insertarCajaParrafo(pCampo, pContenido, pEventos, pEsCampoOculto, pEsCampoCalculado)));
+        String eventos_local = " onKeyPress=\"return replaceSingleQuote(event);\" onPaste=\"return replaceSingleQuotePaste(event);\" onDrop=\"return replaceSingleQuotePaste(event);\" ";
+        campoParrafo_local = mc.concatenarCadena(campoParrafo_local, crearCeldaCampoDistribucion(pCampo.getEstiloCampo(), insertarCajaParrafo(pCampo, pContenido, pEventos + eventos_local, pEsCampoOculto, pEsCampoCalculado)));
       
       }
     }

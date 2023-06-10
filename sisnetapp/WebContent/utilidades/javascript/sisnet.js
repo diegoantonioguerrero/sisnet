@@ -485,9 +485,10 @@ function esNumeroEnteroDigitacionPaste(e, positive){
    e.returnValue = false;
   }
 
+  e.target = e.target ? e.target : window.event.srcElement;
   var data = "";
   
-  // Obtiene el texto que se estÃ¡ intentando pegar
+  // Obtiene el texto que se está intentando pegar
   if (window.clipboardData && window.clipboardData.getData) { // IE
      data = window.clipboardData.getData('Text');
   }
@@ -495,13 +496,21 @@ function esNumeroEnteroDigitacionPaste(e, positive){
      data = e.clipboardData.getData('text/plain');
   }
 
+  // Split and rejoin, keeping only first occurence of `-`
+  var splitStr = data.split('-');
+  if (splitStr.length > 1){
+  	data = '-' + splitStr[0];
+  	for (var i = 1; i < splitStr.length; i++) {
+  		data += splitStr[i];
+  	}
+  }
+  
   if(positive){
   	data = data.replace(/[^0-9]+/g, '');
   }
   else{
   	data = data.replace(/[^-0-9]+/g, '');
   }
-  e.target = e.target ? e.target : window.event.srcElement;
   e.target.value = data;  
  }catch(error)
  {
@@ -511,40 +520,288 @@ function esNumeroEnteroDigitacionPaste(e, positive){
 
 /* Valida que la entrada digitada sea un numero*/
 function esNumeroEnteroDigitacionDrop(e, positive){
- // Cancela el evento de drop
-try{
-  if(e.preventDefault){
-   e.preventDefault();
-  }
-  else{
-   e.returnValue = false;
-  }
-
-  // Obtiene el texto que se estÃ¡ intentando pegar
-  var data = e.dataTransfer.getData("Text");
-
-
-  if(positive){
-  	data = data.replace(/[^0-9]+/g, '');
-  }
-  else{
-  	data = data.replace(/[^-0-9]+/g, '');
-  }
-  e.target = e.target ? e.target : window.event.srcElement;
-  e.target.value = data;  
- }catch(error)
- {
- 	alert(error);
- }
+	try{
+	  // Cancela el evento de drop
+	  if(e.preventDefault){
+	   e.preventDefault();
+	  }
+	  else{
+	   e.returnValue = false;
+	  }
+	
+	  e.target = e.target ? e.target : window.event.srcElement;
+	  // Obtiene el texto que se está intentando pegar
+	  var data = e.dataTransfer.getData("Text");
+	
+	  // Split and rejoin, keeping only first occurence of `-`
+	  var splitStr = data.split('-');
+	  if (splitStr.length > 1){
+	  	data = '-' + splitStr[0];
+	  	for (var i = 1; i < splitStr.length; i++) {
+	  		data += splitStr[i];
+	  	}
+	  }
+	  
+	  if(positive){
+	  	data = data.replace(/[^0-9]+/g, '');
+	  }
+	  else{
+	  	data = data.replace(/[^-0-9]+/g, '');
+	  }
+	  e.target.value = data;
+	  var blurEvent = new Event('blur');
+	  e.target.dispatchEvent(blurEvent);
+		  
+	 }catch(error)
+	 {
+	 	alert(error);
+	 }
 }
 
+function getInputSelection(el) {
+    var start = 0, end = 0, normalizedValue, range,
+        textInputRange, len, endRange;
+
+    if (typeof el.selectionStart == "number" && typeof el.selectionEnd == "number") {
+        start = el.selectionStart;
+        end = el.selectionEnd;
+    } else {
+        range = document.selection.createRange();
+
+        if (range && range.parentElement() == el) {
+            len = el.value.length;
+            normalizedValue = el.value.replace(/\r\n/g, "\n");
+
+            // Create a working TextRange that lives only in the input
+            textInputRange = el.createTextRange();
+            textInputRange.moveToBookmark(range.getBookmark());
+
+            // Check if the start and end of the selection are at the very end
+            // of the input, since moveStart/moveEnd doesn't return what we want
+            // in those cases
+            endRange = el.createTextRange();
+            endRange.collapse(false);
+
+            if (textInputRange.compareEndPoints("StartToEnd", endRange) > -1) {
+                start = end = len;
+            } else {
+                start = -textInputRange.moveStart("character", -len);
+                start += normalizedValue.slice(0, start).split("\n").length - 1;
+
+                if (textInputRange.compareEndPoints("EndToEnd", endRange) > -1) {
+                    end = len;
+                } else {
+                    end = -textInputRange.moveEnd("character", -len);
+                    end += normalizedValue.slice(0, end).split("\n").length - 1;
+                }
+            }
+        }
+    }
+
+    return {
+        start: start,
+        end: end
+    };
+}
+
+
+/* replaceSingleQuotePaste*/
+function replaceSingleQuotePaste(e){
+
+  try{
+	  if(e.preventDefault){
+	   e.preventDefault();
+	  }
+	  else{
+	   e.returnValue = false;
+	  }
+  
+	  e.target = e.target ? e.target : window.event.srcElement;
+	  var currentValue = e.target.value;
+	  
+	  if(e.type == 'paste'){
+		  // Obtiene el texto que se está intentando pegar
+		  if (window.clipboardData && window.clipboardData.getData) { // IE
+		     data = window.clipboardData.getData('Text');
+		  }
+		  else if(e.clipboardData && e.clipboardData.getData) {
+		     data = e.clipboardData.getData('text/plain');
+		  }
+	  }
+	  else{
+	  	  currentValue = "";
+		   // Obtiene el texto que se está intentando pegar
+		  data = e.dataTransfer.getData("Text");
+	  }
+	//var dt = data;
+ 	/*var newData = "";
+ for (var i = 0; i < data.length; i++) {
+   	  		newData += data.charCodeAt(i) != 39 ? data.charAt(i) : String.fromCharCode(8217);
+	  	}
+    data = newData;*/
+
+	  data = data.replace(/'/g, String.fromCharCode(8217));
+
+   var inputSelection = getInputSelection(e.target);
+	  var startPos = inputSelection.start;
+	  var endPos = inputSelection.end;
+	  
+	  if (currentValue.length > 0){
+	  	currentValue = currentValue.substring(0, startPos) + data + currentValue.substring(endPos);
+	  }
+	  else{
+	  	currentValue = data;
+	  }
+	  
+	  e.target.value = currentValue;
+
+   }catch(error)
+	 {
+	 	alert(error.message);
+	 }
+   return true;
+}
+
+function moveCaret(win, charCount) {
+    var sel, range;
+    if (win.getSelection) {
+        // IE9+ and other browsers
+        sel = win.getSelection();
+        if (sel.rangeCount > 0) {
+            var textNode = sel.focusNode;
+            var newOffset = sel.focusOffset + charCount;
+            sel.collapse(textNode, Math.min(textNode.length, newOffset));
+        }
+    } else if ( (sel = win.document.selection) ) {
+        // IE <= 8
+        if (sel.type != "Control") {
+            range = sel.createRange();
+            range.move("character", charCount);
+            range.select();
+        }
+    }
+}
+
+function getIndicesOf(searchStr, str, caseSensitive) {
+    var searchStrLen = searchStr.length;
+    if (searchStrLen == 0) {
+        return [];
+    }
+    var startIndex = 0, index, indices = [];
+    if (!caseSensitive) {
+        str = str.toLowerCase();
+        searchStr = searchStr.toLowerCase();
+    }
+    while ((index = str.indexOf(searchStr, startIndex)) > -1) {
+        indices.push(index);
+        startIndex = index + searchStrLen;
+    }
+    return indices;
+}
+
+/* Valida que la entrada digitada sea un numero*/
+function replaceSingleQuote(e){
+  var charCode;
+  
+  try{
+
+	  e.target = e.target ? e.target : window.event.srcElement;
+	  var currentValue = e.target.value;
+	
+   var inputSelection = getInputSelection(e.target);
+	  var startPos = inputSelection.start;
+	  var endPos = inputSelection.end;
+	  
+	  if (this.navigator.appName == "Netscape")
+	     charCode = e.which;
+	  else
+	     charCode = e.keyCode;  
+	  
+   //detect single quote
+	  if(charCode == 39){
+	  // Cancela el evento de drop
+		  if(e.preventDefault){
+		   e.preventDefault();
+		  }
+		  else{
+		   e.returnValue = false;
+		  }
+		  if(e.stopPropagation){
+		   e.stopPropagation();
+		  }
+		  var charQuote = String.fromCharCode(8217);
+		  if (currentValue.length > 0){
+		  	currentValue = currentValue.substring(0, startPos) + charQuote + currentValue.substring(endPos);
+		  }
+		  else{
+		  	currentValue = charQuote;
+		  }
+		  
+		  e.target.value = currentValue;
+		  
+			try
+			{
+   
+    if(e.target.setSelectionRange){
+
+      // second attemp to set value, get native setter
+      var nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+       window.HTMLInputElement.prototype,
+       "value"
+      ).set;
+     
+      nativeInputValueSetter.call(e.target, currentValue);
+     
+      // change cursor position
+      e.target.selectionStart = e.target.selectionEnd = startPos + 1;
+     
+      // dispatch `input` again
+      var newEvent = new InputEvent('input', {
+       bubbles: true,
+       inputType: 'insertText',
+       data: char
+      })
+     
+      e.target.dispatchEvent(newEvent);
+    }
+    else if (e.target.createTextRange){
+     var range = e.target.createTextRange();
+     range.collapse(true);
+     var index = getIndicesOf('\n', currentValue.substr(0, startPos));
+     /*for(var i =0; i < index.length; i++)
+     {
+      alert(index[i]);
+     }*/
+     //alert( startPos + ', '+ endPos + ' - ' + index.length );
+     range.moveEnd('character', startPos + 1 - index.length);
+     range.moveStart('character', startPos + 1 - index.length);
+     range.select();
+     
+    }
+				
+			}catch(error){
+    alert('mov: ' + error.message);
+			}
+						
+	  	return true;
+	  }
+   }catch(error)
+	 {
+   alert('press:' + error.message);
+	 }
+   return true;
+}
     
 /* Valida que la entrada digitada sea un numero*/
 function esNumeroEnteroDigitacion(e){
   var charCode;
+  
   e.target = e.target ? e.target : window.event.srcElement;
   var currentValue = e.target.value;
 
+  var inputSelection = getInputSelection(e.target);
+	 var startPos = inputSelection.start;
+    
   if (this.navigator.appName == "Netscape")
      charCode = e.which;
   else
@@ -552,13 +809,14 @@ function esNumeroEnteroDigitacion(e){
   
   var indexOfFirst = currentValue.indexOf('-');
   //solo un negativo cuando es entero (45)=-
-  if(indexOfFirst >= 0 && charCode == 45 ){
-  	return false;
+  if(charCode == 45 && (indexOfFirst >= 0 || startPos !== 0 )){
+   return false;
   }
       
   if (charCode > 31 && charCode != 45 && (charCode < 48 || charCode > 57)){
      return false;
   }
+
   return true;
 }
 
@@ -579,89 +837,107 @@ function esNumeroEnteroSoloPositivoDigitacion(e){
 
 /* Valida que la entrada digitada sea un numero*/
 function esNumeroRealDigitacionPaste(e, positive){
- // Cancela el evento de pegar
- try{
-  if(e.preventDefault){
-   e.preventDefault();
-  }
-  else{
-   e.returnValue = false;
-  }
-
-  var data = "";
-  
-  // Obtiene el texto que se estÃ¡ intentando pegar
-  if (window.clipboardData && window.clipboardData.getData) { // IE
-     data = window.clipboardData.getData('Text');
-  }
-  else if(e.clipboardData && e.clipboardData.getData) {
-     data = e.clipboardData.getData('text/plain');
-  }
- 
-  // Split and rejoin, keeping only first occurence of `.`
-  var splitStr = data.split('.');
-  if (splitStr.length > 1){
-  	data = splitStr[0] + '.' ;
-  	for (var i = 1; i < splitStr.length; i++) {
-  		data += splitStr[i];
-  	}
-  }
-
-  
-  if(positive){
-  	data = data.replace(/[^.0-9]+/g, '');
-  }
-  else{
-  	data = data.replace(/[^-.0-9]+/g, '');
-  }
-  e.target = e.target ? e.target : window.event.srcElement;
-  e.target.value = data;  
-  }catch(error)
-  {
-  
-  alert(error);
-
-  }  
+	 // Cancela el evento de pegar
+	 try{
+	  if(e.preventDefault){
+	   e.preventDefault();
+	  }
+	  else{
+	   e.returnValue = false;
+	  }
+	
+	  e.target = e.target ? e.target : window.event.srcElement;
+	
+	  var data = "";
+	  
+	  // Obtiene el texto que se está intentando pegar
+	  if (window.clipboardData && window.clipboardData.getData) { // IE
+	     data = window.clipboardData.getData('Text');
+	  }
+	  else if(e.clipboardData && e.clipboardData.getData) {
+	     data = e.clipboardData.getData('text/plain');
+	  }
+	 
+	  // Split and rejoin, keeping only first occurence of `.`
+	  var splitStr = data.split('.');
+	  if (splitStr.length > 1){
+	  	data = splitStr[0] + '.' ;
+	  	for (var i = 1; i < splitStr.length; i++) {
+	  		data += splitStr[i];
+	  	}
+	  }
+	
+	  // Split and rejoin, keeping only first occurence of `-`
+	  splitStr = data.split('-');
+	  if (splitStr.length > 1){
+	  	data = '-' + splitStr[0];
+	  	for (var i = 1; i < splitStr.length; i++) {
+	  		data += splitStr[i];
+	  	}
+	  }
+	  
+	  if(positive){
+	  	data = data.replace(/[^.0-9]+/g, '');
+	  }
+	  else{
+	  	data = data.replace(/[^-.0-9]+/g, '');
+	  }
+	  e.target.value = data;  
+	  }catch(error)
+	  {
+	  
+	  alert(error);
+	
+	  }  
 }
 
 /* Valida que la entrada digitada sea un numero*/
 function esNumeroRealDigitacionDrop(e, positive){
- // Cancela el evento de drop
-try{
-  if(e.preventDefault){
-   e.preventDefault();
-  }
-  else{
-   e.returnValue = false;
-  }
-  // Obtiene el texto que se estÃ¡ intentando pegar
-  var data = e.dataTransfer.getData("Text");
-
-  // Split and rejoin, keeping only first occurence of `.`
-  var splitStr = data.split('.');
-  if (splitStr.length > 1){
-  	data = splitStr[0] + '.' ;
-  	for (var i = 1; i < splitStr.length; i++) {
-  		data += splitStr[i];
-  	}
-  }
-
-
-  if(positive){
-  	data = data.replace(/[^0-9]+/g, '');
-  }
-  else{
-  	data = data.replace(/[^-.0-9]+/g, '');
-  }
-e.target = e.target ? e.target : window.event.srcElement;
-  e.target.value = data;  
-  }catch(error)
-  {
-  
-  alert(error);
-
-  }
-  }
+	 // Cancela el evento de drop
+	try{
+	  if(e.preventDefault){
+	   e.preventDefault();
+	  }
+	  else{
+	   e.returnValue = false;
+	  }
+	  e.target = e.target ? e.target : window.event.srcElement;
+	  // Obtiene el texto que se está intentando pegar
+	  var data = e.dataTransfer.getData("Text");
+	
+	  // Split and rejoin, keeping only first occurence of `.`
+	  var splitStr = data.split('.');
+	  if (splitStr.length > 1){
+	  	data = splitStr[0] + '.' ;
+	  	for (var i = 1; i < splitStr.length; i++) {
+	  		data += splitStr[i];
+	  	}
+	  }
+	  
+	  // Split and rejoin, keeping only first occurence of `-`
+	  splitStr = data.split('-');
+	  if (splitStr.length > 1){
+	  	data = '-' + splitStr[0];
+	  	for (var i = 1; i < splitStr.length; i++) {
+	  		data += splitStr[i];
+	  	}
+	  }
+	
+	  if(positive){
+	  	data = data.replace(/[^0-9]+/g, '');
+	  }
+	  else{
+	  	data = data.replace(/[^-.0-9]+/g, '');
+	  }
+	
+	  e.target.value = data;
+	  var blurEvent = new Event('blur');
+	  e.target.dispatchEvent(blurEvent);
+	}catch(error)
+	{
+	  alert(error);
+	}
+}
 
 /* Valida que la entrada digitada sea un numero real*/
 function esNumeroRealDigitacion(e){
@@ -669,14 +945,17 @@ function esNumeroRealDigitacion(e){
   e.target = e.target ? e.target : window.event.srcElement;
   var currentValue = e.target.value;
   
+  var inputSelection = getInputSelection(e.target);
+	 var startPos = inputSelection.start;
+    
   if (this.navigator.appName == "Netscape")
      charCode = e.which;
   else
-     charCode = e.keyCode;
+     charCode = e.keyCode;  
   
   var indexOfFirst = currentValue.indexOf('-');
   //solo un negativo cuando es entero (45)=-
-  if(indexOfFirst >= 0 && charCode == 45 ){
+  if(charCode == 45 && (indexOfFirst >= 0 || startPos !== 0 )){
   	return false;
   }
   
@@ -1337,9 +1616,22 @@ function completarValorConCeros(pObjeto, pLongitud){
     }
     
     try{
+
         elemento_local = document.getElementById(pObjeto.id);
         if(elemento_local != null){
-            elemento_local.value = completarCadenaConCaracteres(elemento_local.value, "0", pLongitud, false);
+        	var value = elemento_local.value;
+        	
+        	if(value.indexOf('-') == 0)
+        	{
+        		value = value.replace('-','');
+        		pLongitud = pLongitud - 1;
+        		value = completarCadenaConCaracteres(value, "0", pLongitud, false);
+        		value = '-' + value;  	
+        	}else
+        	{
+        		value = completarCadenaConCaracteres(value, "0", pLongitud, false);
+        	}
+            elemento_local.value = value;
         }
     } catch (e){
     }
