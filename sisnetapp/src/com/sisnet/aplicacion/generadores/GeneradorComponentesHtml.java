@@ -55,9 +55,8 @@ public class GeneradorComponentesHtml
   public String getMetaData() {
     String metaData_local = "";
     try {
-      metaData_local = mc.concatenarCadena(metaData_local, "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\">\n");
-      
-      metaData_local = mc.concatenarCadena(metaData_local, "<META name=\"language\" content=\"es\">\n");
+      metaData_local += "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\">\n";
+      metaData_local += "<META name=\"language\" content=\"es\">\n";
     } catch (Exception excepcion) {
       excepcion.printStackTrace();
     } 
