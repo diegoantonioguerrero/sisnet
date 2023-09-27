@@ -1,5 +1,4 @@
 package com.sisnet.servlets;
-import com.sisnet.aplicacion.generadores.GeneradorPagina;
 import com.sisnet.aplicacion.manejadores.ManejadorAplicacion;
 import com.sisnet.aplicacion.manejadores.ManejadorArchivos;
 import com.sisnet.aplicacion.manejadores.ManejadorCadenas;
