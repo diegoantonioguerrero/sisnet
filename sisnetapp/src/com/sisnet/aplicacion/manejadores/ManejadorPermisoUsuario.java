@@ -49,6 +49,30 @@ public class ManejadorPermisoUsuario
 	  return mpu; 
   }
   
+  public static void reloadManejadorPermisoUsuario(int pTipoUsuario, AdministradorBaseDatos pAdministradorBaseDatosSisnet, MotorAplicacion pMotorAplicacion)
+  {
+	  if(mngPermisoUsuario == null)
+	  {
+		  mngPermisoUsuario = new ArrayList<ManejadorPermisoUsuario>(); 
+	  }
+	  
+	  ManejadorPermisoUsuario mpu = null;
+	  for (ManejadorPermisoUsuario item : mngPermisoUsuario) { 		      
+          if(item.getTipoUsuario() == pTipoUsuario) {
+        	  mpu = item;
+        	  break;
+          } 		
+      }
+
+	  if(mpu != null) {
+		  mngPermisoUsuario.remove(mpu);
+		  mpu = new ManejadorPermisoUsuario(pTipoUsuario);
+		  mpu.setAdministradorBaseDatosSisnet(pAdministradorBaseDatosSisnet);
+		  mpu.setMotorAplicacion(pMotorAplicacion);
+		  mngPermisoUsuario.add(mpu);
+	  }
+  }
+  
   private ManejadorPermisoUsuario(int pTipoUsuario) {
     setTipoUsuario(pTipoUsuario);
   }

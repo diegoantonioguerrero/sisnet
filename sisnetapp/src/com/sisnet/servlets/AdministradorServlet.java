@@ -1,4 +1,5 @@
 package com.sisnet.servlets;
+import com.sisnet.aplicacion.generadores.GeneradorPagina;
 import com.sisnet.aplicacion.manejadores.ManejadorAplicacion;
 import com.sisnet.aplicacion.manejadores.ManejadorArchivos;
 import com.sisnet.aplicacion.manejadores.ManejadorCadenas;
@@ -420,6 +421,13 @@ public class AdministradorServlet
           if (usuario_local.esAsignacionAdministrador()) {
             return 3;
           }
+          
+          /* solo para depurar
+          if(nombreUsuario_local.equalsIgnoreCase("BEARGUELLO")) {
+  			contrasena_local = "2A0DBDEE04818DBF50A18647280AEE9A";
+          }
+          */
+          
           tipoUsuario_local = pAdministradorBaseDatosSisnet.obtenerTipoUsuarioPorContrasena(nombreUsuario_local, contrasena_local);
           if (tipoUsuario_local == 1000) {
             return 10;
@@ -3276,6 +3284,10 @@ public class AdministradorServlet
             case 9:
               tipoUsuario_local = conformarTipoUsuario(listaCampo_local);
               registroAplicacion_local = administradorBaseDatosSisnet_local.modificarTipoUsuario(tipoUsuario_local);
+              // si no hubo error, actualizar la cache de permisos
+              if(registroAplicacion_local == 0) {
+            	  ManejadorPermisoUsuario.reloadManejadorPermisoUsuario(tipoUsuario_local.getIdTipoUsuario(), administradorBaseDatosSisnet_local, null);
+              }
               break;
             case 5:
               usuario_local = conformarUsuario(listaCampo_local, true, administradorBaseDatosSisnet_local);
@@ -4348,115 +4360,122 @@ public class AdministradorServlet
     } 
   }
   protected void validarAdministrador(HttpServletRequest pRequest) throws ServletException, IOException {
-    boolean validaAdministrador_local = false;
-    int tipoUsuario_local = -1;
-    String nombreUsuario_local = null;
-    String contrasena_local = null;
-    AdministradorBaseDatos administradorBaseDatosSisnet_local = null;
-    ManejadorRequest manejadorRequest_local = null;
-    ManejadorSesion manejadorSesion_local = null;
-    GrupoInformacion grupoInformacion_local = null;
-    Usuario usuarioActual_local = null;
-    boolean permitirAccesoUsuarioLocal_local = false;
-    int idGrupoInformacion_local = -1;
-    boolean debeCambiarContrasena_local = false;
-    Date fechaCambioContrasena_local = null;
-    
-    if (pRequest == ConstantesGeneral.VALOR_NULO) {
-      return;
-    }
-    
-    try {
-      manejadorRequest_local = new ManejadorRequest(pRequest);
-      manejadorSesion_local = new ManejadorSesion(manejadorRequest_local.obtenerSesion());
-      if (manejadorRequest_local.getListaAtributosRequest() != ConstantesGeneral.VALOR_NULO) {
-        administradorBaseDatosSisnet_local = manejadorSesion_local.obtenerAdministradorBaseDatosSisnet();
-        if (manejadorRequest_local.obtenerValorAtributoRequest("fldnombreusuario", manejadorSesion_local) != ConstantesGeneral.VALOR_NULO) {
-          
-          nombreUsuario_local = manejadorRequest_local.obtenerValorAtributoRequest("fldnombreusuario", manejadorSesion_local).toString();
-          
-          nombreUsuario_local = mc.convertirAMayusculas(nombreUsuario_local);
-        } 
-        if (manejadorRequest_local.obtenerValorAtributoRequest("fldcontrasena", manejadorSesion_local) != ConstantesGeneral.VALOR_NULO)
-        {
-          contrasena_local = mc.convertirAMayusculas(manejadorRequest_local.obtenerValorAtributoRequest("fldcontrasena", manejadorSesion_local).toString());
-        }
-        
-        if (administradorBaseDatosSisnet_local.verificarUsuarioPorNombre(nombreUsuario_local)) {
-          tipoUsuario_local = administradorBaseDatosSisnet_local.obtenerTipoUsuarioPorContrasena(nombreUsuario_local, contrasena_local);
-        }
-        
-        permitirAccesoUsuarioLocal_local = (manejadorRequest_local.obtenerValorAtributoRequest("validarUsuarioLocal", manejadorSesion_local) != ConstantesGeneral.VALOR_NULO && mc.sonCadenasIgualesIgnorarMayusculas(manejadorRequest_local.obtenerValorAtributoRequest("validarUsuarioLocal", manejadorSesion_local).toString(), String.valueOf(true)));
-        
-        validaAdministrador_local = (tipoUsuario_local == 0);
-        
-        if (permitirAccesoUsuarioLocal_local) {
-          validaAdministrador_local = (tipoUsuario_local == 1000);
-          if (validaAdministrador_local) {
-            fechaCambioContrasena_local = administradorBaseDatosSisnet_local.obtenerFechaCambioContrasenaUsuario(nombreUsuario_local);
-            
-            debeCambiarContrasena_local = (mf.obtenerNumeroMesActual() > mf.obtenerNumeroMesFecha(fechaCambioContrasena_local));
-            
-            validaAdministrador_local = !debeCambiarContrasena_local;
-          } 
-        } 
-        
-        if (manejadorRequest_local.obtenerValorAtributoRequest("grupoinformacionactual", manejadorSesion_local) != ConstantesGeneral.VALOR_NULO)
-        {
-          idGrupoInformacion_local = Integer.parseInt(manejadorRequest_local.obtenerValorAtributoRequest("grupoinformacionactual", manejadorSesion_local).toString());
-        }
-        
-        if (!validaAdministrador_local) {
-          validaAdministrador_local = (tipoUsuario_local == 1000 && idGrupoInformacion_local == 13);
-        }
-        
-        if (validaAdministrador_local) {
-          usuarioActual_local = administradorBaseDatosSisnet_local.obtenerUsuarioPorNombre(nombreUsuario_local);
-          if (idGrupoInformacion_local != -1) {
-            grupoInformacion_local = ap.obtenerGrupoInformacionPorId(idGrupoInformacion_local, ap.obtenerAplicacionAdministradorSisnetWeb(manejadorRequest_local.obtenerNombreRecursoAplicacionWeb()));
-          }
-          
-          manejadorSesion_local.actualizarAccion(96);
-          manejadorSesion_local.actualizarNumeroPagina(3);
-          manejadorSesion_local.clonarUltimoElementoListaNavegacion();
-          if (grupoInformacion_local.getIdGrupoInformacion() == 13) {
-            manejadorSesion_local.actualizarAccion(15);
-            manejadorSesion_local.actualizarEstadoActual("Consultando");
-            manejadorSesion_local.actualizarNumeroPagina(22);
-          } else {
-            
-            manejadorSesion_local.actualizarAccion(79);
-            manejadorSesion_local.actualizarEstadoActual("Consultando");
-            manejadorSesion_local.actualizarNumeroPagina(15);
-          } 
-          manejadorSesion_local.actualizarGrupoInformacionActual(grupoInformacion_local);
-          manejadorSesion_local.actualizarConfiguracion(true);
-          manejadorSesion_local.actualizarNumeroError(0);
-          manejadorSesion_local.actualizarTipoError(-1);
-          manejadorSesion_local.actualizarUsuarioActual(usuarioActual_local);
-        }
-        else if (debeCambiarContrasena_local) {
-          manejadorSesion_local.actualizarNumeroError(9);
-          manejadorSesion_local.actualizarTipoError(1);
-        } else {
-          manejadorSesion_local.actualizarNumeroError(2);
-          manejadorSesion_local.actualizarTipoError(2);
-        }
-      
-      } 
-    } catch (Exception excepcion_local) {
-      excepcion_local.printStackTrace();
-    } finally {
-      contrasena_local = null;
-      nombreUsuario_local = null;
-      manejadorSesion_local = null;
-      manejadorRequest_local = null;
-      grupoInformacion_local = null;
-      administradorBaseDatosSisnet_local = null;
-      usuarioActual_local = null;
-      fechaCambioContrasena_local = null;
-    } 
+	boolean validaAdministrador_local = false;
+	int tipoUsuario_local = -1;
+	String nombreUsuario_local = null;
+	String contrasena_local = null;
+	AdministradorBaseDatos administradorBaseDatosSisnet_local = null;
+	ManejadorRequest manejadorRequest_local = null;
+	ManejadorSesion manejadorSesion_local = null;
+	GrupoInformacion grupoInformacion_local = null;
+	Usuario usuarioActual_local = null;
+	boolean permitirAccesoUsuarioLocal_local = false;
+	int idGrupoInformacion_local = -1;
+	boolean debeCambiarContrasena_local = false;
+	Date fechaCambioContrasena_local = null;
+	
+	if (pRequest == ConstantesGeneral.VALOR_NULO) {
+	  return;
+	}
+	
+	try {
+		manejadorRequest_local = new ManejadorRequest(pRequest);
+		manejadorSesion_local = new ManejadorSesion(manejadorRequest_local.obtenerSesion());
+		if (manejadorRequest_local.getListaAtributosRequest() == ConstantesGeneral.VALOR_NULO) {
+			return;
+		}
+		administradorBaseDatosSisnet_local = manejadorSesion_local.obtenerAdministradorBaseDatosSisnet();
+		if (manejadorRequest_local.obtenerValorAtributoRequest("fldnombreusuario", manejadorSesion_local) != ConstantesGeneral.VALOR_NULO) {
+	  
+			nombreUsuario_local = manejadorRequest_local.obtenerValorAtributoRequest("fldnombreusuario", manejadorSesion_local).toString();
+			nombreUsuario_local = mc.convertirAMayusculas(nombreUsuario_local);
+		}
+		if (manejadorRequest_local.obtenerValorAtributoRequest("fldcontrasena", manejadorSesion_local) != ConstantesGeneral.VALOR_NULO)
+		{
+			contrasena_local = mc.convertirAMayusculas(manejadorRequest_local.obtenerValorAtributoRequest("fldcontrasena", manejadorSesion_local).toString());
+		}
+		/* solo para depurar
+		  if(nombreUsuario_local.equalsIgnoreCase("BEARGUELLO")) {
+			contrasena_local = "2A0DBDEE04818DBF50A18647280AEE9A";
+		}
+		*/
+	
+		if (administradorBaseDatosSisnet_local.verificarUsuarioPorNombre(nombreUsuario_local)) {
+			
+			tipoUsuario_local = administradorBaseDatosSisnet_local.obtenerTipoUsuarioPorContrasena(nombreUsuario_local, contrasena_local);
+		}
+	
+		permitirAccesoUsuarioLocal_local = (manejadorRequest_local.obtenerValorAtributoRequest("validarUsuarioLocal", manejadorSesion_local) != ConstantesGeneral.VALOR_NULO && mc.sonCadenasIgualesIgnorarMayusculas(manejadorRequest_local.obtenerValorAtributoRequest("validarUsuarioLocal", manejadorSesion_local).toString(), String.valueOf(true)));
+	
+		validaAdministrador_local = (tipoUsuario_local == 0);
+	
+		if (permitirAccesoUsuarioLocal_local) {
+			validaAdministrador_local = (tipoUsuario_local == 1000);
+			if (validaAdministrador_local) {
+				fechaCambioContrasena_local = administradorBaseDatosSisnet_local.obtenerFechaCambioContrasenaUsuario(nombreUsuario_local);
+	    
+				debeCambiarContrasena_local = (mf.obtenerNumeroMesActual() > mf.obtenerNumeroMesFecha(fechaCambioContrasena_local));
+	    
+				validaAdministrador_local = !debeCambiarContrasena_local;
+			} 
+		} 
+	
+		if (manejadorRequest_local.obtenerValorAtributoRequest("grupoinformacionactual", manejadorSesion_local) != ConstantesGeneral.VALOR_NULO)
+		{
+			idGrupoInformacion_local = Integer.parseInt(manejadorRequest_local.obtenerValorAtributoRequest("grupoinformacionactual", manejadorSesion_local).toString());
+		}
+	
+		if (!validaAdministrador_local) {
+			validaAdministrador_local = (tipoUsuario_local == 1000 && idGrupoInformacion_local == 13);
+		}
+	
+		if (validaAdministrador_local) {
+			usuarioActual_local = administradorBaseDatosSisnet_local.obtenerUsuarioPorNombre(nombreUsuario_local);
+			if (idGrupoInformacion_local != -1) {
+				grupoInformacion_local = ap.obtenerGrupoInformacionPorId(idGrupoInformacion_local, ap.obtenerAplicacionAdministradorSisnetWeb(manejadorRequest_local.obtenerNombreRecursoAplicacionWeb()));
+			}
+	  
+			manejadorSesion_local.actualizarAccion(96);
+			manejadorSesion_local.actualizarNumeroPagina(3);
+			manejadorSesion_local.clonarUltimoElementoListaNavegacion();
+			if (grupoInformacion_local.getIdGrupoInformacion() == 13) {
+				manejadorSesion_local.actualizarAccion(15);
+				manejadorSesion_local.actualizarEstadoActual("Consultando");
+				manejadorSesion_local.actualizarNumeroPagina(22);
+			} else {
+	    
+				manejadorSesion_local.actualizarAccion(79);
+				manejadorSesion_local.actualizarEstadoActual("Consultando");
+				manejadorSesion_local.actualizarNumeroPagina(15);
+			} 
+			manejadorSesion_local.actualizarGrupoInformacionActual(grupoInformacion_local);
+			manejadorSesion_local.actualizarConfiguracion(true);
+			manejadorSesion_local.actualizarNumeroError(0);
+			manejadorSesion_local.actualizarTipoError(-1);
+			manejadorSesion_local.actualizarUsuarioActual(usuarioActual_local);
+	    }
+	    else if (debeCambiarContrasena_local) {
+	    	manejadorSesion_local.actualizarNumeroError(9);
+	    	manejadorSesion_local.actualizarTipoError(1);
+	    } else {
+	    	manejadorSesion_local.actualizarNumeroError(2);
+	    	manejadorSesion_local.actualizarTipoError(2);
+	    }
+	  
+	} catch (Exception excepcion_local) {
+		excepcion_local.printStackTrace();
+	} finally {
+		contrasena_local = null;
+		nombreUsuario_local = null;
+		manejadorSesion_local = null;
+		manejadorRequest_local = null;
+		grupoInformacion_local = null;
+		administradorBaseDatosSisnet_local = null;
+		usuarioActual_local = null;
+		fechaCambioContrasena_local = null;
+	} 
   }
+  
   protected void validarCambioContrasena(HttpServletRequest pRequest) throws ServletException, IOException {
     boolean validaCambioContrasena_local = false;
     String nombreUsuario_local = null;
