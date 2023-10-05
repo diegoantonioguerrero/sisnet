@@ -3,8 +3,13 @@ import com.sisnet.constantes.ConstantesGeneral;
 import com.sisnet.objetosManejo.ItemLista;
 import com.sisnet.objetosManejo.listas.ListaCadenas;
 import com.sisnet.objetosManejo.listas.ListaGeneral;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+
 public class ManejadorCadenas
 {
   private static com.sisnet.aplicacion.manejadores.ManejadorCadenas manejadorCadenasSingleton = null;
@@ -1508,6 +1513,28 @@ public class ManejadorCadenas
     } 
     
     return cadenaHora_local;
+  }
+  
+  public String encodeAction(String actionParams) {
+	  try {
+          String[] parameters = actionParams.split("&");
+          String encodedAction = "";
+          String[] param;
+          List<String> finalParams = new ArrayList<String>();  
+          for(String parameter : parameters) {
+        	  
+        	  param = parameter.split("=");
+        	  encodedAction = param[0] + "=";
+        	  encodedAction += URLEncoder.encode(param[1], "UTF-8");
+        	  finalParams.add(encodedAction);
+          }
+          encodedAction = String.join("&", finalParams);
+          return encodedAction;  
+          
+      } catch (UnsupportedEncodingException e) {
+          e.printStackTrace();
+      }
+	  return actionParams;
   }
 }
 /* Location:              D:\Personal\sisnet\sisnetMasterApp\sisnetapp.war!\WEB-INF\classes\com\sisnet\aplicacion\manejadores\ManejadorCadenas.class

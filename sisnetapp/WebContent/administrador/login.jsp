@@ -18,7 +18,6 @@
         manejadorRequest_local = new ManejadorRequest(request);
         manejadorSesion_local = new ManejadorSesion(manejadorRequest_local.obtenerSesion());
         manejadorAplicacion_local = ManejadorAplicacion.getManejadorAplicacion();
-        //coco
         String rutaArchivo_local = getServletContext().getRealPath(com.sisnet.constantes.ConstantesBaseDatos.const_rutaConfigPostgres);
         //ConexionPostgres conexionPostgres_local = manejadorAplicacion_local.obtenerConexionPostgres(rutaArchivo_local);
         

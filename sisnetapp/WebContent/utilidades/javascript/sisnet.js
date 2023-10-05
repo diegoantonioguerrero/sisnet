@@ -50,6 +50,36 @@ var parrafo = "ingrese un texto que contenga solo letras, numeros y/o espacios";
 /*                  CODIGO PARA FUNCIONES BASICAS                         */
 /* ---------------------------------------------------------------------- */
 
+if (!Array.prototype.indexOf) {
+    Array.prototype.indexOf = function (searchElement, fromIndex) {
+        if (this == null) {
+            throw new TypeError('"this" is null or not defined');
+        }
+
+        var length = this.length >>> 0; // asegura que length sea un n√∫mero no negativo entero
+        fromIndex = +fromIndex || 0;
+
+        if (Math.abs(fromIndex) === Infinity) {
+            fromIndex = 0;
+        }
+
+        if (fromIndex < 0) {
+            fromIndex += length;
+            if (fromIndex < 0) {
+                fromIndex = 0;
+            }
+        }
+
+        for (; fromIndex < length; fromIndex++) {
+            if (this[fromIndex] === searchElement) {
+                return fromIndex;
+            }
+        }
+
+        return -1;
+    };
+}
+
 
 /* s es vacio */
 function verificarEstaVacio(s)
@@ -488,7 +518,7 @@ function esNumeroEnteroDigitacionPaste(e, positive){
   e.target = e.target ? e.target : window.event.srcElement;
   var data = "";
   
-  // Obtiene el texto que se est· intentando pegar
+  // Obtiene el texto que se estÔøΩ intentando pegar
   if (window.clipboardData && window.clipboardData.getData) { // IE
      data = window.clipboardData.getData('Text');
   }
@@ -530,7 +560,7 @@ function esNumeroEnteroDigitacionDrop(e, positive){
 	  }
 	
 	  e.target = e.target ? e.target : window.event.srcElement;
-	  // Obtiene el texto que se est· intentando pegar
+	  // Obtiene el texto que se estÔøΩ intentando pegar
 	  var data = e.dataTransfer.getData("Text");
 	
 	  // Split and rejoin, keeping only first occurence of `-`
@@ -620,7 +650,7 @@ function replaceSingleQuotePaste(e){
 	  var currentValue = e.target.value;
 	  
 	  if(e.type == 'paste'){
-		  // Obtiene el texto que se est· intentando pegar
+		  // Obtiene el texto que se estÔøΩ intentando pegar
 		  if (window.clipboardData && window.clipboardData.getData) { // IE
 		     data = window.clipboardData.getData('Text');
 		  }
@@ -630,7 +660,7 @@ function replaceSingleQuotePaste(e){
 	  }
 	  else{
 	  	  currentValue = "";
-		   // Obtiene el texto que se est· intentando pegar
+		   // Obtiene el texto que se estÔøΩ intentando pegar
 		  data = e.dataTransfer.getData("Text");
 	  }
 	//var dt = data;
@@ -850,7 +880,7 @@ function esNumeroRealDigitacionPaste(e, positive){
 	
 	  var data = "";
 	  
-	  // Obtiene el texto que se est· intentando pegar
+	  // Obtiene el texto que se estÔøΩ intentando pegar
 	  if (window.clipboardData && window.clipboardData.getData) { // IE
 	     data = window.clipboardData.getData('Text');
 	  }
@@ -902,7 +932,7 @@ function esNumeroRealDigitacionDrop(e, positive){
 	   e.returnValue = false;
 	  }
 	  e.target = e.target ? e.target : window.event.srcElement;
-	  // Obtiene el texto que se est· intentando pegar
+	  // Obtiene el texto que se estÔøΩ intentando pegar
 	  var data = e.dataTransfer.getData("Text");
 	
 	  // Split and rejoin, keeping only first occurence of `.`
@@ -2140,3 +2170,46 @@ jQuery(document).ready(function($) {
 	/**/
 });
 
+/*
+function setDebugger(){
+
+var elemento = document.getElementById("debugger");
+ 
+// Asigna los atributos CSS
+elemento.style.position = 'absolute';
+elemento.style.left = '0px';
+elemento.style.width = '300px';
+elemento.style.height = '300px';
+elemento.style.backgroundColor = 'blue';
+elemento.style.zIndex = '1000';
+ // Limpia el contenido actual del div
+elemento.innerHTML = '';
+
+// Crea un nuevo textarea
+var textarea = document.createElement('textarea');
+
+// Establece el atributo 'rows' y 'cols' seg√∫n sea necesario
+textarea.rows = 10; // Establece el n√∫mero de filas
+textarea.cols = 30; // Establece el n√∫mero de columnas
+
+// Establece el estilo CSS para que ocupe el 100% del ancho y alto del contenedor
+textarea.style.width = '100%';
+textarea.style.height = '100%';
+
+// Agrega el textarea al div
+elemento.appendChild(textarea);
+var frmIncluir = document.formularioIncluir
+var textoAgregado = frmIncluir.id;
+textoAgregado += " \r\nItemsCampoCalculado=" + frmIncluir.FLDCAMPOCALCULADO.length;
+textoAgregado += " \r\nSelect=" + frmIncluir.FLDCAMPOCALCULADO;
+textoAgregado += " \r\nselectedIndex=" + frmIncluir.FLDCAMPOCALCULADO.selectedIndex;
+var seleccion_local = parseInt(frmIncluir.FLDCAMPOCALCULADO[frmIncluir.FLDCAMPOCALCULADO.selectedIndex].value);
+textoAgregado += " \r\nseleccion_local=" + seleccion_local;
+textoAgregado += " \r\ntypeof seleccion_local=" + (typeof seleccion_local);
+textoAgregado += " \r\nfrmIncluir.FLDIDCAMPOORIGENUNO=" + (frmIncluir.FLDIDCAMPOORIGENUNO);
+textoAgregado += " \r\nfrmIncluir.FLDIDCAMPOORIGENDOS=" + (frmIncluir.FLDIDCAMPOORIGENDOS);
+
+textarea.value = textoAgregado;
+
+}
+*/

@@ -4575,7 +4575,7 @@ public class AdministradorServlet
           }
           
           manejadorSesion_local.borrarUltimoElementoListaNavegacion();
-          manejadorSesion_local.actualizarAccion(96);
+          manejadorSesion_local.actualizarAccion(com.sisnet.constantes.ConstantesAdministrador.const_AccionSalirAplicacion);
           manejadorSesion_local.actualizarNumeroPagina(3);
           manejadorSesion_local.actualizarNumeroError(24);
           manejadorSesion_local.actualizarTipoError(3);
@@ -5229,7 +5229,7 @@ public class AdministradorServlet
             manejadorSesion_local.borrarUltimoElementoListaNavegacion();
             break;
           
-          case 96:
+          case com.sisnet.constantes.ConstantesAdministrador.const_AccionSalirAplicacion:
             cerrarSesion(request);
             break;
           

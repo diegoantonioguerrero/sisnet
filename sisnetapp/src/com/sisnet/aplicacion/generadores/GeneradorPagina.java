@@ -2,6 +2,7 @@ package com.sisnet.aplicacion.generadores;
 
 import com.sisnet.aplicacion.manejadores.ManejadorAplicacion;
 import com.sisnet.aplicacion.manejadores.ManejadorCadenas;
+import com.sisnet.aplicacion.manejadores.ManejadorEventos;
 import com.sisnet.aplicacion.manejadores.ManejadorHabilitacionCampos;
 import com.sisnet.aplicacion.manejadores.ManejadorPermisoUsuario;
 import com.sisnet.aplicacion.manejadores.ManejadorRequest;
@@ -9,7 +10,6 @@ import com.sisnet.aplicacion.manejadores.ManejadorResultadoConsultaSQL;
 import com.sisnet.aplicacion.manejadores.ManejadorSesion;
 import com.sisnet.aplicacion.manejadores.informacionRecalculable.ManejadorInformacionRecalculable;
 import com.sisnet.baseDatos.AdministradorBaseDatos;
-import com.sisnet.baseDatos.ConexionBaseDatos;
 import com.sisnet.baseDatos.ConexionPostgres;
 import com.sisnet.baseDatos.consultasBaseDatos.ConsultasAdministrador;
 import com.sisnet.baseDatos.sisnet.administrador.Aplicacion;
@@ -17,7 +17,9 @@ import com.sisnet.baseDatos.sisnet.administrador.Campo;
 import com.sisnet.baseDatos.sisnet.administrador.GrupoInformacion;
 import com.sisnet.constantes.ConstantesGeneral;
 import com.sisnet.constantes.ConstantesMensajesAplicacion;
+import com.sisnet.constantes.ConstantesAdministrador;
 import com.sisnet.controlesHTML.Formulario;
+import com.sisnet.motorAplicacion.MotorAplicacion;
 import com.sisnet.objetosManejo.AtributoSesion;
 import com.sisnet.objetosManejo.ItemLista;
 import com.sisnet.objetosManejo.listas.ListaBotones;
@@ -1976,36 +1978,37 @@ public class GeneradorPagina
     {
         String eventosBody_local = "";
 
-        if (pListaCampo == ConstantesGeneral.VALOR_NULO)
-        {
-            return eventosBody_local;
-        }
-        if (pNombreFormulario == ConstantesGeneral.VALOR_NULO)
+        if (pListaCampo == ConstantesGeneral.VALOR_NULO || 
+        		pNombreFormulario == ConstantesGeneral.VALOR_NULO ||
+        		pListaCampo.contarElementos() == 0)
         {
             return eventosBody_local;
         }
 
         try
         {
-            if (pListaCampo.contarElementos() > 0)
+
+        	MotorAplicacion motorAplicacion_local = getManejadorSesion().obtenerMotorAplicacion(); 
+
+        	if ( motorAplicacion_local != ConstantesGeneral.VALOR_NULO && (
+        			motorAplicacion_local.verificarGrupoContieneCamposCalculadosNoRecalculables(
+        					pListaCampo.obtenerPrimerCampo().getGrupoInformacion()) || 
+        					motorAplicacion_local.verificarGrupoContieneCamposCalculadosRecalculables(pListaCampo.obtenerPrimerCampo().getGrupoInformacion())))
             {
-                if (getManejadorSesion().obtenerMotorAplicacion() != ConstantesGeneral.VALOR_NULO && (
-                  getManejadorSesion().obtenerMotorAplicacion().verificarGrupoContieneCamposCalculadosNoRecalculables(pListaCampo.obtenerPrimerCampo().getGrupoInformacion()) || getManejadorSesion().obtenerMotorAplicacion().verificarGrupoContieneCamposCalculadosRecalculables(pListaCampo.obtenerPrimerCampo().getGrupoInformacion())))
-                {
 
-                    if (mc.esCadenaVacia(eventosBody_local))
-                    {
-                        eventosBody_local = " onLoad=\"";
-                    }
-                    eventosBody_local = mc.concatenarCadena(eventosBody_local, "ejecutarOperaciones(); ejecutarOperaciones(); ejecutarOperaciones();");
-                    eventosBody_local = mc.concatenarCadena(eventosBody_local, String.valueOf(';'));
-                }
-
-                if (!mc.esCadenaVacia(eventosBody_local))
+                if (mc.esCadenaVacia(eventosBody_local))
                 {
-                    eventosBody_local = mc.concatenarCadena(eventosBody_local, String.valueOf('"'));
+                    eventosBody_local = " onLoad=\"";
                 }
+                eventosBody_local = mc.concatenarCadena(eventosBody_local, "ejecutarOperaciones(); ejecutarOperaciones(); ejecutarOperaciones();");
+                eventosBody_local = mc.concatenarCadena(eventosBody_local, String.valueOf(';'));
             }
+
+            if (!mc.esCadenaVacia(eventosBody_local))
+            {
+                eventosBody_local = mc.concatenarCadena(eventosBody_local, String.valueOf('"'));
+            }
+
         }
         catch (Exception excepcion)
         {
@@ -2544,12 +2547,13 @@ public class GeneradorPagina
         try
         {
             javascriptCambiarOrigenDos_local = "function cambiarOrigenDos(){ \n "
-    		+"var opcioncampoConcatenado = [11,12,21,22,23,24,27,28];\n";
-            javascriptCambiarOrigenDos_local += "limpiarLista (document.formularioIncluir.FLDIDCAMPOORIGENDOS);\n";
-            javascriptCambiarOrigenDos_local += "var seleccion_local = parseInt(document.formularioIncluir." + mc.convertirAMayusculas("fldcampocalculado") + "[document." + "formularioIncluir" + '.' + mc.convertirAMayusculas("fldcampocalculado") + ".selectedIndex].value);\n";
-            javascriptCambiarOrigenDos_local += "var esSumaResta_local = ((seleccion_local == 5) || (seleccion_local == 6));\n";
-            javascriptCambiarOrigenDos_local += "  if(esSumaResta_local || seleccion_local == 7 || seleccion_local == 8 || seleccion_local == 43){\n"
-            +"     if(verificarCampoEnGrupoMultiple(document.formularioIncluir." + mc.convertirAMayusculas("fldidcampoorigenuno") + ")){\n" 
+    		+"try{"
+    		+ "var opcioncampoConcatenado = [11,12,21,22,23,24,27,28];\n"
+            + "limpiarLista (document.formularioIncluir.FLDIDCAMPOORIGENDOS);\n"
+            + "var seleccion_local = parseInt(document.formularioIncluir." + mc.convertirAMayusculas("fldcampocalculado") + "[document." + "formularioIncluir" + '.' + mc.convertirAMayusculas("fldcampocalculado") + ".selectedIndex].value);\n"
+            + "var esSumaResta_local = ((seleccion_local == 5) || (seleccion_local == 6));\n"
+            + "  if(esSumaResta_local || seleccion_local == 7 || seleccion_local == 8 || seleccion_local == 43){\n"
+            + "     if(verificarCampoEnGrupoMultiple(document.formularioIncluir." + mc.convertirAMayusculas("fldidcampoorigenuno") + ")){\n" 
             + "       obtenerlistaCamposNumericosGruposNoMultiples(document.formularioIncluir.FLDIDCAMPOORIGENDOS); \n" 
             + "       obtenerlistaCamposFechasGruposNoMultiples(document.formularioIncluir.FLDIDCAMPOORIGENDOS); \n" 
             + "       llenarCampoOrigenDos(esSumaResta_local);\n     } else { \n" 
@@ -2570,6 +2574,7 @@ public class GeneradorPagina
             + "           obtenerlistaCamposNumericosMismoGrupo(document." + "formularioIncluir.FLDIDCAMPOORIGENDOS); \n" 
             + "         } \n" 
             + "     } \n" + " } \n "
+            + "}catch(err) { alert(err.message);} \n"
             +"}\n";
         }
         catch (Exception excepcion)
@@ -4663,41 +4668,42 @@ public class GeneradorPagina
 
         try
         {
+        	GeneradorComponentesHtml gch_local = getGeneradorComponentesHtml();
             stringBuffer_local = new StringBuffer();
-            stringBuffer_local.append(getGeneradorComponentesHtml().abrirHead());
-            stringBuffer_local.append(getGeneradorComponentesHtml().getMetaData());
-            stringBuffer_local.append(getGeneradorComponentesHtml().getTituloPagina());
-            stringBuffer_local.append(getGeneradorComponentesHtml().getHojaEstiloSisnet(pNivelesAnterioresDirectorio));
+            stringBuffer_local.append(gch_local.abrirHead());
+            stringBuffer_local.append(gch_local.getMetaData());
+            stringBuffer_local.append(gch_local.getTituloPagina());
+            stringBuffer_local.append(gch_local.getHojaEstiloSisnet(pNivelesAnterioresDirectorio));
 
-            stringBuffer_local.append(getGeneradorComponentesHtml().getHojaEstiloCalendario(pNivelesAnterioresDirectorio));
+            stringBuffer_local.append(gch_local.getHojaEstiloCalendario(pNivelesAnterioresDirectorio));
 
-            stringBuffer_local.append(getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/calendario/", "calendario.js", pNivelesAnterioresDirectorio));
+            stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/calendario/", "calendario.js", pNivelesAnterioresDirectorio));
 
-            stringBuffer_local.append(getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/calendario/", "calendario-espanol.js", pNivelesAnterioresDirectorio));
+            stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/calendario/", "calendario-espanol.js", pNivelesAnterioresDirectorio));
 
-            stringBuffer_local.append(getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/calendario/", "mostrarcalendario.js", pNivelesAnterioresDirectorio));
+            stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/calendario/", "mostrarcalendario.js", pNivelesAnterioresDirectorio));
 
-            stringBuffer_local.append(getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "encripcion.js", pNivelesAnterioresDirectorio));
+            stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/", "encripcion.js", pNivelesAnterioresDirectorio));
 
-            stringBuffer_local.append(getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "jquery-3.6.0.min.js", pNivelesAnterioresDirectorio));
-            stringBuffer_local.append(getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js?v=1.2", pNivelesAnterioresDirectorio));
+            stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/", "jquery-3.6.0.min.js", pNivelesAnterioresDirectorio));
+            stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js?v=1.3", pNivelesAnterioresDirectorio));
 
-            stringBuffer_local.append(getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "operaciones.js", pNivelesAnterioresDirectorio));
+            stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/", "operaciones.js", pNivelesAnterioresDirectorio));
 
             if (pExisteActuacion)
             {
-                stringBuffer_local.append(getGeneradorComponentesHtml().incluirLibreriaJavascript("../", "fckeditor.js", 0));
+                stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../", "fckeditor.js", 0));
             }
 
-            stringBuffer_local.append(getGeneradorComponentesHtml().abrirBloqueJavascript());
-            stringBuffer_local.append(getGeneradorComponentesHtml().ocultarBarraEstado());
+            stringBuffer_local.append(gch_local.abrirBloqueJavascript());
+            stringBuffer_local.append(gch_local.ocultarBarraEstado());
             if (mc.sonCadenasIgualesIgnorarMayusculas(cp.obtenerValorPropiedadSisnet("BLOQUEAR_SELECCION_CONTENIDO"), "Si"))
             {
-                stringBuffer_local.append(getGeneradorComponentesHtml().inhabilitarSeleccion());
+                stringBuffer_local.append(gch_local.inhabilitarSeleccion());
             }
             stringBuffer_local.append(obtenerSeccionJavascript(pListaCampo, pNombreFormulario, pEsSoloConsulta));
-            stringBuffer_local.append(getGeneradorComponentesHtml().cerrarBloqueJavascript());
-            stringBuffer_local.append(getGeneradorComponentesHtml().cerrarHead());
+            stringBuffer_local.append(gch_local.cerrarBloqueJavascript());
+            stringBuffer_local.append(gch_local.cerrarHead());
             encabezadoPagina_local = stringBuffer_local.toString();
         }
         catch (Exception excepcion)
@@ -4771,7 +4777,6 @@ return pagina_local;
 
     try
     {
-    	/*coco*/
         rutaArchivo_local = getManejadorSesion().obtenerRutaRealArchivoSesion(com.sisnet.constantes.ConstantesBaseDatos.const_rutaConfigPostgres);
         conexionPostgres_local = ap.obtenerConexionPostgres(rutaArchivo_local);
         administradorBaseDatos_local = new AdministradorBaseDatos(ap.obtenerConexionBaseDatosPostgres(conexionPostgres_local));
@@ -5572,7 +5577,6 @@ private void actualizarVersion()
 
     try
     {
-    	/*coco*/
          rutaArchivo_local = getManejadorSesion().obtenerRutaRealArchivoSesion(com.sisnet.constantes.ConstantesBaseDatos.const_rutaConfigPostgres);
          conexionPostgres_local = ap.obtenerConexionPostgres(rutaArchivo_local);
 
@@ -5752,9 +5756,8 @@ private boolean verificarRealizaTransaccion()
         existeSisnet_local = verificarExistenciaBaseDatosSisnet();
         if (existeSisnet_local)
         {
-        	/*coco*/
             rutaArchivo_local = getManejadorSesion().obtenerRutaRealArchivoSesion(com.sisnet.constantes.ConstantesBaseDatos.const_rutaConfigPostgres);
-            /**/
+
             objetoConexionBaseDatos_local = ap.obtenerConexionBaseDatosSisnet(getManejadorRequest().obtenerNombreRecursoAplicacion() , rutaArchivo_local);
             version01_local = new Version01(objetoConexionBaseDatos_local);
             actualizarVersion_local = version01_local.verificarActualizarVersion();
@@ -5795,7 +5798,7 @@ private String obtenerEncabezadoPaginaSisnet(boolean pExisteConexion)
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().getTituloPagina());
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().getHojaEstiloSisnet(0));
 
-        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js?v=1.2", 0));
+        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js?v=1.3", 0));
 
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().cerrarHead());
     }
@@ -5912,31 +5915,30 @@ public Pagina obtenerPaginaLogin() throws IOException
     
     try {
         existenAplicaciones_local = (getAdministradorBaseDatosSisnet().obtenerIdPrimeraAplicacion(1, -1) != -1);
-
+        ManejadorSesion manejadorSesion_local = getManejadorSesion();
         if (getManejadorRequest().obtenerValorAtributoRequest("accion", getManejadorSesion()) != ConstantesGeneral.VALOR_NULO)
         {
 
             if (getManejadorSesion().getSesion() != ConstantesGeneral.VALOR_NULO && Integer.parseInt(getManejadorRequest().obtenerValorAtributoRequest("accion", getManejadorSesion()).toString()) == 96)
             {
+            	ManejadorEventos manejadorEventos_local = manejadorSesion_local.obtenerManejadorEventos();
+            	manejadorEventos_local.setNombreEvento("FINALSESIONAPLICATIVO");
+            	manejadorEventos_local.setListaCampo(null);
+            	manejadorEventos_local.setListaCampoValoresAnteriores(null);
+            	manejadorEventos_local.setGrupoInformacion(getManejadorSesion().obtenerGrupoInformacionActual());
 
-                getManejadorSesion().obtenerManejadorEventos().setNombreEvento("FINALSESIONAPLICATIVO");
+            	manejadorEventos_local.setRealizarAccionUsuario(true);
 
-                getManejadorSesion().obtenerManejadorEventos().setListaCampo(null);
-                getManejadorSesion().obtenerManejadorEventos().setListaCampoValoresAnteriores(null);
-                getManejadorSesion().obtenerManejadorEventos().setGrupoInformacion(getManejadorSesion().obtenerGrupoInformacionActual());
+            	manejadorSesion_local.actualizarExistenEventosEnEjecucion(true);
+            	manejadorSesion_local.obtenerManejadorEventos().ejecutarEvento();
+            	manejadorSesion_local.actualizarExistenEventosEnEjecucion(!getManejadorSesion().obtenerManejadorEventos().haFinalizadoEjecucion());
 
-                getManejadorSesion().obtenerManejadorEventos().setRealizarAccionUsuario(true);
-
-                getManejadorSesion().actualizarExistenEventosEnEjecucion(true);
-                getManejadorSesion().obtenerManejadorEventos().ejecutarEvento();
-                getManejadorSesion().actualizarExistenEventosEnEjecucion(!getManejadorSesion().obtenerManejadorEventos().haFinalizadoEjecucion());
-
-                getManejadorSesion().cerrarSesion();
+            	manejadorSesion_local.cerrarSesion();
             }
         }
-        else if (getManejadorSesion().obtenerAccion() == 96)
+        else if (manejadorSesion_local.obtenerAccion() == 96)
         {
-            getManejadorSesion().cerrarSesion();
+        	manejadorSesion_local.cerrarSesion();
         }
         listaCampoLogin_local = ap.obtenerCamposLogin(existenAplicaciones_local);
         listaParametrosRedireccion_local = new ListaParametrosRedireccion();
@@ -5965,7 +5967,6 @@ public Pagina obtenerPaginaLogin() throws IOException
         formularioLogin_local.setListaCampo(listaCampoLogin_local);
 
         listaBotones_local.adicionar("ingresar", true, "", "Ingresar", "", 0, false, true);
-
         listaBotones_local.adicionar("cancelar", false, " onClick=\"return cerrarVentana();\"", "Cancelar", "login.jsp", 0, false, true);
 
         formularioLogin_local.setContenido(insertarFormulario(formularioLogin_local, listaCampoLogin_local, listaBotones_local, false, 1, "", -1, "center"));
@@ -5975,7 +5976,7 @@ public Pagina obtenerPaginaLogin() throws IOException
         listaParametrosRedireccion_local.borrarElementos();
         listaParametrosRedireccion_local.adicionar("accion", String.valueOf(11));
 
-        listaParametrosRedireccion_local.adicionar("grupoinformacionactual", String.valueOf(9));
+        listaParametrosRedireccion_local.adicionar(ConstantesAdministrador.PARAMETRO_GRUPO_INFORMACION_ACTUAL, String.valueOf(9));
 
         listaBotones_local.borrarElementos();
         listaBotones_local.adicionar("tiposusuario", false, "", "Tipos de Usuario", listaParametrosRedireccion_local.concatenarParametros(), 0, false);
@@ -5983,14 +5984,14 @@ public Pagina obtenerPaginaLogin() throws IOException
         listaParametrosRedireccion_local.borrarElementos();
         listaParametrosRedireccion_local.adicionar("accion", String.valueOf(11));
 
-        listaParametrosRedireccion_local.adicionar("grupoinformacionactual", String.valueOf(5));
+        listaParametrosRedireccion_local.adicionar(ConstantesAdministrador.PARAMETRO_GRUPO_INFORMACION_ACTUAL, String.valueOf(5));
 
         listaBotones_local.adicionar("registrousuario", false, "", "Registro Usuario", listaParametrosRedireccion_local.concatenarParametros(), 0, false);
 
         listaParametrosRedireccion_local.borrarElementos();
         listaParametrosRedireccion_local.adicionar("accion", String.valueOf(11));
 
-        listaParametrosRedireccion_local.adicionar("grupoinformacionactual", String.valueOf(12));
+        listaParametrosRedireccion_local.adicionar(ConstantesAdministrador.PARAMETRO_GRUPO_INFORMACION_ACTUAL, String.valueOf(12));
 
         listaBotones_local.adicionar("cambiarcontrasena", false, "", "Cambiar Contrase\u00f1a", listaParametrosRedireccion_local.concatenarParametros(), 0, false);
 
@@ -6001,7 +6002,7 @@ public Pagina obtenerPaginaLogin() throws IOException
         listaParametrosRedireccion_local.borrarElementos();
         listaParametrosRedireccion_local.adicionar("accion", String.valueOf(11));
 
-        listaParametrosRedireccion_local.adicionar("grupoinformacionactual", String.valueOf(13));
+        listaParametrosRedireccion_local.adicionar(ConstantesAdministrador.PARAMETRO_GRUPO_INFORMACION_ACTUAL, String.valueOf(13));
 
         listaBotones_local.borrarElementos();
         listaBotones_local.adicionar("botonoculto", false, "", "", listaParametrosRedireccion_local.concatenarParametros(), 0, false);
@@ -7381,7 +7382,7 @@ public Pagina obtenerPaginaLoginAcceso() throws IOException
             }
         }
 
-        listaParametrosRedireccion_local.adicionar("grupoinformacionactual", String.valueOf(idGrupoInformacion_local));
+        listaParametrosRedireccion_local.adicionar(ConstantesAdministrador.PARAMETRO_GRUPO_INFORMACION_ACTUAL, String.valueOf(idGrupoInformacion_local));
 
         formulario_local = new Formulario();
         formulario_local.setNombre("formularioLogin");
@@ -7426,27 +7427,30 @@ public Pagina obtenerPaginaCambiarContrasena() throws IOException
     try {
         pagina_local = new Pagina();
         listaCampo_local = ap.obtenerCamposCambioContrasena();
-        getManejadorRequest().asignarValoresAtributosRequestACampos(listaCampo_local, getManejadorSesion());
+        ManejadorSesion manejadorSesion_local = getManejadorSesion();
+        getManejadorRequest().asignarValoresAtributosRequestACampos(listaCampo_local, manejadorSesion_local);
         listaParametrosRedireccion_local = new ListaParametrosRedireccion();
         listaBotones_local = new ListaBotones();
-        getGeneradorComponentesHtml().setAnchoCampos("200");
+        GeneradorComponentesHtml gch_local = getGeneradorComponentesHtml();
+        gch_local.setAnchoCampos("200");
 
         pagina_local.setEncabezadoPagina(obtenerBloqueHeadPagina(listaCampo_local, "formularioCambioContrasena", 0, false, false));
 
-        pagina_local.setInicioCuerpoPagina(getGeneradorComponentesHtml().abrirBody(conformarEventosBody(listaCampo_local, "formularioCambioContrasena")));
+        pagina_local.setInicioCuerpoPagina(gch_local.abrirBody(conformarEventosBody(listaCampo_local, "formularioCambioContrasena")));
 
-        pagina_local.setContenidoDatos(getGeneradorComponentesHtml().insertarImagenCentrada("", "../imagenes/" + CargadorPropiedades.getCargadorPropiedades().obtenerValorPropiedadImagenes("IMAGEN_LOGO_ENTRADA"), "", "", true, false));
+        pagina_local.setContenidoDatos(gch_local.insertarImagenCentrada("", "../imagenes/" + CargadorPropiedades.getCargadorPropiedades().obtenerValorPropiedadImagenes("IMAGEN_LOGO_ENTRADA"), "", "", true, false));
 
         insertarMensajePagina(pagina_local);
-        pagina_local.setMensaje(mc.concatenarCadena(getGeneradorComponentesHtml().insertarMensaje(ConstantesMensajesAplicacion.const_DescripcionMensajeDigiteNuevaContrasena), pagina_local.getMensaje()));
+        pagina_local.setMensaje(mc.concatenarCadena(gch_local.insertarMensaje(ConstantesMensajesAplicacion.const_DescripcionMensajeDigiteNuevaContrasena), pagina_local.getMensaje()));
 
-        listaParametrosRedireccion_local.adicionar("accion", String.valueOf(13));
-
-        listaParametrosRedireccion_local.adicionar("grupoinformacionactual", String.valueOf(getManejadorSesion().obtenerGrupoInformacionActual()));
+        listaParametrosRedireccion_local.adicionar("accion", String.valueOf( ConstantesAdministrador.const_AccionCambiarContrasena));
+        listaParametrosRedireccion_local.adicionar(ConstantesAdministrador.PARAMETRO_GRUPO_INFORMACION_ACTUAL, String.valueOf(manejadorSesion_local.obtenerGrupoInformacionActual()));
 
         formulario_local = new Formulario();
         formulario_local.setNombre("formularioCambioContrasena");
-        formulario_local.setAction(listaParametrosRedireccion_local.concatenarParametros());
+        
+        String action = mc.encodeAction(listaParametrosRedireccion_local.concatenarParametros());
+        formulario_local.setAction(action);
         formulario_local.setEventoOnSubmit("return (verificarCampos() && verificarContrasena(document.formularioCambioContrasena.fldcontrasena.value ,document.formularioCambioContrasena.fldconfirmarcontrasena.value ));");
 
         formulario_local.setListaCampo(listaCampo_local);
@@ -7454,16 +7458,16 @@ public Pagina obtenerPaginaCambiarContrasena() throws IOException
         listaBotones_local.adicionar("aceptarmodificacion", true, "", "Aceptar Modificaci\u00f3n", "", 0, false);
 
         listaParametrosRedireccion_local.borrarElementos();
-        listaParametrosRedireccion_local.adicionar("accion", String.valueOf(96));
+        listaParametrosRedireccion_local.adicionar("accion", String.valueOf(ConstantesAdministrador.const_AccionSalirAplicacion));
 
         listaParametrosRedireccion_local.setRecursoDestino("login.jsp");
-        listaBotones_local.adicionar("cancelarmodificacion", false, "", "Cancelar Modificaci\u00f3n", listaParametrosRedireccion_local.concatenarParametros(), 0, false);
+        listaBotones_local.adicionar("cancelarmodificacion", false, "", "Cancelar Modificaci\u00f3n", action, 0, false);
 
         formulario_local.setContenido(insertarFormulario(formulario_local, listaCampo_local, listaBotones_local, false, 1, "", -1, "center"));
 
         pagina_local.setContenidoFormulario(formulario_local.dibujar());
 
-        pagina_local.setFinCuerpoPagina(getGeneradorComponentesHtml().cerrarBody());
+        pagina_local.setFinCuerpoPagina(gch_local.cerrarBody());
         listaParametrosRedireccion_local.borrarElementos();
     } catch (Throwable excepcion) {
         excepcion.printStackTrace();
@@ -7503,7 +7507,7 @@ public Pagina obtenerPaginaCambiarUsuarioAdministrador() throws IOException
 
         listaParametrosRedireccion_local.adicionar("accion", String.valueOf(15));
 
-        listaParametrosRedireccion_local.adicionar("grupoinformacionactual", String.valueOf(getManejadorSesion().obtenerGrupoInformacionActual()));
+        listaParametrosRedireccion_local.adicionar(ConstantesAdministrador.PARAMETRO_GRUPO_INFORMACION_ACTUAL, String.valueOf(getManejadorSesion().obtenerGrupoInformacionActual()));
 
         formulario_local = new Formulario();
         formulario_local.setNombre("formularioCambioContrasena");
@@ -7549,7 +7553,7 @@ private String obtenerEncabezadoPaginaConfiguracion()
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().getHojaEstiloSisnet(0));
 
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "jquery-3.6.0.min.js", 0));
-        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js?v=1.2", 0));
+        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js?v=1.3", 0));
 
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().abrirBloqueJavascript());
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, insertarJavascriptVerificarCampos("formularioIncluir", ap.obtenerCamposConfiguracion(), false));
