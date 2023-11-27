@@ -21,6 +21,7 @@ import com.sisnet.baseDatos.sisnet.administrador.GrupoInformacion;
 import com.sisnet.baseDatos.sisnet.administrador.Tabla;
 import com.sisnet.baseDatos.sisnet.usuario.TipoUsuario;
 import com.sisnet.baseDatos.sisnet.usuario.Usuario;
+import com.sisnet.constantes.ConstantesAdministrador;
 import com.sisnet.constantes.ConstantesGeneral;
 import com.sisnet.motorAplicacion.MotorAplicacion;
 import com.sisnet.objetosManejo.AtributoRequest;
@@ -4575,7 +4576,7 @@ public class AdministradorServlet
           }
           
           manejadorSesion_local.borrarUltimoElementoListaNavegacion();
-          manejadorSesion_local.actualizarAccion(com.sisnet.constantes.ConstantesAdministrador.const_AccionSalirAplicacion);
+          manejadorSesion_local.actualizarAccion(ConstantesAdministrador.const_AccionSalirAplicacion);
           manejadorSesion_local.actualizarNumeroPagina(3);
           manejadorSesion_local.actualizarNumeroError(24);
           manejadorSesion_local.actualizarTipoError(3);
@@ -5075,10 +5076,15 @@ public class AdministradorServlet
       manejadorRequest_local = new ManejadorRequest(request);
       manejadorSesion_local = new ManejadorSesion(manejadorRequest_local.obtenerSesion());
       tipoAutorizacion_local = 0;
-      accion_local = Integer.parseInt(manejadorRequest_local.obtenerValorAtributoRequest("accion", manejadorSesion_local).toString());
+      Object accion = manejadorRequest_local.obtenerValorAtributoRequest("accion", manejadorSesion_local);
+      if (accion == ConstantesGeneral.VALOR_NULO) {
+          return;
+      }
+      accion_local = Integer.parseInt(accion.toString());
       
       if (manejadorSesion_local.getSesion() != ConstantesGeneral.VALOR_NULO) {
-        int error_local; switch (accion_local) {
+        int error_local; 
+        switch (accion_local) {
           case 1:
             asignarEsConfiguracionListaNavegacion(request);
             manejadorSesion_local.obtenerManejadorEventos().setNombreEvento("FINALSESIONAPLICATIVO");
@@ -5505,8 +5511,21 @@ public class AdministradorServlet
               direccionarError(request, numeroError_local, false);
               break;
             
-            case 89:
-              numeroError_local = incluirRegistroAplicacion(request, true);
+            case ConstantesAdministrador.const_AccionIncluirRegistroPrincipalAplicacion:
+            	 long tiempoInicio; 
+            	    long tiempoFin;
+            	    long tiempoEjecucion;
+            	 // Registra el tiempo de inicio
+                    tiempoInicio = System.nanoTime();
+            	numeroError_local = incluirRegistroAplicacion(request, true);
+            	   // Registra el tiempo de finalizaci�n
+                tiempoFin = System.nanoTime();
+
+                // Calcula el tiempo de ejecuci�n en milisegundos
+                tiempoEjecucion = (tiempoFin - tiempoInicio) / 1000000;
+
+                // Imprime el tiempo de ejecucion en milisegundos
+                // System.out.println("Tiempo de ejecucion incluirRegistroAplicacion: " + tiempoEjecucion + " ms");
               direccionarError(request, numeroError_local, true);
               break;
             case 92:

@@ -2821,7 +2821,7 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 				}
 
 				numeroRegistrosConsulta_local++;
-				// si se completa el numero de registros de la página se detiene
+				// si se completa el numero de registros de la pï¿½gina se detiene
 				// el listado
 				if (numeroRegistrosConsulta_local > numeroUltimoRegistro_local) {
 					break;
@@ -2832,7 +2832,7 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 				 * numeroPrimerRegistro_local && numeroRegistrosConsulta_local
 				 * <= numeroUltimoRegistro_local
 				 */
-				// Si el registro ya está desplegado no se tiene en cuenta
+				// Si el registro ya estï¿½ desplegado no se tiene en cuenta
 				if (listaCadenas_local.verificarExistenciaCadena(String.valueOf(valorLlavePrimaria_local))
 						|| numeroRegistrosConsulta_local < numeroPrimerRegistro_local) {
 					continue;
@@ -5264,7 +5264,7 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 			}
 			if (!pCampo.esCampoCalculado()) {
 				eventoOnBlur_local = mc.concatenarCadena(eventoOnBlur_local,
-						"ejecutarOperaciones(); ejecutarOperaciones(); ejecutarOperaciones();");
+						"ejecutarOperaciones();");
 			}
 			if (pCampo.esRecargarPantalla()) {
 				eventoOnBlur_local = mc.concatenarCadena(eventoOnBlur_local, String.valueOf(' '));

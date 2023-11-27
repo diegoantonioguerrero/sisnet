@@ -4686,7 +4686,7 @@ public class GeneradorPagina
             stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/", "encripcion.js", pNivelesAnterioresDirectorio));
 
             stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/", "jquery-3.6.0.min.js", pNivelesAnterioresDirectorio));
-            stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js?v=1.3", pNivelesAnterioresDirectorio));
+            stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js?v=1.3.2", pNivelesAnterioresDirectorio));
 
             stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/", "operaciones.js", pNivelesAnterioresDirectorio));
 
@@ -5798,7 +5798,7 @@ private String obtenerEncabezadoPaginaSisnet(boolean pExisteConexion)
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().getTituloPagina());
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().getHojaEstiloSisnet(0));
 
-        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js?v=1.3", 0));
+        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js?v=1.3.2", 0));
 
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().cerrarHead());
     }
@@ -7511,7 +7511,8 @@ public Pagina obtenerPaginaCambiarUsuarioAdministrador() throws IOException
 
         formulario_local = new Formulario();
         formulario_local.setNombre("formularioCambioContrasena");
-        formulario_local.setAction(listaParametrosRedireccion_local.concatenarParametros());
+        String action = mc.encodeAction(listaParametrosRedireccion_local.concatenarParametros());
+        formulario_local.setAction(action);
         formulario_local.setEventoOnSubmit("return verificarCampos();");
         formulario_local.setListaCampo(listaCampo_local);
 
@@ -7553,7 +7554,7 @@ private String obtenerEncabezadoPaginaConfiguracion()
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().getHojaEstiloSisnet(0));
 
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "jquery-3.6.0.min.js", 0));
-        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js?v=1.3", 0));
+        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js?v=1.3.2", 0));
 
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().abrirBloqueJavascript());
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, insertarJavascriptVerificarCampos("formularioIncluir", ap.obtenerCamposConfiguracion(), false));

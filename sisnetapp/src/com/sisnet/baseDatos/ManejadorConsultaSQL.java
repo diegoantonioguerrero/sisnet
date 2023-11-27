@@ -122,23 +122,48 @@ public class ManejadorConsultaSQL
     int errorEjecutarConsulta_local = 0;
     String consultaContarRegistros_local = null;
     String query = null;
+    long tiempoInicio; 
+    long tiempoFin;
+    long tiempoEjecucion;
     try {
       if (mc.sonCadenasIguales(getTipoConsulta(), "actualizacion")) {
+    	// Registra el tiempo de inicio
+          tiempoInicio = System.nanoTime();
+          
     	  query = getConsultaSQL();
         setPreparedStatement(getConeccionBaseDatos().getConexion().prepareStatement(query));
         asignarNumeroRegistrosActualizacion(getPreparedStatement().executeUpdate());
         getPreparedStatement().setQueryTimeout(getTimeOut());
-        //System.out.println("Executed statement: " + query);
+        
+     // Registra el tiempo de finalización
+        tiempoFin = System.nanoTime();
+
+        // Calcula el tiempo de ejecución en milisegundos
+        tiempoEjecucion = (tiempoFin - tiempoInicio) / 1000000;
+
+        // Imprime el tiempo de ejecución en milisegundos
+        // System.out.println("Tiempo de ejecución: " + tiempoEjecucion + " ms");
+        // System.out.println("Executed statement: time[" + tiempoEjecucion + " ms]" + query);
       } else {
+      	// Registra el tiempo de inicio
+          tiempoInicio = System.nanoTime();
+
         setStatement(getConeccionBaseDatos().getConexion().createStatement());
         query = getConsultaSQL();
         setResultSet(getStatement().executeQuery(query));
-        //System.out.println("Executed query: " + query);
+        // Registra el tiempo de finalización
+        tiempoFin = System.nanoTime();
+        // Calcula el tiempo de ejecución en milisegundos
+        tiempoEjecucion = (tiempoFin - tiempoInicio) / 1000000;
+        // System.out.println("Executed query: time[" + tiempoEjecucion + " ms]" + query);
         consultaContarRegistros_local = ca.conformarConsultaContarRegistros(getConsultaSQL());
         setStatementContador(getConeccionBaseDatos().getConexion().createStatement());
         setResultSetContador(getStatementContador().executeQuery(consultaContarRegistros_local));
         asignarNumeroRegistrosConsulta();
         getStatement().setQueryTimeout(getTimeOut());
+
+
+
       } 
     } catch (SQLException exception) {
       if (mc.esCadenaNumerica(exception.getSQLState(), true)) {

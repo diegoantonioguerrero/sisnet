@@ -773,10 +773,10 @@ function replaceSingleQuote(e){
 			{
    
     if(e.target.setSelectionRange){
-
       // second attemp to set value, get native setter
       var nativeInputValueSetter = Object.getOwnPropertyDescriptor(
-       window.HTMLInputElement.prototype,
+		(e.target.type == 'textarea' ? window.HTMLTextAreaElement.prototype :
+       window.HTMLInputElement.prototype),
        "value"
       ).set;
      
@@ -789,7 +789,7 @@ function replaceSingleQuote(e){
       var newEvent = new InputEvent('input', {
        bubbles: true,
        inputType: 'insertText',
-       data: char
+       data: charQuote
       })
      
       e.target.dispatchEvent(newEvent);
