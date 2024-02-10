@@ -638,73 +638,136 @@ function getInputSelection(el) {
 /* replaceSingleQuotePaste*/
 function replaceSingleQuotePaste(e){
 
+
+
   try{
-	  if(e.preventDefault){
-	   e.preventDefault();
-	  }
-	  else{
-	   e.returnValue = false;
-	  }
-  
-	  e.target = e.target ? e.target : window.event.srcElement;
-	  var currentValue = e.target.value;
-	  
-	  if(e.type == 'paste'){
-		  // Obtiene el texto que se est� intentando pegar
-		  if (window.clipboardData && window.clipboardData.getData) { // IE
-		     data = window.clipboardData.getData('Text');
-		  }
-		  else if(e.clipboardData && e.clipboardData.getData) {
-		     data = e.clipboardData.getData('text/plain');
-		  }
-	  }
-	  else{
-	  	  currentValue = "";
-		   // Obtiene el texto que se est� intentando pegar
-		  data = e.dataTransfer.getData("Text");
-	  }
-	//var dt = data;
- 	/*var newData = "";
- for (var i = 0; i < data.length; i++) {
-   	  		newData += data.charCodeAt(i) != 39 ? data.charAt(i) : String.fromCharCode(8217);
-	  	}
-    data = newData;*/
+	  // Previene el comportamiento predeterminado del evento paste
+    if(e.preventDefault){
+		e.preventDefault();
+	}
+	else{
+		e.returnValue = false;
+	}
 
-	  data = data.replace(/'/g, String.fromCharCode(8217));
+    // Obtén una referencia al área de texto
+    var textArea = e.target ? e.target : window.event.srcElement;
 
-   var inputSelection = getInputSelection(e.target);
-	  var startPos = inputSelection.start;
-	  var endPos = inputSelection.end;
+	// Guarda la posición inicial del cursor
+	var inputSelection = getInputSelection(textArea);
+    var start = inputSelection.start;
+    var end = inputSelection.end;
 	  
+	// Obtén el texto pegado del portapapeles
+	var textoPegado = "";
+	
+	if(e.type == 'paste'){
+	  // Obtiene el texto que se est� intentando pegar
+	  if (window.clipboardData && window.clipboardData.getData) { // IE
+		 textoPegado = window.clipboardData.getData('Text');
+	  }
+	  else if(e.clipboardData && e.clipboardData.getData) {
+		 textoPegado = e.clipboardData.getData('text/plain');
+	  }
+	}
+	else{
+		  currentValue = "";
+		   // Obtiene el texto que se esta intentando pegar
+		  textoPegado = e.dataTransfer.getData("Text");
+	}
+	  
+	// Transforma todas las letras "a" minúsculas en mayúsculas en el texto pegado
+	//var textoTransformado = textoPegado.replace(/a/g, "A");
+	var textoTransformado = textoPegado.replace(/'/g, String.fromCharCode(8217));
+
+	// Actualiza el contenido del área de texto con el texto transformado
+	textArea.value = textArea.value.substring(0, start) + textoTransformado + textArea.value.substring(end);
+
+  /*
+	  var caret = 0;
 	  if (currentValue.length > 0){
 	  	currentValue = currentValue.substring(0, startPos) + data + currentValue.substring(endPos);
+		caret = currentValue.substring(0, startPos).length + data.length;
 	  }
 	  else{
 	  	currentValue = data;
+		caret = data.length
 	  }
-	  
-	  e.target.value = currentValue;
+	*/  
+	
+	// Restaura la posición del cursor después de la transformación
+	var cursorPos = start + textoTransformado.length;
+    moveCursor(textArea, cursorPos , start);
+
+  
+  return true;
 
    }catch(error)
 	 {
-	 	alert(error.message);
+	 	alert("opss 1 " + error.message);
 	 }
    return true;
 }
+function esInternetExplorer() {
+    // Obtén la cadena del agente de usuario
+    var agenteUsuario = window.navigator.userAgent;
+console.log(agenteUsuario);
+    // Verifica si la cadena contiene "MSIE" (Internet Explorer)
+    return agenteUsuario.indexOf("MSIE") !== -1 || agenteUsuario.indexOf("Trident") !== -1;
+}
 
+function moveCursor(txt, pos)
+{
+
+	if (!esInternetExplorer()) {
+		//console.log('no ie');
+		txt.setSelectionRange(pos, pos);
+	}
+	else if(txt.selectionStart){
+		//console.log('ie');
+		
+		txt.selectionStart = pos;
+		txt.selectionEnd = pos;
+	}
+	else{
+		//console.log('ie81');
+		 setTimeout(function() {
+
+		var range = txt.createTextRange();
+		range.collapse(true); // Colapsa el rango al inicio del texto
+
+		// Calcula cuántos caracteres necesitas mover el cursor para llegar a la posición deseada
+		var charactersToMove = pos ;// currentPosition es la posición actual del cursor
+
+		for (var i = 0; i < charactersToMove; i++) {
+			range.move("character", 1); // Mueve el cursor un caracter hacia adelante
+		}
+
+		range.select(); // Selecciona el rango de texto para mover el cursor
+		
+		}, 20);
+		
+	}
+	
+}
 function moveCaret(win, charCount) {
     var sel, range;
+	
     if (win.getSelection) {
+		console.log('1');
         // IE9+ and other browsers
         sel = win.getSelection();
         if (sel.rangeCount > 0) {
+			console.log('2');
             var textNode = sel.focusNode;
             var newOffset = sel.focusOffset + charCount;
+			console.log('2' , textNode, newOffset);
             sel.collapse(textNode, Math.min(textNode.length, newOffset));
         }
     } else if ( (sel = win.document.selection) ) {
+		console.log('3');
         // IE <= 8
         if (sel.type != "Control") {
+			console.log('4');
             range = sel.createRange();
             range.move("character", charCount);
             range.select();

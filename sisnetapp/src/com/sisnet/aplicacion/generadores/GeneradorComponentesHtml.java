@@ -2618,7 +2618,11 @@ public class GeneradorComponentesHtml
       }
       //coco
       if (pCampo.getEstiloCampo().getAnchoControl() > 0) {
-        String eventos_local = " onKeyPress=\"return replaceSingleQuote(event);\" onPaste=\"return replaceSingleQuotePaste(event);\" onDrop=\"return replaceSingleQuotePaste(event);\" ";
+        //String eventos_local = " onKeyPress=\"return replaceSingleQuote(event);\" onPaste=\"return replaceSingleQuotePaste(event);\" onDrop=\"return replaceSingleQuotePaste(event);\" ";
+    	  String eventos_local =
+    			  " onKeyPress=\"return replaceSingleQuote(event);\"" 
+    			+ " onPaste=\"return replaceSingleQuotePaste(event);\""
+    			+ " onDrop=\"return replaceSingleQuotePaste(event);\" ";
         campoTexto_local = mc.concatenarCadena(campoTexto_local, crearCeldaCampoDistribucion(pCampo.getEstiloCampo(), insertarCajaTexto(pCampo, pContenido, pEventos + eventos_local, pEsCampoOculto, pEsCampoCalculado)));
       }
     }
@@ -3625,7 +3629,10 @@ public class GeneradorComponentesHtml
         campoParrafo_local = crearCeldaEtiqueta(pCampo.getEstiloCampo(), pCampo.getEtiquetaCampo());
       }
       if (pCampo.getEstiloCampo().getAnchoControl() > 0) {
-        String eventos_local = " onKeyPress=\"return replaceSingleQuote(event);\" onPaste=\"return replaceSingleQuotePaste(event);\" onDrop=\"return replaceSingleQuotePaste(event);\" ";
+        String eventos_local =
+        		  " onKeyPress=\"return replaceSingleQuote(event);\""
+        		+ " onPaste=\"return replaceSingleQuotePaste(event);\""
+        		+ " onDrop=\"return replaceSingleQuotePaste(event);\" ";
         campoParrafo_local = mc.concatenarCadena(campoParrafo_local, crearCeldaCampoDistribucion(pCampo.getEstiloCampo(), insertarCajaParrafo(pCampo, pContenido, pEventos + eventos_local, pEsCampoOculto, pEsCampoCalculado)));
       
       }

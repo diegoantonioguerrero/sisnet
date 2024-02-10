@@ -23,6 +23,7 @@ import com.sisnet.baseDatos.sisnet.usuario.TipoUsuario;
 import com.sisnet.baseDatos.sisnet.usuario.Usuario;
 import com.sisnet.constantes.ConstantesAdministrador;
 import com.sisnet.constantes.ConstantesGeneral;
+import com.sisnet.constantes.ConstantesRelacionAplicativos;
 import com.sisnet.motorAplicacion.MotorAplicacion;
 import com.sisnet.objetosManejo.AtributoRequest;
 import com.sisnet.objetosManejo.AtributoSesion;
@@ -3634,7 +3635,7 @@ public class AdministradorServlet
       manejadorSesion_local.actualizarEjecutarConsulta(grupoInformacion_local.getAplicacion().esPermitirConsultaGeneral());
       manejadorSesion_local.limpiarAtributoListaConsulta();
       inicializarListaOpcionesConsultaPorPerfilUsuario(pRequest);
-      manejadorSesion_local.obtenerManejadorEventos().setNombreEvento("INICIOSESIONAPLICATIVO");
+      manejadorSesion_local.obtenerManejadorEventos().setNombreEvento(ConstantesRelacionAplicativos.const_EventoInicioSesionAplicativo);
       
       manejadorSesion_local.obtenerManejadorEventos().setListaCampo(null);
       manejadorSesion_local.obtenerManejadorEventos().setListaCampoValoresAnteriores(null);
@@ -4852,7 +4853,7 @@ public class AdministradorServlet
       manejadorSesion_local = new ManejadorSesion(manejadorRequest_local.obtenerSesion());
       manejadorSesion_local.obtenerManejadorEventos().setMotorAplicacion(manejadorSesion_local.obtenerMotorAplicacion());
       
-      manejadorSesion_local.obtenerManejadorEventos().setNombreEvento("INICIOSESIONAPLICATIVO");
+      manejadorSesion_local.obtenerManejadorEventos().setNombreEvento(ConstantesRelacionAplicativos.const_EventoInicioSesionAplicativo);
       
       manejadorSesion_local.obtenerManejadorEventos().setListaCampo(null);
       manejadorSesion_local.obtenerManejadorEventos().setListaCampoValoresAnteriores(null);

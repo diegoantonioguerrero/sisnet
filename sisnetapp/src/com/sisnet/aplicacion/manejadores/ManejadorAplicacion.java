@@ -9,6 +9,7 @@ import com.sisnet.baseDatos.sisnet.administrador.Campo;
 import com.sisnet.baseDatos.sisnet.administrador.GrupoInformacion;
 import com.sisnet.baseDatos.sisnet.administrador.Tabla;
 import com.sisnet.baseDatos.sisnet.usuario.TipoUsuario;
+import com.sisnet.constantes.ConstantesBaseDatos;
 import com.sisnet.constantes.ConstantesGeneral;
 import com.sisnet.constantes.ConstantesVersion;
 import com.sisnet.objetosManejo.listas.ListaCadenas;
@@ -901,7 +902,7 @@ public class ManejadorAplicacion
     
     try {
     	ConexionPostgres conexionPostgres_local = this.obtenerConexionPostgres(rutaArchivo);
-      objetoConexionBaseDatos_local = new ObjetoConexionBaseDatos("org.postgresql.Driver", "localhost", String.valueOf(conexionPostgres_local.getNumeroPuertoConexion()) 
+      objetoConexionBaseDatos_local = new ObjetoConexionBaseDatos("org.postgresql.Driver", ConstantesBaseDatos.const_UbicacionServidor, String.valueOf(conexionPostgres_local.getNumeroPuertoConexion()) 
     		  /*"5432"*/, pNombreBaseDatos, "postgres", "postgres");
     
     }
@@ -918,7 +919,7 @@ public class ManejadorAplicacion
     }
     
     try {
-      objetoConexionBaseDatos_local = new ObjetoConexionBaseDatos("org.postgresql.Driver", "localhost", String.valueOf(pConexionPostgres.getNumeroPuertoConexion()), "postgres", pConexionPostgres.getSuperUsuario(), pConexionPostgres.getContrasenaSuperUsuario());
+      objetoConexionBaseDatos_local = new ObjetoConexionBaseDatos("org.postgresql.Driver", ConstantesBaseDatos.const_UbicacionServidor, String.valueOf(pConexionPostgres.getNumeroPuertoConexion()), "postgres", pConexionPostgres.getSuperUsuario(), pConexionPostgres.getContrasenaSuperUsuario());
     
     }
     catch (Exception excepcion) {
@@ -937,7 +938,7 @@ public class ManejadorAplicacion
     try {
     	ConexionPostgres conexionPostgres_local = this.obtenerConexionPostgres(rutaArchivo);
 
-      objetoConexionBaseDatos_local = new ObjetoConexionBaseDatos("org.postgresql.Driver", "localhost",String.valueOf(conexionPostgres_local.getNumeroPuertoConexion()) 
+      objetoConexionBaseDatos_local = new ObjetoConexionBaseDatos("org.postgresql.Driver", ConstantesBaseDatos.const_UbicacionServidor,String.valueOf(conexionPostgres_local.getNumeroPuertoConexion()) 
     		  /*"5432"*/, pNombreAplicacion, "postgres", "postgres");
     
     }

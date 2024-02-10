@@ -2391,41 +2391,48 @@ public class ManejadorEventos
         
         cicloPrincipal_local = pAccion.getListaCiclos().obtenerCicloPrincipal();
         inicializarCiclo(cicloPrincipal_local);
-        if (cicloPrincipal_local.getResultSet() != ConstantesGeneral.VALOR_NULO) {
-          while (cicloPrincipal_local.getResultSet().next() && !cicloPrincipal_local.esHaFinalizado()) {
-            getManejadorInformacionRecalculable().asignarValoresConsultaRegistroCampos(cicloPrincipal_local.getListaCampos(), cicloPrincipal_local.getResultSet());
-            
-            if (pAccion.getListaCiclos().contarElementos() == 1) {
-              realizarAsignacionesListaCampo(pAccion.getListaAsignaciones(), listaCampo_local, cicloPrincipal_local.getNumeroCiclo());
-              
-              if (listaCampoAsignacionArchivoNulo_local != ConstantesGeneral.VALOR_NULO && listaCampoAsignacionArchivoNulo_local.contarElementos() == 0 && sonTodosLosCamposTipoArchivoEnListaCamposDeAsignaciones(pAccion.getListaAsignaciones())) {
-                
-                copiarArchivos(pAccion.getListaAsignaciones(), cicloPrincipal_local.getNumeroCiclo());
-              } else {
-                modificarRegistro(pAccion.getGrupoInformacion(), listaCampo_local, cicloPrincipal_local.getNumeroCiclo(), pAccion.esActualizarInformacionRecalculable());
-              } 
-            } else {
-              
-              while (!pAccion.getListaCiclos().verificarHanFinalizadoTodosLosCiclosSecundarios()) {
-                actualizarCiclosSecundarios(pAccion.getListaCiclos());
-                if (!pAccion.getListaCiclos().verificarExistenciaCicloSecundarioFinalizado()) {
-                  realizarAsignacionesListaCampo(pAccion.getListaAsignaciones(), listaCampo_local, pAccion.getListaCiclos().contarElementos());
-                  
-                  if (listaCampoAsignacionArchivoNulo_local != ConstantesGeneral.VALOR_NULO && listaCampoAsignacionArchivoNulo_local.contarElementos() == 0 && sonTodosLosCamposTipoArchivoEnListaCamposDeAsignaciones(pAccion.getListaAsignaciones())) {
-                    
-                    copiarArchivos(pAccion.getListaAsignaciones(), pAccion.getListaCiclos().contarElementos()); continue;
-                  } 
-                  modificarRegistro(pAccion.getGrupoInformacion(), listaCampo_local, pAccion.getListaCiclos().contarElementos(), pAccion.esActualizarInformacionRecalculable());
-                } 
-              } 
-            } 
-            
-            cicloPrincipal_local.setHaFinalizado(cicloPrincipal_local.esSoloUnRegistro());
-            if (!cicloPrincipal_local.esHaFinalizado()) {
-              pAccion.getListaCiclos().inicializarCiclosSecundarios();
-            }
-          } 
+        if (cicloPrincipal_local.getResultSet() == ConstantesGeneral.VALOR_NULO) {
+        	return;
         }
+        long filasProcesadas = 0;
+        ResultSet resulset = cicloPrincipal_local.getResultSet();
+        ManejadorInformacionRecalculable manejadorInformacionRecalculable = getManejadorInformacionRecalculable();
+		  while (resulset.next() && !cicloPrincipal_local.esHaFinalizado()) {
+			  filasProcesadas++;
+			  System.out.println("FilasProcesadas : " + filasProcesadas);
+			  manejadorInformacionRecalculable.asignarValoresConsultaRegistroCampos(cicloPrincipal_local.getListaCampos(), resulset);
+		    
+		    if (pAccion.getListaCiclos().contarElementos() == 1) {
+		      realizarAsignacionesListaCampo(pAccion.getListaAsignaciones(), listaCampo_local, cicloPrincipal_local.getNumeroCiclo());
+		      
+		      if (listaCampoAsignacionArchivoNulo_local != ConstantesGeneral.VALOR_NULO && listaCampoAsignacionArchivoNulo_local.contarElementos() == 0 && sonTodosLosCamposTipoArchivoEnListaCamposDeAsignaciones(pAccion.getListaAsignaciones())) {
+		        
+		        copiarArchivos(pAccion.getListaAsignaciones(), cicloPrincipal_local.getNumeroCiclo());
+		      } else {
+		        modificarRegistro(pAccion.getGrupoInformacion(), listaCampo_local, cicloPrincipal_local.getNumeroCiclo(), pAccion.esActualizarInformacionRecalculable());
+		      } 
+		    } else {
+		      
+		      while (!pAccion.getListaCiclos().verificarHanFinalizadoTodosLosCiclosSecundarios()) {
+		        actualizarCiclosSecundarios(pAccion.getListaCiclos());
+		        if (!pAccion.getListaCiclos().verificarExistenciaCicloSecundarioFinalizado()) {
+		          realizarAsignacionesListaCampo(pAccion.getListaAsignaciones(), listaCampo_local, pAccion.getListaCiclos().contarElementos());
+		          
+		          if (listaCampoAsignacionArchivoNulo_local != ConstantesGeneral.VALOR_NULO && listaCampoAsignacionArchivoNulo_local.contarElementos() == 0 && sonTodosLosCamposTipoArchivoEnListaCamposDeAsignaciones(pAccion.getListaAsignaciones())) {
+		            
+		            copiarArchivos(pAccion.getListaAsignaciones(), pAccion.getListaCiclos().contarElementos()); continue;
+		          } 
+		          modificarRegistro(pAccion.getGrupoInformacion(), listaCampo_local, pAccion.getListaCiclos().contarElementos(), pAccion.esActualizarInformacionRecalculable());
+		        } 
+		      } 
+		    } 
+		    
+		    cicloPrincipal_local.setHaFinalizado(cicloPrincipal_local.esSoloUnRegistro());
+		    if (!cicloPrincipal_local.esHaFinalizado()) {
+		      pAccion.getListaCiclos().inicializarCiclosSecundarios();
+		    }
+		  } 
+        
       } 
     } catch (Exception excepcion) {
       excepcion.printStackTrace();

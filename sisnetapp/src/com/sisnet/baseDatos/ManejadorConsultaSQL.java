@@ -143,13 +143,14 @@ public class ManejadorConsultaSQL
 
         // Imprime el tiempo de ejecución en milisegundos
         // System.out.println("Tiempo de ejecución: " + tiempoEjecucion + " ms");
-        // System.out.println("Executed statement: time[" + tiempoEjecucion + " ms]" + query);
+        //System.out.println("Executed statement: time[" + tiempoEjecucion + " ms]" + query);
       } else {
       	// Registra el tiempo de inicio
           tiempoInicio = System.nanoTime();
 
         setStatement(getConeccionBaseDatos().getConexion().createStatement());
         query = getConsultaSQL();
+        //System.out.println("Executing query: " + query);
         setResultSet(getStatement().executeQuery(query));
         // Registra el tiempo de finalización
         tiempoFin = System.nanoTime();

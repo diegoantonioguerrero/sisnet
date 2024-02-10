@@ -5,7 +5,6 @@ import com.sisnet.objetosManejo.listas.ListaCadenas;
 import com.sisnet.objetosManejo.listas.ListaGeneral;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -873,31 +872,80 @@ public class ManejadorCadenas
   }
   public String formatearNumeroEntero(long pNumero) {
     String formatearNumero_local = "";
-    DecimalFormat numero_local = null;
-    
+   
     try {
-      numero_local = new DecimalFormat("#,##0;-#,##0");
-      formatearNumero_local = numero_local.format(pNumero);
+    	boolean isNegative = false;
+    	if(pNumero < 0)
+    	{
+    		pNumero = pNumero * -1;
+    		isNegative = true;
+    	}
+    	
+    	String cadena = String.valueOf(pNumero);
+        StringBuilder builder = new StringBuilder(cadena);
+        cadena = builder.reverse().toString();
+        for(int i = 0;i< cadena.length();  i++) {
+        	if(i%3 == 0 && i > 0) {
+        		formatearNumero_local += ".";
+        	}
+        	formatearNumero_local += cadena.charAt(i);
+        }
+        
+        builder = new StringBuilder(formatearNumero_local);
+        formatearNumero_local = (isNegative ? "-" : "") + builder.reverse().toString();
+
     } catch (Exception excepcion) {
+    	formatearNumero_local= excepcion.getMessage();
       excepcion.printStackTrace();
     } finally {
       
-      numero_local = null;
+     // numero_local = null;
     } 
     return formatearNumero_local;
   }
   public String formatearNumeroReal(double pNumero) {
     String formatearNumero_local = "";
-    DecimalFormat numero_local = null;
+    //DecimalFormat numero_local = null;
     
     try {
-      numero_local = new DecimalFormat("#,##0.00#;-#,##0.00#");
-      formatearNumero_local = numero_local.format(pNumero);
+    	boolean isNegative = false;
+    	if(pNumero < 0)
+    	{
+    		pNumero = pNumero * -1;
+    		isNegative = true;
+    	}
+    	String cadena = String.format("%.2f", pNumero);
+    	cadena = cadena.replace(",", ":").replace(".", ":");
+    	String[] parts = cadena.split(":");
+    	
+    	cadena = parts[0];
+        StringBuilder builder = new StringBuilder(cadena);
+        cadena = builder.reverse().toString();
+        for(int i = 0;i< cadena.length();  i++) {
+        	if(i%3 == 0 && i > 0) {
+        		formatearNumero_local += ".";
+        	}
+        	formatearNumero_local += cadena.charAt(i);
+        }
+        
+        builder = new StringBuilder(formatearNumero_local);
+        formatearNumero_local = (isNegative ? "-" : "") + builder.reverse().toString();
+
+        
+        String decimal = "";
+        if(parts.length > 1) {
+	        cadena = parts[1];
+            formatearNumero_local += ",";
+            decimal = cadena;
+        }
+        formatearNumero_local += decimal;
+        
     } catch (Exception excepcion) {
+    	formatearNumero_local= excepcion.getMessage();
       excepcion.printStackTrace();
     } finally {
       
-      numero_local = null;
+      //numero_local = null;
     } 
     return formatearNumero_local;
   }
