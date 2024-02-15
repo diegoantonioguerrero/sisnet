@@ -641,21 +641,11 @@ function replaceSingleQuotePaste(e){
 
 
   try{
-	  // Previene el comportamiento predeterminado del evento paste
-    if(e.preventDefault){
-		e.preventDefault();
-	}
-	else{
-		e.returnValue = false;
-	}
+	
 
     // Obtén una referencia al área de texto
     var textArea = e.target ? e.target : window.event.srcElement;
 
-	// Guarda la posición inicial del cursor
-	var inputSelection = getInputSelection(textArea);
-    var start = inputSelection.start;
-    var end = inputSelection.end;
 	  
 	// Obtén el texto pegado del portapapeles
 	var textoPegado = "";
@@ -674,7 +664,26 @@ function replaceSingleQuotePaste(e){
 		   // Obtiene el texto que se esta intentando pegar
 		  textoPegado = e.dataTransfer.getData("Text");
 	}
-	  
+	
+	if (textoPegado.indexOf("'") === -1) {
+		//console.log('normal no comme');
+		return true;
+	}
+	//console.log('cambia');
+	
+	  // Previene el comportamiento predeterminado del evento paste
+    if(e.preventDefault){
+		e.preventDefault();
+	}
+	else{
+		e.returnValue = false;
+	}
+	
+	// Guarda la posición inicial del cursor
+	var inputSelection = getInputSelection(textArea);
+    var start = inputSelection.start;
+    var end = inputSelection.end;
+	
 	// Transforma todas las letras "a" minúsculas en mayúsculas en el texto pegado
 	//var textoTransformado = textoPegado.replace(/a/g, "A");
 	var textoTransformado = textoPegado.replace(/'/g, String.fromCharCode(8217));
@@ -682,6 +691,7 @@ function replaceSingleQuotePaste(e){
 	// Actualiza el contenido del área de texto con el texto transformado
 	textArea.value = textArea.value.substring(0, start) + textoTransformado + textArea.value.substring(end);
 
+	
   /*
 	  var caret = 0;
 	  if (currentValue.length > 0){

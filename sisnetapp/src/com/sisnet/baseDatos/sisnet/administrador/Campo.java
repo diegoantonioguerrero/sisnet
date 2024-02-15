@@ -1134,7 +1134,12 @@ public class Campo
     
     try {
       tipoDato_local = getFormatoCampo().getTipoDato();
-      if (mc.sonCadenasIguales(tipoDato_local, "E") || mc.sonCadenasIguales(tipoDato_local, "R") || mc.sonCadenasIguales(tipoDato_local, "LL") || mc.sonCadenasIguales(tipoDato_local, "W") || mc.sonCadenasIguales(tipoDato_local, "BB") || mc.sonCadenasIguales(tipoDato_local, "GG") || mc.sonCadenasIguales(tipoDato_local, "XX") || mc.esCadenaNumerica(tipoDato_local, true)) {
+      if (mc.sonCadenasIguales(tipoDato_local, "E")) {
+    	  tipoDatoEquivalente_local = mc.concatenarCadena(tipoDatoEquivalente_local, "integer");
+          
+          return tipoDatoEquivalente_local;
+      }else if ( mc.sonCadenasIguales(tipoDato_local, "R") || mc.sonCadenasIguales(tipoDato_local, "LL") || mc.sonCadenasIguales(tipoDato_local, "W") || mc.sonCadenasIguales(tipoDato_local, "BB") || mc.sonCadenasIguales(tipoDato_local, "GG") || mc.sonCadenasIguales(tipoDato_local, "XX") || mc.esCadenaNumerica(tipoDato_local, true)) {
+
         
         tipoDatoEquivalente_local = mc.concatenarCadena(tipoDatoEquivalente_local, "numeric");
         tipoDatoEquivalente_local = mc.concatenarCadena(tipoDatoEquivalente_local, mc.colocarEntreParentesis(String.valueOf(getFormatoCampo().getLongitudCampo()) + ',' + String.valueOf(getFormatoCampo().getNumeroDecimales())));

@@ -1083,8 +1083,7 @@ public class AdministradorServlet
       if (pGrupoInformacion.esGrupoInformacionMultiple()) {
         campoLlaveForanea_local = ap.conformarCampoLlaveForanea(pGrupoInformacion);
         pAdministradorBaseDatosAplicacion.crearTabla(pGrupoInformacion.getNombreGrupoInformacion());
-        pAdministradorBaseDatosAplicacion.crearCampo(pGrupoInformacion.getNombreGrupoInformacion(), campoLlaveForanea_local, ap.conformarNombreCampoLlavePrimaria(pGrupoInformacion.getAplicacion().getNombreAplicacion()));
-        
+        pAdministradorBaseDatosAplicacion.crearCampo(pGrupoInformacion.getNombreGrupoInformacion(), campoLlaveForanea_local, ap.conformarNombreCampoLlavePrimaria(pGrupoInformacion.getAplicacion().getNombreAplicacion()));        
         pAdministradorBaseDatosAplicacion.crearRestriccionLlaveForanea(pGrupoInformacion.getNombreGrupoInformacion(), campoLlaveForanea_local.getNombreCampo(), pGrupoInformacion.getAplicacion().getNombreAplicacion(), campoLlaveForanea_local.getNombreCampo(), mc.concatenarCadena(pGrupoInformacion.getNombreGrupoInformacion(), pGrupoInformacion.getAplicacion().getNombreAplicacion()));
       }
     
@@ -5467,9 +5466,10 @@ public class AdministradorServlet
           
           numeroError_local = 0;
           accion_local = Integer.parseInt(manejadorRequest_local.obtenerValorAtributoRequest("accion", manejadorSesion_local).toString());
-          
+
+          //ConstantesAdministrador.const_AccionBorrarRegistroAplicacion
           switch (accion_local) {
-            case 90:
+            case ConstantesAdministrador.const_AccionIncluirRegistroAplicacion:
               numeroError_local = incluirRegistroAplicacion(request, false);
               direccionarError(request, numeroError_local, false);
               break;
@@ -5511,7 +5511,7 @@ public class AdministradorServlet
               numeroError_local = incluirUsuarioLogin(request);
               direccionarError(request, numeroError_local, false);
               break;
-            
+              
             case ConstantesAdministrador.const_AccionIncluirRegistroPrincipalAplicacion:
             	 long tiempoInicio; 
             	    long tiempoFin;
