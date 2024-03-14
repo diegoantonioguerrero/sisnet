@@ -3751,7 +3751,7 @@ public class AdministradorServlet
       if (manejadorSesion_local.getSesion() != ConstantesGeneral.VALOR_NULO) {
         response.sendRedirect(response.encodeRedirectURL(redireccionPagina_local));
       } else {
-        response.sendRedirect(response.encodeURL(redireccionPagina_local));
+        response.sendRedirect(response.encodeRedirectURL(redireccionPagina_local));
       } 
     } catch (Exception excepcion_local) {
       excepcion_local.printStackTrace();
@@ -4395,8 +4395,8 @@ public class AdministradorServlet
 			contrasena_local = mc.convertirAMayusculas(manejadorRequest_local.obtenerValorAtributoRequest("fldcontrasena", manejadorSesion_local).toString());
 		}
 		/* solo para depurar
-		  if(nombreUsuario_local.equalsIgnoreCase("BEARGUELLO")) {
-			contrasena_local = "2A0DBDEE04818DBF50A18647280AEE9A";
+		  if(nombreUsuario_local.equalsIgnoreCase("JAMUN2022")) {
+			contrasena_local = "7354511EFDCC869B6E3C83B5321E2094";
 		}
 		*/
 	
@@ -4405,7 +4405,8 @@ public class AdministradorServlet
 			tipoUsuario_local = administradorBaseDatosSisnet_local.obtenerTipoUsuarioPorContrasena(nombreUsuario_local, contrasena_local);
 		}
 	
-		permitirAccesoUsuarioLocal_local = (manejadorRequest_local.obtenerValorAtributoRequest("validarUsuarioLocal", manejadorSesion_local) != ConstantesGeneral.VALOR_NULO && mc.sonCadenasIgualesIgnorarMayusculas(manejadorRequest_local.obtenerValorAtributoRequest("validarUsuarioLocal", manejadorSesion_local).toString(), String.valueOf(true)));
+		Object validarUsuarioLocal = manejadorRequest_local.obtenerValorAtributoRequest("validarUsuarioLocal", manejadorSesion_local); 
+		permitirAccesoUsuarioLocal_local = ( validarUsuarioLocal != ConstantesGeneral.VALOR_NULO && mc.sonCadenasIgualesIgnorarMayusculas(validarUsuarioLocal.toString(), String.valueOf(true)));
 	
 		validaAdministrador_local = (tipoUsuario_local == 0);
 	
@@ -5563,7 +5564,7 @@ public class AdministradorServlet
             case 13:
               cambiarContrasena(request);
               break;
-            case 15:
+            case ConstantesAdministrador.const_AccionCambiarUsuarioAdministrador:
               cambiarUsuarioAdministrador(request);
               break;
             case 41:
