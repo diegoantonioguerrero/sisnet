@@ -34,10 +34,13 @@ import com.sisnet.objetosManejo.manejoPaginaJsp.ItemConsulta;
 import com.sisnet.objetosManejo.manejoPaginaJsp.Pagina;
 import com.sisnet.objetosManejo.manejoReportes.ReporteExcel;
 import com.sisnet.utilidades.CargadorPropiedades;
+import com.sisnet.utilidades.ConversorCaracteresHtml;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -661,7 +664,7 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 		String contenidoCeldaMenuOpciones_local = null;
 
 		try {
-			contenidoCeldaMenuOpciones_local = "<script src=\"../utilidades/javascript/menubusqueda/xaramenu.js\"></script>";
+			contenidoCeldaMenuOpciones_local = "<script src=\"../utilidades/javascript/menubusqueda/xaramenu.js?v=2\"></script>";
 
 			contenidoCeldaMenuOpciones_local = mc.concatenarCadena(contenidoCeldaMenuOpciones_local,
 					"<script src=\"../utilidades/javascript/menubusqueda/menubusqueda.js\"></script>\n");
@@ -694,7 +697,7 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 		String contenidoCeldaMenuOrdenadoPor_local = null;
 
 		try {
-			contenidoCeldaMenuOrdenadoPor_local = "<script src=\"../utilidades/javascript/menuordenadopor/xaramenu.js\"></script>";
+			contenidoCeldaMenuOrdenadoPor_local = "<script src=\"../utilidades/javascript/menuordenadopor/xaramenu.js?v=2\"></script>";
 
 			contenidoCeldaMenuOrdenadoPor_local = mc.concatenarCadena(contenidoCeldaMenuOrdenadoPor_local,
 					"<script src=\"../utilidades/javascript/menuordenadopor/menuordenadopor.js\"></script>\n");
@@ -1188,12 +1191,8 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 
 		try {
 			listaParametrosRedireccion_local = new ListaParametrosRedireccion();
-			menuPrincipal_local = mc.concatenarCadena(menuPrincipal_local,
-					"<script src=\"../utilidades/javascript/menuprincipal/xaramenu.js?v=1\"></script>");
-
-			menuPrincipal_local = mc.concatenarCadena(menuPrincipal_local,
-					"<script src=\"../utilidades/javascript/menuprincipal/menuprincipal.js\"></script>\n");
-
+			menuPrincipal_local += "<script src=\"../utilidades/javascript/menuprincipal/xaramenu.js?v=2\"></script>";
+			menuPrincipal_local += "<script src=\"../utilidades/javascript/menuprincipal/menuprincipal.js\"></script>\n";
 			menuPrincipal_local = mc.concatenarCadena(menuPrincipal_local,
 					getGeneradorComponentesHtml().abrirBloqueJavascript());
 			menuPrincipal_local = mc.concatenarCadena(menuPrincipal_local, conformarOpcionesPrincipalesMenuPrincipal());
@@ -1214,43 +1213,33 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 
 			menuPrincipal_local = mc.concatenarCadena(menuPrincipal_local, conformarMenuAplicarEvento());
 
-			menuPrincipal_local = mc.concatenarCadena(menuPrincipal_local,
-					"startSubmenu(\"menuprincipal_b1\",\"menuprincipal_menu\",150);\n");
-
-			menuPrincipal_local = mc.concatenarCadena(menuPrincipal_local,
-					"mainMenuItem(\"menuprincipal_b1_1\",\"Configuraci\u00f3n\",0,0,\"" + destinoConfiguracion_local
-							+ "\",\"\",\"\",1,1,\"menuprincipal_l\");\n");
-
-			menuPrincipal_local = mc.concatenarCadena(menuPrincipal_local,
-					"mainMenuItem(\"menuprincipal_b1_2\",\"Aplicar Evento\",0,0,\"" + destinoConfiguracion_local
-							+ "\",\"\",\"\",1,1,\"menuprincipal_l\");\n");
+			menuPrincipal_local += "startSubmenu(\"menuprincipal_b1\",\"menuprincipal_menu\",150);\n";
+			menuPrincipal_local += "mainMenuItem(\"menuprincipal_b1_1\",\"Configuraci\u00f3n\",0,0,\"" + destinoConfiguracion_local
+							+ "\",\"\",\"\",1,1,\"menuprincipal_l\");\n";
+			menuPrincipal_local += "mainMenuItem(\"menuprincipal_b1_2\",\"Aplicar Evento\",0,0,\"" + destinoConfiguracion_local
+							+ "\",\"\",\"\",1,1,\"menuprincipal_l\");\n";
 
 			if (getManejadorPermisoUsuario()
 					.verificarPermisoImportacion(getManejadorSesion().obtenerAplicacionActual())) {
 				listaParametrosRedireccion_local.borrarElementos();
 				listaParametrosRedireccion_local.adicionar("accion", String.valueOf(40));
 
-				menuPrincipal_local = mc.concatenarCadena(menuPrincipal_local,
-						"submenuItem(\"Importaci\u00f3n\",\"" + listaParametrosRedireccion_local.concatenarParametros()
+				menuPrincipal_local += "submenuItem(\"Importaci\u00f3n\",\"" + listaParametrosRedireccion_local.concatenarParametros()
 								+ "\",\"\",\"menuprincipal_plain\","
-								+ "\"javascript: mostrarMensajeProcesandoInformacion();\"" + ");\n");
+								+ "\"javascript: mostrarMensajeProcesandoInformacion();\"" + ");\n";
 			} else {
 
-				menuPrincipal_local = mc.concatenarCadena(menuPrincipal_local,
-						"submenuItem(\"Importaci\u00f3n\",\"javascript: mensajeAutorizacionImportacion();\",\"\",\"menuprincipal_plain\",\"\");\n");
+				menuPrincipal_local += "submenuItem(\"Importaci\u00f3n\",\"javascript: mensajeAutorizacionImportacion();\",\"\",\"menuprincipal_plain\",\"\");\n";
 			}
 
-			menuPrincipal_local = mc.concatenarCadena(menuPrincipal_local,
-					"mainMenuItem(\"menuprincipal_b1_3\",\"Impresi\u00f3n Masiva\",0,0,\"javascript:;\",\"\",\"\",1,1,\"menuprincipal_l\");\n");
-
-			menuPrincipal_local = mc.concatenarCadena(menuPrincipal_local, "endSubmenu(\"menuprincipal_b1\");\n");
+			menuPrincipal_local += "mainMenuItem(\"menuprincipal_b1_3\",\"Impresi\u00f3n Masiva\",0,0,\"javascript:;\",\"\",\"\",1,1,\"menuprincipal_l\");\n";
+			menuPrincipal_local += "endSubmenu(\"menuprincipal_b1\");\n";
 
 			menuPrincipal_local = mc.concatenarCadena(menuPrincipal_local, conformarMenuAplicacionMenuPrincipal());
 			menuPrincipal_local = mc.concatenarCadena(menuPrincipal_local, conformarMenuTablasMenuPrincipal());
 			menuPrincipal_local = mc.concatenarCadena(menuPrincipal_local, conformarMenuReportesMenuPrincipal());
 			menuPrincipal_local = mc.concatenarCadena(menuPrincipal_local, conformarMenuImpresionMasivaMenuPrincipal());
-
-			menuPrincipal_local = mc.concatenarCadena(menuPrincipal_local, "loc=\"\";\n");
+			menuPrincipal_local += "loc=\"\";\n";
 			menuPrincipal_local = mc.concatenarCadena(menuPrincipal_local,
 					getGeneradorComponentesHtml().cerrarBloqueJavascript());
 		} catch (Exception excepcion) {
@@ -6609,9 +6598,11 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 				nombreArchivo_local = ap.conformarNombreArchivoParaDescarga(numeroArchivo_local, nombreArchivo_local);
 				recurso_local = getManejadorRequest().obtenerRecursoAplicacion();
 				url_local = getManejadorRequest().obtenerURLAplicacion();
-
+				nombreArchivo_local = ConversorCaracteresHtml.removeSpecialCharsAndAccents(nombreArchivo_local).toLowerCase(); 
+				String nombreArchivo_localEncoded = URLEncoder.encode(nombreArchivo_local, "UTF-8");
+				
 				urlDescarga_local = new URL(url_local, recurso_local
-						+ getManejadorSesion().obtenerRutaDirectorioUsuarioActual() + nombreArchivo_local);
+						+ getManejadorSesion().obtenerRutaDirectorioUsuarioActual() + nombreArchivo_localEncoded);
 
 				rutaArchivo_local = getManejadorSesion().obtenerRutaDirectorioUsuarioActual() + nombreArchivo_local;
 				rutaArchivo_local = getManejadorSesion().obtenerRutaRealArchivoSesion(rutaArchivo_local);
@@ -6621,6 +6612,8 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 				destino_local = "javascript:;";
 				manejadorArchivos_local = new ManejadorArchivos();
 				if (manejadorArchivos_local.existeArchivo(rutaArchivo_local)) {
+					waitForFile(rutaArchivo_local);
+					
 					destino_local = urlDescarga_local.toString();
 				}
 				numeroArchivo_local++;
@@ -6638,6 +6631,21 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 
 		return destino_local;
 	}
+	
+	private void waitForFile(String filePath) {
+		
+		try {
+			Thread.sleep(100);
+	        File file = new File(filePath);
+	        while (!file.exists() || file.length() == 0) {
+	            
+	                Thread.sleep(100); // Esperar un poco antes de verificar nuevamente
+	        }
+		} catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException("Thread interrupted", e);
+        }
+    }
 
 	public Pagina obtenerPaginaDescargarArchivo() throws IOException {
 		Pagina pagina_local = null;

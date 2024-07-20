@@ -646,7 +646,7 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 		String contenidoCeldaMenuOpciones_local = null;
 
 		try {
-			contenidoCeldaMenuOpciones_local = "<script src=\"../utilidades/javascript/menubusqueda/xaramenu.js\"></script>";
+			contenidoCeldaMenuOpciones_local = "<script src=\"../utilidades/javascript/menubusqueda/xaramenu.js?v=2\"></script>";
 
 			contenidoCeldaMenuOpciones_local = mc.concatenarCadena(contenidoCeldaMenuOpciones_local,
 					"<script src=\"../utilidades/javascript/menubusqueda/menubusqueda.js\"></script>\n");
@@ -679,7 +679,7 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 		String contenidoCeldaMenuOrdenadoPor_local = null;
 
 		try {
-			contenidoCeldaMenuOrdenadoPor_local = "<script src=\"../utilidades/javascript/menuordenadopor/xaramenu.js\"></script>";
+			contenidoCeldaMenuOrdenadoPor_local = "<script src=\"../utilidades/javascript/menuordenadopor/xaramenu.js?v=2\"></script>";
 
 			contenidoCeldaMenuOrdenadoPor_local = mc.concatenarCadena(contenidoCeldaMenuOrdenadoPor_local,
 					"<script src=\"../utilidades/javascript/menuordenadopor/menuordenadopor.js\"></script>\n");
@@ -1174,7 +1174,7 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 		try {
 			listaParametrosRedireccion_local = new ListaParametrosRedireccion();
 			menuPrincipal_local = mc.concatenarCadena(menuPrincipal_local,
-					"<script src=\"../utilidades/javascript/menuprincipal/xaramenu.js?v=1\"></script>");
+					"<script src=\"../utilidades/javascript/menuprincipal/xaramenu.js?v=2\"></script>");
 
 			menuPrincipal_local = mc.concatenarCadena(menuPrincipal_local,
 					"<script src=\"../utilidades/javascript/menuprincipal/menuprincipal.js\"></script>\n");

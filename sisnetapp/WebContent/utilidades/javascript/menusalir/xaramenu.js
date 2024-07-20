@@ -204,11 +204,24 @@ function openMenu(event, id, pos, bc, fc) {
 		var p = event.target;
 		if (p.nodeName != "A" && p.nodeName != "IMG" && p.parentNode.nodeName == "A")
 			p = p.parentNode;
+		
+		// Usar getBoundingClientRect para obtener dimensiones escaladas
+        var rect = p.getBoundingClientRect();
+        dx = rect.width;
+        dy = rect.height;
+
+        /*
 		dx = p.offsetWidth;
 		dy = p.offsetHeight;
+		*/
+		
 		if (mal == 0) {
-			x = p.x;
-			y = p.y;
+			
+			x = rect.left + window.pageXOffset;
+			y = rect.top + window.pageYOffset;
+			//x = p.x;
+			//y = p.y;
+			
 			if (typeof (p.x) == "undefined" || (!NS6 && !SAF)) {
 				x = p.offsetLeft;
 				y = p.offsetTop;
@@ -284,7 +297,8 @@ function openMenu(event, id, pos, bc, fc) {
 		mx[mal] = x;
 		my[mal] = y;
 		if (NS7 || IE5 || frames == 0) {
-			el.style.left = x + "px"; el.style.top = y + "px";
+			el.style.left = x + "px"; 
+			el.style.top = y + "px";
 		}
 		if (!IE5)
 			clipMenu(mal, el);
@@ -294,7 +308,8 @@ function openMenu(event, id, pos, bc, fc) {
 		if (NS7) {
 			var p = event.target;
 			if (p.nodeName != "A" && p.parentNode.nodeName == "A")
-				p = p.parentNode; mc[mal] = p.style;
+				p = p.parentNode; 
+				mc[mal] = p.style;
 			if (!NS6 && mal > 0) {
 				mc[mal].backgroundColor = "#" + bc.toString(16);
 				mc[mal].color = "#" + fc.toString(16);
@@ -310,6 +325,7 @@ function openMenu(event, id, pos, bc, fc) {
 		}
 		mal++;
 	}
+
 	if (ifr && el && frames == 0 && (typeof (tr) == "undefined" || tr == "")) {
 		var p = d.getElementById(id + "i");
 		if (p) {

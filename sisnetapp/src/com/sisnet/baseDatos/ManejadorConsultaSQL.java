@@ -150,7 +150,7 @@ public class ManejadorConsultaSQL
 
         setStatement(getConeccionBaseDatos().getConexion().createStatement());
         query = getConsultaSQL();
-        //System.out.println("Executing query: " + query);
+        // System.out.println("Executing query: " + query);
         setResultSet(getStatement().executeQuery(query));
         // Registra el tiempo de finalización
         tiempoFin = System.nanoTime();

@@ -3466,7 +3466,7 @@ public class GeneradorComponentesHtml
   public String insertarMenuSalir() {
     String menuSalir_local = "";
     try {
-      menuSalir_local = menuSalir_local.concat("<script src=\"../utilidades/javascript/menusalir/xaramenu.js\"></script>\n");
+      menuSalir_local = menuSalir_local.concat("<script src=\"../utilidades/javascript/menusalir/xaramenu.js?v=2\"></script>\n");
       menuSalir_local = menuSalir_local.concat("<script src=\"../utilidades/javascript/menusalir/menusalir.js\"></script>\n");
     }
     catch (Exception excepcion) {

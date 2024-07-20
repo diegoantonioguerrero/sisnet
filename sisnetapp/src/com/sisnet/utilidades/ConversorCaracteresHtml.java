@@ -7,6 +7,9 @@
  * and open the template in the editor.
  */
 package com.sisnet.utilidades;
+import java.text.Normalizer;
+import java.util.regex.Pattern;
+
 import com.sisnet.aplicacion.manejadores.ManejadorCadenas;
 import com.sisnet.constantes.ConstantesConversorCaracteresHtml;
 import com.sisnet.constantes.ConstantesGeneral;
@@ -73,5 +76,22 @@ public class ConversorCaracteresHtml{
             excepcion.printStackTrace();
         }
         return cadenaHTML_local;
+    }
+    
+    public static String removeSpecialCharsAndAccents(String input) {
+        // Normalizar el texto para descomponer los caracteres acentuados
+        String normalized = Normalizer.normalize(input, Normalizer.Form.NFD);
+
+        // Eliminar caracteres especiales (diacríticos)
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        String result = pattern.matcher(normalized).replaceAll("");
+
+        // Eliminar caracteres no alfabéticos ni numéricos (excepto espacios y puntos)
+        result = result.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit} .-]", "");
+
+        // Reemplazar ñ y Ñ manualmente
+        result = result.replace("ñ", "n").replace("Ñ", "N");
+
+        return result;
     }
 }    

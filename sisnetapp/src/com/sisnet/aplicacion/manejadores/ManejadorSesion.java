@@ -1260,7 +1260,7 @@ public class ManejadorSesion
     String directorioUsuarioActual_local = null;
     
     try {
-      directorioUsuarioActual_local = "/administrador/" + obtenerUsuarioActual().getNombreUsuario() + ap.obtenerSeparadorArchivos();
+      directorioUsuarioActual_local = "/administrador/" + obtenerUsuarioActual().getNombreUsuario() + "/";
     }
     catch (Exception excepcion) {
       excepcion.printStackTrace();

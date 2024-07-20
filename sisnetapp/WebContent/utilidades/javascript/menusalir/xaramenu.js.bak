@@ -80,7 +80,7 @@ function endMainMenu(file, h, w) {
 	main = 0;
 }
 
-function mainMenuItem(name, ext, h, w, url, tar, alt, dir, state, s, cim) {
+function mainMenuItem(name, ext, h, w, url, tar, alt, dir, state, s) {
 	if (NS4 && main == 0) return;
 	var isgraphic = ext.charAt(0) == ".";
 	if (main == 1)
@@ -100,10 +100,7 @@ function mainMenuItem(name, ext, h, w, url, tar, alt, dir, state, s, cim) {
 	d.write("onmouseout=\"");
 	if (dir > 0)
 		d.write("tidyMenu(event);");
-	if (isgraphic)
-		d.write("\" onclick=\"");
-	else
-		d.write("\" onmouseover=\"");
+	d.write("\" onclick=\"");
 	if (dir > 0)
 		d.write("openMenu(event, '" + name + "'," + dir + "," + bc + "," + fc + ");");
 	if (state > 1 && isgraphic) {
@@ -122,10 +119,7 @@ function mainMenuItem(name, ext, h, w, url, tar, alt, dir, state, s, cim) {
 		if (w > 0)
 			d.write(" width=\"" + w + "\"");
 		if (alt != "")
-			d.write(" alt=\"" + alt + "\" title=\"" + alt + "\"");
-		if (cim != "")
-			d.write(" data-customimg=\"true\"");
-
+			d.write(" alt=\"" + alt + "\"");
 		d.write(" />");
 	}
 	else {
@@ -153,7 +147,7 @@ function endSubmenu(name) {
 	if (!NS7) d.getElementById(name).onmouseout = tidyMenu;
 }
 
-function submenuItem(text, url, tar, s, click) {
+function submenuItem(text, url, tar, s) {
 	if (NS4) return;
 	if (text.charAt(0) == '<')
 		d.write(text);
@@ -166,8 +160,6 @@ function submenuItem(text, url, tar, s, click) {
 				d.write("href=\"" + url + "\" ");
 			if (tar != "")
 				d.write("target=\"" + tar + "\" ");
-			if (click != "")
-				d.write("onClick=\"" + click + "\" ");
 			d.write("class=\"" + s + "\" style=\"width:" + menuw + "px\">&nbsp;" + text + "&nbsp;</a>");
 		}
 }
@@ -182,7 +174,6 @@ function setGraphic(event, name) {
 }
 
 function openMenu(event, id, pos, bc, fc) {
-	//console.log("hola menu-ordenado 2", id, pos, bc, fc);
 	if (NS4) return;
 	var el, x, y, dx, dy;
 	var bwidth;
@@ -213,24 +204,11 @@ function openMenu(event, id, pos, bc, fc) {
 		var p = event.target;
 		if (p.nodeName != "A" && p.nodeName != "IMG" && p.parentNode.nodeName == "A")
 			p = p.parentNode;
-		
-		// Usar getBoundingClientRect para obtener dimensiones escaladas
-        var rect = p.getBoundingClientRect();
-        dx = rect.width;
-        dy = rect.height;
-
-        /*
 		dx = p.offsetWidth;
 		dy = p.offsetHeight;
-		*/
-		
 		if (mal == 0) {
-			
-			x = rect.left + window.pageXOffset;
-			y = rect.top + window.pageYOffset;
-			//x = p.x;
-			//y = p.y;
-			
+			x = p.x;
+			y = p.y;
 			if (typeof (p.x) == "undefined" || (!NS6 && !SAF)) {
 				x = p.offsetLeft;
 				y = p.offsetTop;
@@ -306,8 +284,7 @@ function openMenu(event, id, pos, bc, fc) {
 		mx[mal] = x;
 		my[mal] = y;
 		if (NS7 || IE5 || frames == 0) {
-			el.style.left = x + "px"; 
-			el.style.top = y + "px";
+			el.style.left = x + "px"; el.style.top = y + "px";
 		}
 		if (!IE5)
 			clipMenu(mal, el);
@@ -317,8 +294,7 @@ function openMenu(event, id, pos, bc, fc) {
 		if (NS7) {
 			var p = event.target;
 			if (p.nodeName != "A" && p.parentNode.nodeName == "A")
-				p = p.parentNode; 
-				mc[mal] = p.style;
+				p = p.parentNode; mc[mal] = p.style;
 			if (!NS6 && mal > 0) {
 				mc[mal].backgroundColor = "#" + bc.toString(16);
 				mc[mal].color = "#" + fc.toString(16);
@@ -334,7 +310,6 @@ function openMenu(event, id, pos, bc, fc) {
 		}
 		mal++;
 	}
-
 	if (ifr && el && frames == 0 && (typeof (tr) == "undefined" || tr == "")) {
 		var p = d.getElementById(id + "i");
 		if (p) {
