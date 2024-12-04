@@ -484,18 +484,18 @@ public class ManejadorCadenas
       return cadenaConvertida_local;
     }
     try {
-      pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00e1'), "A");
-      pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00e9'), "E");
-      pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00ed'), "I");
-      pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00f3'), "O");
-      pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00fa'), "U");
-      pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00e1'), "a");
-      pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00e9'), "e");
-      pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00ed'), "i");
-      pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00f3'), "o");
-      pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00fa'), "u");
-      pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00f1'), "n");
-      pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00f1'), "N");
+    	 pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00e1'), "a");
+         pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00e9'), "e");
+         pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00ed'), "i");
+         pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00f3'), "o");
+         pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00fa'), "u");
+         pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00c1'), "A");
+         pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00c9'), "E");
+         pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00cd'), "I");
+         pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00d3'), "O");
+         pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00da'), "U");
+         pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00f1'), "n");
+         pCadenaConvertir = reemplazarCadena(pCadenaConvertir, String.valueOf('\u00d1'), "N");
       
       cadenaConvertida_local = pCadenaConvertir;
     } catch (Exception excepcion) {

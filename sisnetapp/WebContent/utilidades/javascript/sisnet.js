@@ -1748,13 +1748,16 @@ function borrarCerosIzquierda(pNumero, pEsEntero){
     var nuevoNumero_local = null;
     
     try {
+		if (pNumero.charAt(0) == '.'){
+			pNumero = '0' + pNumero;
+		}
         if (pNumero == "0" || pNumero == "0.00"){
             nuevoNumero_local = pNumero;
         } else {
             if (pNumero.charAt(0) != '0'){
                 nuevoNumero_local = pNumero;       
             } else {
-                while (pNumero.charAt(0) == '0'){
+                while (pNumero.charAt(0) == '0' && (pNumero.charAt(1) && pNumero.charAt(1) != '.' )){
                     pNumero = pNumero.substring(1, pNumero.length);
                 }
                 if (this.verificarEstaVacio(pNumero)){
@@ -1776,7 +1779,7 @@ function borrarCerosIzquierda(pNumero, pEsEntero){
 /* Modific\u00F3 ZDOR fecha: 11/02/2008 */
 /* Modific\u00F3 GEOT fecha: */
 
-/* FUNCION QUE COLOCA EL VALOR POR DEFECTO A CAMPOS NUM\u00C9RICOS*/
+/* FUNCION QUE COLOCA EL VALOR POR DEFECTO A CAMPOS N UMERICOS*/
 function colocarValorPorDefecto(pObjeto, pEsEntero, pBorrarCerosIzquierda){
     var elemento_local = null;
     var valor_local = null;

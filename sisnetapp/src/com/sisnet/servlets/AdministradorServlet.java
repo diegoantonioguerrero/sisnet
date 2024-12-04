@@ -1226,9 +1226,9 @@ public class AdministradorServlet
           valorCampo_local = manejadorSesion_local.obtenerRutaRealArchivoSesion("/administrador/" + manejadorSesion_local.obtenerUsuarioActual().getNombreUsuario() + ap.obtenerSeparadorArchivos());
           
           nombreArchivo_local = mc.convertirTildeANoTilde(ap.obtenerNombreArchivo(fileItem_local.getName()));
+          nombreArchivo_local = mc.reemplazarCadena(nombreArchivo_local, " ", "_");
           tamanoMaximo_local = manejadorSesion_local.obtenerAplicacionActual().getTamanoMaximoArchivos();
           if (!mc.esCadenaVacia(nombreArchivo_local) && (tamanoMaximo_local == 0 || fileItem_local.getSize() <= tamanoMaximo_local)) {
-            
             manejadorRequest_local.subirArchivo(fileItem_local, valorCampo_local);
             valorCampo_local = mc.concatenarCadena(valorCampo_local, ap.obtenerSeparadorArchivos() + nombreArchivo_local);
           } else {

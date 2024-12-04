@@ -87,7 +87,7 @@ public class ConversorCaracteresHtml{
         String result = pattern.matcher(normalized).replaceAll("");
 
         // Eliminar caracteres no alfabéticos ni numéricos (excepto espacios y puntos)
-        result = result.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit} .-]", "");
+        result = result.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit} ._-]", "");
 
         // Reemplazar ñ y Ñ manualmente
         result = result.replace("ñ", "n").replace("Ñ", "N");

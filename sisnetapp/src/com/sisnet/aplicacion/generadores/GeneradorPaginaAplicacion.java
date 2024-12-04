@@ -6598,11 +6598,10 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 				nombreArchivo_local = ap.conformarNombreArchivoParaDescarga(numeroArchivo_local, nombreArchivo_local);
 				recurso_local = getManejadorRequest().obtenerRecursoAplicacion();
 				url_local = getManejadorRequest().obtenerURLAplicacion();
-				nombreArchivo_local = ConversorCaracteresHtml.removeSpecialCharsAndAccents(nombreArchivo_local).toLowerCase(); 
-				String nombreArchivo_localEncoded = URLEncoder.encode(nombreArchivo_local, "UTF-8");
+				nombreArchivo_local = ConversorCaracteresHtml.removeSpecialCharsAndAccents(nombreArchivo_local); 
 				
 				urlDescarga_local = new URL(url_local, recurso_local
-						+ getManejadorSesion().obtenerRutaDirectorioUsuarioActual() + nombreArchivo_localEncoded);
+						+ getManejadorSesion().obtenerRutaDirectorioUsuarioActual() + nombreArchivo_local);
 
 				rutaArchivo_local = getManejadorSesion().obtenerRutaDirectorioUsuarioActual() + nombreArchivo_local;
 				rutaArchivo_local = getManejadorSesion().obtenerRutaRealArchivoSesion(rutaArchivo_local);

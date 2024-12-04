@@ -304,6 +304,7 @@ public class ManejadorRequest
       if (!pFileItem.isFormField()) {
         rutaArchivo_local = pFileItem.getName();
         nombreArchivo_local = mc.convertirTildeANoTilde(ap.obtenerNombreArchivo(rutaArchivo_local));
+        nombreArchivo_local = mc.reemplazarCadena(nombreArchivo_local, " ", "_");
         manejadorArchivos_local = new ManejadorArchivos();
         if (manejadorArchivos_local.existeArchivo(pDirectorioCargaArchivo + ap.obtenerSeparadorArchivos() + nombreArchivo_local))
         {
@@ -371,6 +372,7 @@ public class ManejadorRequest
     try {
       ruta_local = getRequest().getRequestURL();
       URL_local = new URL(ruta_local.toString());
+      System.out.println("Ruteo" + URL_local);
     } catch (Exception excepcion_local) {
       excepcion_local.printStackTrace();
     } finally {
