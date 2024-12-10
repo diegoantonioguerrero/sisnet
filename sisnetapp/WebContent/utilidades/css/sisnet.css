@@ -208,3 +208,30 @@ input.checkbox {
 input.checkboxOculto {
     display: none;
 }
+
+
+	
+
+.select2-container--default .select2-results__option--selected {
+    color: #02733C !important;
+	font-size: 11px !important;
+}
+
+.select2-results__option--selectable {
+    color: #02733C !important;
+	font-size: 11px !important;
+}
+
+.select2-container--default .select2-results>.select2-results__options
+{
+	background-color: #E7FEE5 !important;
+    font-family: verdana, tahoma !important;
+	font-size: 11px !important;
+    color: #02733C !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #02733C !important;
+	font-size: 11px !important;
+	background-color: #E7FEE5 !important;
+}

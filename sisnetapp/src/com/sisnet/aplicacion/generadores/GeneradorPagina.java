@@ -4674,21 +4674,17 @@ public class GeneradorPagina
             stringBuffer_local.append(gch_local.getMetaData());
             stringBuffer_local.append(gch_local.getTituloPagina());
             stringBuffer_local.append(gch_local.getHojaEstiloSisnet(pNivelesAnterioresDirectorio));
-
             stringBuffer_local.append(gch_local.getHojaEstiloCalendario(pNivelesAnterioresDirectorio));
-
+            stringBuffer_local.append(gch_local.getHojaEstiloDropDownSearcher(pNivelesAnterioresDirectorio));
+            
             stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/calendario/", "calendario.js", pNivelesAnterioresDirectorio));
-
             stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/calendario/", "calendario-espanol.js", pNivelesAnterioresDirectorio));
-
             stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/calendario/", "mostrarcalendario.js", pNivelesAnterioresDirectorio));
-
             stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/", "encripcion.js", pNivelesAnterioresDirectorio));
-
             stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/", "jquery-3.6.0.min.js", pNivelesAnterioresDirectorio));
             stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js?v=1.3.3", pNivelesAnterioresDirectorio));
-
             stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/", "operaciones.js", pNivelesAnterioresDirectorio));
+            stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/", "select2.min.js", pNivelesAnterioresDirectorio));
 
             if (pExisteActuacion)
             {

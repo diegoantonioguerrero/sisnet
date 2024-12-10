@@ -5351,11 +5351,11 @@ public class AdministradorServlet
             abrirPaginaConsultaGeneral(request);
             break;
           
-          case 35:
+          case ConstantesAdministrador.const_AccionConformarConsulta:
             conformarListaOpcionesConsulta(request);
             break;
           
-          case 37:
+          case ConstantesAdministrador.const_AccionBorrarOpcionConsulta:
             borrarOpcionConsulta(request);
             break;
           

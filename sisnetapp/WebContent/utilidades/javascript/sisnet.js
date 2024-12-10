@@ -2241,6 +2241,7 @@ jQuery(document).ready(function($) {
 	   });
 	});
 	
+	$('#formularioConsultas select').select2();
 	
 		
 	/**/

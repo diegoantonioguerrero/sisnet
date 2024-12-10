@@ -103,6 +103,22 @@ public class GeneradorComponentesHtml
     } 
     return hojaEstilo_local;
   }
+  
+  public String getHojaEstiloDropDownSearcher(int pNivelesAnterioresDirectorio) {
+	    String hojaEstilo_local = "";
+	    try {
+	    	UUID uuid = UUID.randomUUID();
+
+	      hojaEstilo_local = "<link rel=\"stylesheet\" type=\"text/css\" href=\"";
+	      hojaEstilo_local += mc.complementarDirectorio(pNivelesAnterioresDirectorio);
+	      hojaEstilo_local += "../utilidades/css/";
+	      hojaEstilo_local += "select2.min.css?p=" +     	uuid.toString() + "\"/>\n";
+	    } catch (Exception excepcion) {
+	      excepcion.printStackTrace();
+	    } 
+	    return hojaEstilo_local;
+  }
+  
   public String getHojaEstiloSisnetInicial() {
     String hojaEstilol_local = "";
     try {
