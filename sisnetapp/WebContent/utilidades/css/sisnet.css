@@ -211,7 +211,9 @@ input.checkboxOculto {
 
 
 	
-
+#formularioConsultas .select2-container {
+	width: 250px !important;
+}
 .select2-container--default .select2-results__option--selected {
     color: #02733C !important;
 	font-size: 11px !important;
@@ -233,5 +235,21 @@ input.checkboxOculto {
 .select2-container--default .select2-selection--single .select2-selection__rendered {
     color: #02733C !important;
 	font-size: 11px !important;
-	background-color: #E7FEE5 !important;
+	margin-top: 2px !important;
+    font-weight: normal !important;
+	line-height: normal !important;
+}
+
+.select2-container--default .select2-selection--single{
+	height: 19px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow{
+	height: 17px !important;
+}
+
+.select2-container--default .select2-selection--single {
+	border-color: rgb(118, 118, 118) !important;
+    background-color: #E7FEE5 !important;
+	border-radius: 5px 5px !important;
 }

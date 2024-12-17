@@ -2242,7 +2242,7 @@ jQuery(document).ready(function($) {
 	});
 	
 	$('#formularioConsultas select').select2();
-	
+	$('#formularioIncluir select').select2();
 		
 	/**/
 });
