@@ -2241,11 +2241,82 @@ jQuery(document).ready(function($) {
 	   });
 	});
 	
-	$('#formularioConsultas select').select2();
-	$('#formularioIncluir select').select2();
+	
+	const matcherAccent = function(params, data) {
+        if ($.trim(params.term) === '') {
+            return data;
+        }
+
+        // Normalizar texto eliminando acentos
+        const term = params.term.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        const text = data.text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+		// console.log(term, text);
+        // Comparar términos
+        if (text.indexOf(term) > -1) {
+            return data;
+        }
+
+        // No hay coincidencia
+        return null;
+    };
+	
+	const focuser = function() {
+		setTimeout(function() {
+			let searchField = document.querySelector('.select2-container--open .select2-search__field');
+			if (searchField) {
+				searchField.focus();
+			}
+		}, 0);
+	};
+
+	
+	$('#formularioConsultas select:visible').each(function(el) {
+	    const originalSelect = $(this);
+		//console.log('TO SELECT 2', el);
+	   
+        // Inicializar select2
+        const select2Instance = originalSelect.select2({
+			matcher:matcherAccent}
+		);
+
+        // Reasignar el evento blur al contenedor de select2
+        select2Instance.on('select2:close', function(tosel) {
+        	// console.log('select2:close ', tosel);
+            // Llamar al evento blur original
+            originalSelect.trigger('blur');
+        });
 		
-	/**/
+		// Forzar el enfoque en la caja de búsqueda al abrir
+		select2Instance.on('select2:open', focuser);
+
+	});
+	
+	$('#formularioIncluir select:visible').each(function(el) {
+	    const originalSelect = $(this);
+		//console.log('TO SELECT 2', el);
+	   
+
+        // Inicializar select2
+        const select2Instance = originalSelect.select2({
+			matcher:matcherAccent}
+		);
+
+        // Reasignar el evento blur al contenedor de select2
+        select2Instance.on('select2:close', function(tosel) {
+        	// console.log('select2:close ', tosel);
+            // Llamar al evento blur original
+            originalSelect.trigger('blur');
+        });
+		
+		// Forzar el enfoque en la caja de búsqueda al abrir
+		select2Instance.on('select2:open', focuser);
+
+	});
+	
 });
+
+
+
 
 /*
 function setDebugger(){
