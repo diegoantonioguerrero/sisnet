@@ -2242,40 +2242,54 @@ jQuery(document).ready(function($) {
 	});
 	
 	
-	const matcherAccent = function(params, data) {
+	var matcherAccent = function(params, data) {
         if ($.trim(params.term) === '') {
             return data;
         }
 
         // Normalizar texto eliminando acentos
-        const term = params.term.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-        const text = data.text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        var term = params.term.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        var text = data.text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 		// console.log(term, text);
         // Comparar términos
-        if (text.indexOf(term) > -1) {
-            return data;
-        }
+		var coins =0;
+       var parts = term.trim().split(/\s+/); // Divide el término en partes
+		for (var i = 0; i < parts.length; i++) {
+			var part = $.trim(parts[i]);
+			if (text.indexOf(part) !== -1) {
+				coins++;
+			}
+			else{
+				break;
+			}
+		}
+		
+		if(parts.length === coins){
+			return data;
+		}
+		
 
         // No hay coincidencia
         return null;
     };
 	
-	const focuser = function() {
+	var focuser = function() {
 		setTimeout(function() {
-			let searchField = document.querySelector('.select2-container--open .select2-search__field');
+			var searchField = document.querySelector('.select2-container--open .select2-search__field');
 			if (searchField) {
 				searchField.focus();
 			}
 		}, 0);
 	};
-
+	
+	
 	
 	$('#formularioConsultas select:visible').each(function(el) {
-	    const originalSelect = $(this);
-		//console.log('TO SELECT 2', el);
+	    var originalSelect = $(this);
+		//console.log('TO SELECT 2 ', el);
 	   
         // Inicializar select2
-        const select2Instance = originalSelect.select2({
+        var select2Instance = originalSelect.select2({
 			matcher:matcherAccent}
 		);
 
@@ -2288,16 +2302,52 @@ jQuery(document).ready(function($) {
 		
 		// Forzar el enfoque en la caja de búsqueda al abrir
 		select2Instance.on('select2:open', focuser);
+		var el = select2Instance.next();
+		el.get(0).addEventListener('keydown', function(event) {
+			
+			// Verifica si event.key es una letra o número
+  			var key = event.key;
+  			if (!/^[a-zA-Z0-9]$/.test(key)) {
+			   return; 
+			}
+			//console.log(key + " es un carácter alfanumérico.");
+			//console.log('Teclaa presionada: ', event.key);
+			
+			var valorEncontrado = null;
+			
+			 
+			// Iterar sobre todas las opciones del select2 usando el select original
+			originalSelect.find('option').each(function() {
+			  var valor = $(this).val();
+			  var valorText = $(this).text();
+			  // console.log('valor ', valor, valor.charAt(0).toLowerCase(), key.toLowerCase());
+			  // Comprobar si el valor empieza con la letra especificada
+			  if (valorText.charAt(0).toLowerCase() === key.toLowerCase()) {
+				valorEncontrado = valor;
+				return false;  // Detener la iteración al encontrar el primer valor que coincida
+			  }
+			});
+		
+			//console.log('valorEncontrado ', valorEncontrado);
+		
+			if(valorEncontrado){
+				originalSelect.val(valorEncontrado).trigger('change');	
+			}
+			
+		} );
+    
+		
+		
 
 	});
 	
 	$('#formularioIncluir select:visible').each(function(el) {
-	    const originalSelect = $(this);
+	    var originalSelect = $(this);
 		//console.log('TO SELECT 2', el);
 	   
 
         // Inicializar select2
-        const select2Instance = originalSelect.select2({
+        var select2Instance = originalSelect.select2({
 			matcher:matcherAccent}
 		);
 
@@ -2310,6 +2360,39 @@ jQuery(document).ready(function($) {
 		
 		// Forzar el enfoque en la caja de búsqueda al abrir
 		select2Instance.on('select2:open', focuser);
+		var el = select2Instance.next();
+		el.get(0).addEventListener('keydown', function(event) {
+			
+			// Verifica si event.key es una letra o número
+  			var key = event.key;
+  			if (!/^[a-zA-Z0-9]$/.test(key)) {
+			   return; 
+			}
+			//console.log(key + " es un carácter alfanumérico.");
+			//console.log('Teclaa presionada: ', event.key);
+			
+			var valorEncontrado = null;
+			
+			 
+			// Iterar sobre todas las opciones del select2 usando el select original
+			originalSelect.find('option').each(function() {
+			  var valor = $(this).val();
+			  var valorText = $(this).text();
+			  //console.log('valor ', valor, valor.charAt(0).toLowerCase(), key.toLowerCase());
+			  // Comprobar si el valor empieza con la letra especificada
+			  if (valorText.charAt(0).toLowerCase() === key.toLowerCase()) {
+				valorEncontrado = valor;
+				return false;  // Detener la iteración al encontrar el primer valor que coincida
+			  }
+			});
+		
+			//console.log('valorEncontrado ', valorEncontrado);
+		
+			if(valorEncontrado){
+				originalSelect.val(valorEncontrado).trigger('change');	
+			}
+			
+		} );
 
 	});
 	
