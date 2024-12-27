@@ -2282,18 +2282,9 @@ jQuery(document).ready(function($) {
 		}, 0);
 	};
 	
-	
-	
-	$('#formularioConsultas select:visible').each(function(el) {
-	    var originalSelect = $(this);
-		//console.log('TO SELECT 2 ', el);
-	   
-        // Inicializar select2
-        var select2Instance = originalSelect.select2({
-			matcher:matcherAccent}
-		);
-
-        // Reasignar el evento blur al contenedor de select2
+	var configSelectAdvance = function(select2Instance, originalSelect){
+		
+		        // Reasignar el evento blur al contenedor de select2
         select2Instance.on('select2:close', function(tosel) {
         	// console.log('select2:close ', tosel);
             // Llamar al evento blur original
@@ -2303,42 +2294,92 @@ jQuery(document).ready(function($) {
 		// Forzar el enfoque en la caja de búsqueda al abrir
 		select2Instance.on('select2:open', focuser);
 		var el = select2Instance.next();
-		el.get(0).addEventListener('keydown', function(event) {
-			
-			// Verifica si event.key es una letra o número
-  			var key = event.key;
-  			if (!/^[a-zA-Z0-9]$/.test(key)) {
-			   return; 
-			}
-			//console.log(key + " es un carácter alfanumérico.");
-			//console.log('Teclaa presionada: ', event.key);
-			
-			var valorEncontrado = null;
-			
-			 
-			// Iterar sobre todas las opciones del select2 usando el select original
-			originalSelect.find('option').each(function() {
-			  var valor = $(this).val();
-			  var valorText = $(this).text();
-			  // console.log('valor ', valor, valor.charAt(0).toLowerCase(), key.toLowerCase());
-			  // Comprobar si el valor empieza con la letra especificada
-			  if (valorText.charAt(0).toLowerCase() === key.toLowerCase()) {
-				valorEncontrado = valor;
-				return false;  // Detener la iteración al encontrar el primer valor que coincida
-			  }
-			});
-		
-			//console.log('valorEncontrado ', valorEncontrado);
-		
-			if(valorEncontrado){
-				originalSelect.val(valorEncontrado).trigger('change');	
-			}
-			
-		} );
-    
-		
-		
 
+		// Capturar las opciones del select una sola vez
+		var opciones = originalSelect.find('option'); // Todas las opciones del select original
+		var ultimoIndicePorLetra = {}; // Rastrear el índice de la última coincidencia por cada letra
+
+		el.get(0).addEventListener('keydown', function (event) {
+			var key = event.key;
+			var opcionActual = originalSelect.val(); // Valor actual del select
+			var selector = '[value="' + opcionActual + '"]';
+			var indiceActual = opciones.index(opciones.filter(selector)); // Índice de la opción actual
+			var nuevoIndice = indiceActual;
+			//console.log(key + " es un caracter.");
+			if (key === 'ArrowDown') {
+				// Mover al siguiente elemento
+				nuevoIndice = Math.min(opciones.length - 1, indiceActual + 1);
+				event.preventDefault(); // Evitar comportamiento por defecto
+			} else if (key === 'ArrowUp') {
+				// Mover al elemento anterior
+				nuevoIndice = Math.max(0, indiceActual - 1);
+				event.preventDefault(); // Evitar comportamiento por defecto
+			} else if (key === 'PageDown') {
+				// Avanzar un bloque de opciones (salto de 5 elementos o hasta el final)
+				nuevoIndice = Math.min(opciones.length - 1, indiceActual + 5);
+				event.preventDefault(); // Evitar comportamiento por defecto
+			} else if (key === 'PageUp') {
+				// Retroceder un bloque de opciones (salto de 5 elementos o hasta el inicio)
+				nuevoIndice = Math.max(0, indiceActual - 5);
+				event.preventDefault(); // Evitar comportamiento por defecto
+			} else if (key === 'Home') {
+			    // Ir al primer elemento
+			    nuevoIndice = 0;
+			    event.preventDefault(); // Evitar comportamiento por defecto
+			} else if (key === 'End') {
+			    // Ir al último elemento
+			    nuevoIndice = opciones.length - 1;
+			    event.preventDefault(); // Evitar comportamiento por defecto
+			}
+			else if (/^[a-zA-Z0-9]$/.test(key)) {
+				// Búsqueda cíclica por coincidencias con la tecla presionada
+				var letra = key.toLowerCase();
+				var indiceInicio = ultimoIndicePorLetra[letra] || -1; // Último índice encontrado, o -1 si no hay ninguno
+
+				var encontrado = false;
+
+				// Iterar a partir del último índice para encontrar la siguiente coincidencia
+				opciones.each(function (index) {
+					if (index > indiceInicio && $(this).text().charAt(0).toLowerCase() === letra) {
+						ultimoIndicePorLetra[letra] = index; // Actualizar el índice para esta letra
+						nuevoIndice = index;
+						encontrado = true;
+						return false; // Detener la iteración
+					}
+				});
+
+				// Si no se encontró una coincidencia después del índice actual, buscar desde el principio
+				if (!encontrado) {
+					opciones.each(function (index) {
+						if (index <= indiceInicio && $(this).text().charAt(0).toLowerCase() === letra) {
+							ultimoIndicePorLetra[letra] = index; // Actualizar el índice para esta letra
+							nuevoIndice = index;
+							return false; // Detener la iteración
+						}
+					});
+				}
+			}
+
+			// Cambiar selección solo si el índice cambió
+			if (nuevoIndice !== indiceActual) {
+				var nuevoValor = opciones.eq(nuevoIndice).val();
+				originalSelect.val(nuevoValor).trigger('change');
+			}
+		});
+		
+		
+	};
+	
+	$('#formularioConsultas select:visible:lt(2)').each(function(el) {
+	    var originalSelect = $(this);
+		//console.log('TO SELECT 2 ', el);
+	   
+        // Inicializar select2
+        var select2Instance = originalSelect.select2({
+			matcher:matcherAccent}
+		);
+
+		configSelectAdvance(select2Instance, originalSelect);
 	});
 	
 	$('#formularioIncluir select:visible').each(function(el) {
@@ -2351,48 +2392,7 @@ jQuery(document).ready(function($) {
 			matcher:matcherAccent}
 		);
 
-        // Reasignar el evento blur al contenedor de select2
-        select2Instance.on('select2:close', function(tosel) {
-        	// console.log('select2:close ', tosel);
-            // Llamar al evento blur original
-            originalSelect.trigger('blur');
-        });
-		
-		// Forzar el enfoque en la caja de búsqueda al abrir
-		select2Instance.on('select2:open', focuser);
-		var el = select2Instance.next();
-		el.get(0).addEventListener('keydown', function(event) {
-			
-			// Verifica si event.key es una letra o número
-  			var key = event.key;
-  			if (!/^[a-zA-Z0-9]$/.test(key)) {
-			   return; 
-			}
-			//console.log(key + " es un carácter alfanumérico.");
-			//console.log('Teclaa presionada: ', event.key);
-			
-			var valorEncontrado = null;
-			
-			 
-			// Iterar sobre todas las opciones del select2 usando el select original
-			originalSelect.find('option').each(function() {
-			  var valor = $(this).val();
-			  var valorText = $(this).text();
-			  //console.log('valor ', valor, valor.charAt(0).toLowerCase(), key.toLowerCase());
-			  // Comprobar si el valor empieza con la letra especificada
-			  if (valorText.charAt(0).toLowerCase() === key.toLowerCase()) {
-				valorEncontrado = valor;
-				return false;  // Detener la iteración al encontrar el primer valor que coincida
-			  }
-			});
-		
-			//console.log('valorEncontrado ', valorEncontrado);
-		
-			if(valorEncontrado){
-				originalSelect.val(valorEncontrado).trigger('change');	
-			}
-			
-		} );
+        configSelectAdvance(select2Instance, originalSelect);
 
 	});
 	

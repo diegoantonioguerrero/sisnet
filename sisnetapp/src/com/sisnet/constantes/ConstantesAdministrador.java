@@ -531,6 +531,7 @@ public final class ConstantesAdministrador {
   public static final String const_IndicadorAccionModificar = "M";
   public static final String const_IndicadorAccionBorrar = "B";
   public static final String const_DireccionCalculadoraFinanciera = "http://190.84.250.7:8080/componenteCalculosFinancieros";
+ 
 }
 /* Location:              D:\Personal\sisnet\sisnetMasterApp\sisnetapp.war!\WEB-INF\classes\com\sisnet\constantes\ConstantesAdministrador.class
  * Java compiler version: 6 (50.0)

@@ -209,6 +209,7 @@ public final class ConstantesGeneral
   public static final String const_NombreHojaEstilo = "sisnet.css";
   public static final String const_NombreHojaEstiloCalendario = "calendario.css";
   public static final String const_NombreJavaScriptSisnet = "sisnet.js";
+  public static final String const_SisnetJS_version = "1.3.9";
   public static final String const_NombreJavaScriptOperaciones = "operaciones.js";
   public static final String const_NombreJavaScriptFormatos = "formatos.js";
   public static final String const_NombreJavaScriptMenu = "menu.js";

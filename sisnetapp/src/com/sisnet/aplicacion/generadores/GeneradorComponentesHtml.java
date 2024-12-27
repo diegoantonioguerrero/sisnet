@@ -1573,7 +1573,7 @@ public class GeneradorComponentesHtml
     
     try {
       vinculoTexto_local = mc.concatenarCadena(vinculoTexto_local, "<a href=\"" + pDestino);
-      vinculoTexto_local = mc.concatenarCadena(vinculoTexto_local, "\" class=\"marca\"" + pEventoOnClick + ">");
+      vinculoTexto_local = mc.concatenarCadena(vinculoTexto_local, "\" class=\"marca\" " + pEventoOnClick + ">");
       vinculoTexto_local = mc.concatenarCadena(vinculoTexto_local, getConversorCaracteresHtml().getCadenaHtml(pTexto) + "</a>\n");
     } catch (Exception excepcion) {
       excepcion.printStackTrace();
