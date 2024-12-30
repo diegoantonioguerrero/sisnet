@@ -4669,6 +4669,7 @@ public class GeneradorPagina
         try
         {
         	GeneradorComponentesHtml gch_local = getGeneradorComponentesHtml();
+        	
             stringBuffer_local = new StringBuffer();
             stringBuffer_local.append(gch_local.abrirHead());
             stringBuffer_local.append(gch_local.getMetaData());
@@ -4682,7 +4683,8 @@ public class GeneradorPagina
             stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/calendario/", "mostrarcalendario.js", pNivelesAnterioresDirectorio));
             stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/", "encripcion.js", pNivelesAnterioresDirectorio));
             stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/", "jquery-3.6.0.min.js", pNivelesAnterioresDirectorio));
-            stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js?v=" + ConstantesGeneral.const_SisnetJS_version, pNivelesAnterioresDirectorio));
+            
+            stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/", ConstantesGeneral.const_NombreJavaScriptSisnet, pNivelesAnterioresDirectorio));
             stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/", "operaciones.js", pNivelesAnterioresDirectorio));
             stringBuffer_local.append(gch_local.incluirLibreriaJavascript("../utilidades/javascript/", "select2.js", pNivelesAnterioresDirectorio));
 
@@ -5779,24 +5781,23 @@ private String obtenerEncabezadoPaginaSisnet(boolean pExisteConexion)
 
     try
     {
-        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().abrirHead());
-        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().getMetaData());
+    	GeneradorComponentesHtml gch_local = getGeneradorComponentesHtml();
+        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, gch_local.abrirHead());
+        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, gch_local.getMetaData());
         if (pExisteConexion)
         {
-            encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().obtenerMetaRedireccionamientoLogin(verificarRealizaTransaccion()));
+            encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, gch_local.obtenerMetaRedireccionamientoLogin(verificarRealizaTransaccion()));
         }
         else
         {
 
-            encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().obtenerMetaRedireccionamientoConfiguracion());
+            encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, gch_local.obtenerMetaRedireccionamientoConfiguracion());
         }
 
-        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().getTituloPagina());
-        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().getHojaEstiloSisnet(0));
-
-        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js?v=" + ConstantesGeneral.const_SisnetJS_version, 0));
-
-        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().cerrarHead());
+        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, gch_local.getTituloPagina());
+        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, gch_local.getHojaEstiloSisnet(0));
+        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, gch_local.incluirLibreriaJavascript("../utilidades/javascript/", ConstantesGeneral.const_NombreJavaScriptSisnet, 0));
+        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, gch_local.cerrarHead());
     }
     catch (Exception excepcion)
     {
@@ -6368,6 +6369,7 @@ public Pagina obtenerPaginaIncluirRegistro(GrupoInformacion pGrupoInformacion, b
         }
         formulario_local = new Formulario();
         formulario_local.setNombre("formularioIncluir");
+        formulario_local.setClassName("frmIncluirAdmin");
         formulario_local.setAction(listaParametrosRedireccion_local.concatenarParametros());
         formulario_local.setEventoOnSubmit(eventoFormulario_local);
         formulario_local.setListaCampo(listaCampo_local);
@@ -7550,7 +7552,7 @@ private String obtenerEncabezadoPaginaConfiguracion()
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().getHojaEstiloSisnet(0));
 
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "jquery-3.6.0.min.js", 0));
-        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", "sisnet.js?v=" + ConstantesGeneral.const_SisnetJS_version, 0));
+        encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().incluirLibreriaJavascript("../utilidades/javascript/", ConstantesGeneral.const_NombreJavaScriptSisnet, 0));
 
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, getGeneradorComponentesHtml().abrirBloqueJavascript());
         encabezadoPagina_local = mc.concatenarCadena(encabezadoPagina_local, insertarJavascriptVerificarCampos("formularioIncluir", ap.obtenerCamposConfiguracion(), false));

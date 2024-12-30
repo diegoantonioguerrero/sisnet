@@ -240,16 +240,60 @@ input.checkboxOculto {
 	line-height: normal !important;
 }
 
+.select2-container .select2-selection--single .select2-selection__rendered{
+	padding-left: 5px !important;
+	padding-right: 14px !important;
+}
+
 .select2-container--default .select2-selection--single{
 	height: 19px !important;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow{
 	height: 17px !important;
+	width: 14px !important;
 }
 
 .select2-container--default .select2-selection--single {
-	border-color: rgb(118, 118, 118) !important;
     background-color: #E7FEE5 !important;
+	border: 1px #E7FEE5 solid !important;
+	border-bottom: 1px #ccc solid !important;
+}
+
+#formularioConsultas .select2-container--default .select2-selection--single {
+	border: 1px rgb(118, 118, 118) solid !important;
 	border-radius: 5px 5px !important;
+}
+
+.select2-container--default .select2-selection--single:hover {
+	border-bottom: 1px #000 solid !important;
+}
+
+.select2-container--default.select2-container--disabled .select2-selection--single:hover {
+	border-bottom: 1px #ccc solid !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b{
+	border-color: #02733C transparent transparent transparent !important;	
+}
+
+
+.select2.select2-container .select2-selection--single:focus{
+    background-color: #E7FEE5 !important;
+	border: 1px #E7FEE5 solid !important;
+	border-bottom: 1px #000 solid !important;
+	outline: none !important;
+    box-shadow: none !important;
+}
+
+.select2-container--default.select2-container--disabled .select2-selection--single,
+.select2-container--default.select2-container--disabled.select2-container--focus .select2-selection--single{
+	background-color: transparent !important;
+	border-bottom: 1px #ccc solid !important;
+}
+
+
+#formularioConsultas .select2.select2-container .select2-selection--single:focus{
+    box-shadow: none !important;
+    outline: 1px solid #000 !important; /* Cambia el color del borde de enfoque */
 }

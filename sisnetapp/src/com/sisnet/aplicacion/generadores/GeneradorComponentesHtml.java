@@ -14,13 +14,18 @@ import com.sisnet.objetosManejo.listas.ListaGeneral;
 import com.sisnet.objetosManejo.manejoPaginaJsp.Boton;
 import com.sisnet.utilidades.CargadorPropiedades;
 import com.sisnet.utilidades.ConversorCaracteresHtml;
+import com.sisnet.utilidades.VersionedFileGenerator;
+
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 public class GeneradorComponentesHtml
 {
   private static ManejadorCadenas mc = ManejadorCadenas.getManejadorCadenas();
   private static ManejadorAplicacion ap = ManejadorAplicacion.getManejadorAplicacion();
+  
   private String aAnchoCampos;
   private ConversorCaracteresHtml aConversorCaracteresHtml;
   private static CargadorPropiedades cp = CargadorPropiedades.getCargadorPropiedades();
@@ -52,6 +57,7 @@ public class GeneradorComponentesHtml
   public String cerrarBloqueJavascript() {
     return "// End --> \n </script>\n";
   }
+   
   public String getMetaData() {
     String metaData_local = "";
     try {
@@ -145,6 +151,8 @@ public class GeneradorComponentesHtml
   }
   public String incluirLibreriaJavascript(String pDirectorio, String pNombreLibreria, int pNivelesAnterioresDirectorio) {
     String javascript_local = "";
+    String versionedHash = "";
+    List<String> librariesCustom = (List<String>) Arrays.asList(ConstantesGeneral.const_NombreJavaScriptSisnet);
     
     if (pDirectorio == ConstantesGeneral.VALOR_NULO) {
       return javascript_local;
@@ -153,9 +161,13 @@ public class GeneradorComponentesHtml
       return javascript_local;
     }
     try {
+    	if(librariesCustom.contains(pNombreLibreria) ) {
+            versionedHash = "?v=" + VersionedFileGenerator.getVersionedHash(pNombreLibreria);
+    	}
+    	
       javascript_local = mc.concatenarCadena(javascript_local, "<script language=\"JavaScript\" type=\"text/javascript\" src=\"");
       javascript_local = mc.concatenarCadena(javascript_local, mc.complementarDirectorio(pNivelesAnterioresDirectorio));
-      javascript_local = mc.concatenarCadena(javascript_local, pDirectorio + pNombreLibreria + "\" ></script>\n");
+      javascript_local = mc.concatenarCadena(javascript_local, pDirectorio + pNombreLibreria + versionedHash + "\" ></script>\n");
     } catch (Exception excepcion) {
       excepcion.printStackTrace();
     } 

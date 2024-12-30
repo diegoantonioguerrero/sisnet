@@ -16,6 +16,8 @@ public class Formulario
   private ListaCampo aListaCampo;
   private String aContenido;
   private boolean aEsMultipart;
+  private String aClassName;
+  
   public Formulario() {
     setId("");
     setNombre("");
@@ -25,6 +27,7 @@ public class Formulario
     setListaCampo(null);
     setContenido("");
     setEsMultipart(false);
+    this.aClassName = "";
   }
   public String getId() {
     return this.aId;
@@ -74,6 +77,13 @@ public class Formulario
   public void setEsMultipart(boolean pEsMultipart) {
     this.aEsMultipart = pEsMultipart;
   }
+  public String getClassName() {
+	  return aClassName;
+  }
+  public void setClassName(String aClassName) {
+	this.aClassName = aClassName;
+  } 
+	
   public String dibujar() {
     String formulario_local = "";
     
@@ -82,6 +92,8 @@ public class Formulario
       formulario_local = mc.concatenarCadena(" <form ", mcHTML.conformarAtributoHTML(" id=\"", getId()));
       
       formulario_local = mc.concatenarCadena(formulario_local, mcHTML.conformarAtributoHTML(" name=\"", getNombre()));
+      
+      formulario_local = mc.concatenarCadena(formulario_local, mcHTML.conformarAtributoHTML(" class=\"", getClassName()));
       
       formulario_local = mc.concatenarCadena(formulario_local, mcHTML.conformarAtributoHTML(" action=\"", getAction()));
       
@@ -159,7 +171,8 @@ public class Formulario
   public String toString() {
 	  
 	  return this.dibujar(); 
-  } 
+  }
+
 }
 /* Location:              D:\Personal\sisnet\sisnetMasterApp\sisnetapp.war!\WEB-INF\classes\com\sisnet\controlesHTML\Formulario.class
  * Java compiler version: 6 (50.0)

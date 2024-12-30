@@ -2370,7 +2370,7 @@ jQuery(document).ready(function($) {
 		
 	};
 	
-	$('#formularioConsultas select:visible:lt(2)').each(function(el) {
+	$('#formularioConsultas select:visible').each(function(el) {
 	    var originalSelect = $(this);
 		//console.log('TO SELECT 2 ', el);
 	   
@@ -2382,7 +2382,7 @@ jQuery(document).ready(function($) {
 		configSelectAdvance(select2Instance, originalSelect);
 	});
 	
-	$('#formularioIncluir select:visible').each(function(el) {
+	$('#formularioIncluir:not(.frmIncluirAdmin) select:visible').each(function(el) {
 	    var originalSelect = $(this);
 		//console.log('TO SELECT 2', el);
 	   

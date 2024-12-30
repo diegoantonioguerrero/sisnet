@@ -185,12 +185,21 @@ th.titulo{
  border-radius:5px 5px;
  padding-left: 6px;/*Margen izquierdo*/
  padding-right: 6px;/*Margen derecha*/
- background-color: #E7FEE5 !important; /*Color fondo de los cuadros de texto de las consultas*/
+ background-color: #E7FEE5 !important; /*Color fondo de los cuadros de texto de las consultas */
  font-family: verdana,tahoma !important;/*Por defecto es tahoma*/
  color: #02733C;/*Color fuente cuadros de texto de las consultas*/
  font-size:11px !important;/*Tamaño fuente cuadros de texto de las consultas*/
  width: 250px !important;/*Ancho de la etiqueta*/
  }
+ 
+#formularioConsultas tr th.transparente input[type="text"]:focus,
+#formularioConsultas tr th.transparente select:focus,
+#formularioConsultas tr th.transparente textarea:focus,
+#formularioConsultas tr th.transparente input:focus
+{
+ outline: 1px solid #000 !important;
+}
+ 
  
  #formularioConsultas tr th.transparente input.boton{
     font-family: arial;
@@ -287,7 +296,7 @@ th.titulo{
 	 border-top:   1px #E7FEE5 solid !important;
 	 border-right: 1px #E7FEE5 solid !important;
 	 border-left:  1px #E7FEE5 solid !important;
-	 border-bottom: 1px #000 solid !important;/*#000 */
+	 border-bottom: 1px #000 solid !important;
 }
 
 #formularioIncluir input[type="text"][disabled=""]:hover,
