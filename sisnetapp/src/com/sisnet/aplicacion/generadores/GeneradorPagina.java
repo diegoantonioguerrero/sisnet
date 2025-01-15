@@ -2000,8 +2000,8 @@ public class GeneradorPagina
                 {
                     eventosBody_local = " onLoad=\"";
                 }
-                eventosBody_local = mc.concatenarCadena(eventosBody_local, "ejecutarOperaciones(); ejecutarOperaciones(); ejecutarOperaciones();");
-                eventosBody_local = mc.concatenarCadena(eventosBody_local, String.valueOf(';'));
+                eventosBody_local = mc.concatenarCadena(eventosBody_local, "ejecutarOperaciones(); ");
+
             }
 
             if (!mc.esCadenaVacia(eventosBody_local))
@@ -3863,7 +3863,7 @@ public class GeneradorPagina
         {
             javascriptEjecutarOperaciones_local = "\n function ejecutarOperaciones(){ \n";
             listaCadenas_local = new ListaCadenas();
-            document_local = mc.concatenarCadena("document.", "formularioIncluir.");
+            document_local = "document.formularioIncluir.";
 
             iteradorCampos_local = pListaCampo.iterator();
             while (iteradorCampos_local.hasNext())

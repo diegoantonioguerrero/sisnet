@@ -1,7 +1,6 @@
 package com.sisnet.objetosManejo.listas;
 import com.sisnet.constantes.ConstantesGeneral;
 import com.sisnet.objetosManejo.AtributoSesion;
-import com.sisnet.objetosManejo.listas.Lista;
 public class ListaAtributosSesion
   extends Lista
 {

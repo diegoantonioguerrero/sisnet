@@ -27,6 +27,7 @@ import com.sisnet.constantes.ConstantesRelacionAplicativos;
 import com.sisnet.motorAplicacion.MotorAplicacion;
 import com.sisnet.objetosManejo.AtributoRequest;
 import com.sisnet.objetosManejo.AtributoSesion;
+import com.sisnet.objetosManejo.listas.ListaAtributosSesion;
 import com.sisnet.objetosManejo.listas.ListaCadenas;
 import com.sisnet.objetosManejo.listas.ListaConsulta;
 import com.sisnet.objetosManejo.listas.ListaNavegacion;
@@ -1981,18 +1982,19 @@ public class AdministradorServlet
     
     return estructurasAplicacion_local;
   }
-  private void asignarPlantillaUtilizarListaNavegacion(HttpServletRequest pRequest) {
+  private void asignarPlantillaUtilizarListaNavegacion(ManejadorRequest manejadorRequest_local, ManejadorSesion manejadorSesion_local) {
     int plantillaUtilizar_local = 0;
-    ManejadorRequest manejadorRequest_local = null;
-    ManejadorSesion manejadorSesion_local = null;
-    
+    //ManejadorRequest manejadorRequest_local = null;
+    //ManejadorSesion manejadorSesion_local = null;
+    /*
     if (pRequest == ConstantesGeneral.VALOR_NULO) {
       return;
     }
+    */
     
     try {
-      manejadorRequest_local = new ManejadorRequest(pRequest);
-      manejadorSesion_local = new ManejadorSesion(manejadorRequest_local.obtenerSesion());
+      //manejadorRequest_local = new ManejadorRequest(pRequest);
+      //manejadorSesion_local = new ManejadorSesion(manejadorRequest_local.obtenerSesion());
       if (manejadorRequest_local.obtenerValorAtributoRequest("FLDPLANTILLAUTILIZAR", manejadorSesion_local) != ConstantesGeneral.VALOR_NULO)
       {
         plantillaUtilizar_local = Integer.parseInt(manejadorRequest_local.obtenerValorAtributoRequest("FLDPLANTILLAUTILIZAR", manejadorSesion_local).toString());
@@ -2135,7 +2137,7 @@ public class AdministradorServlet
       if (manejadorSesion_local.getSesion() != ConstantesGeneral.VALOR_NULO) {
         administradorBaseDatosSisnet_local = manejadorSesion_local.obtenerAdministradorBaseDatosSisnet();
         administradorBaseDatosAplicacion_local = manejadorSesion_local.obtenerAdministradorBaseDatosAplicacion();
-        asignarPlantillaUtilizarListaNavegacion(pRequest);
+        asignarPlantillaUtilizarListaNavegacion(manejadorRequest_local, manejadorSesion_local);
         if (esConfiguracion_local) {
           registroAplicacion_local = crearEstructurasAplicacion(pRequest, grupoInformacion_local.getIdGrupoInformacion(), administradorBaseDatosSisnet_local, administradorBaseDatosAplicacion_local);
           
@@ -3218,7 +3220,7 @@ public class AdministradorServlet
       manejadorSesion_local = new ManejadorSesion(manejadorRequest_local.obtenerSesion());
       aplicacionActual_local = manejadorSesion_local.obtenerAplicacionActual();
       if (manejadorSesion_local.getSesion() != ConstantesGeneral.VALOR_NULO) {
-        asignarPlantillaUtilizarListaNavegacion(pRequest);
+        asignarPlantillaUtilizarListaNavegacion(manejadorRequest_local, manejadorSesion_local);
         grupoInformacion_local = manejadorSesion_local.obtenerGrupoInformacionActual();
         idGrupoInformacion_local = grupoInformacion_local.getIdGrupoInformacion();
         administradorBaseDatosSisnet_local = manejadorSesion_local.obtenerAdministradorBaseDatosSisnet();
@@ -4899,19 +4901,21 @@ public class AdministradorServlet
       manejadorSesion_local = null;
     } 
   }
-  public boolean verificarParametrosRecargaPagina(HttpServletRequest pRequest) {
+  
+  private boolean verificarParametrosRecargaPagina(ManejadorRequest manejadorRequest_local, ManejadorSesion manejadorSesion_local) {
     boolean recargaPagina_local = false;
-    ManejadorRequest manejadorRequest_local = null;
-    ManejadorSesion manejadorSesion_local = null;
-    
+    //ManejadorRequest manejadorRequest_local = null;
+    //ManejadorSesion manejadorSesion_local = null;
+    /*
     if (pRequest == ConstantesGeneral.VALOR_NULO) {
       return recargaPagina_local;
-    }
+    }*/
     
     try {
-      manejadorRequest_local = new ManejadorRequest(pRequest);
-      manejadorSesion_local = new ManejadorSesion(manejadorRequest_local.obtenerSesion());
-      recargaPagina_local = (manejadorRequest_local.obtenerValorAtributoRequest("recargarPagina", manejadorSesion_local) != ConstantesGeneral.VALOR_NULO && mc.sonCadenasIguales(manejadorRequest_local.obtenerValorAtributoRequest("recargarPagina", manejadorSesion_local).toString(), String.valueOf(true)));
+      //manejadorRequest_local = new ManejadorRequest(pRequest);
+      //manejadorSesion_local = new ManejadorSesion(manejadorRequest_local.obtenerSesion());
+      Object valueRecargaPagina = manejadorRequest_local.obtenerValorAtributoRequest("recargarPagina", manejadorSesion_local);
+      recargaPagina_local = (valueRecargaPagina != ConstantesGeneral.VALOR_NULO && mc.sonCadenasIguales(valueRecargaPagina.toString(), String.valueOf(true)));
     
     }
     catch (Exception excepcion_local) {
@@ -5454,11 +5458,15 @@ public class AdministradorServlet
         } 
       } else {
         tipoAutorizacion_local = 0;
-        manejadorSesion_local.actualizarRecargarPagina(verificarParametrosRecargaPagina(request));
+        manejadorSesion_local.actualizarAtributoListaAtributosRequestMultiparteNulo();
+
+        boolean esRecargaPagina = verificarParametrosRecargaPagina(manejadorRequest_local, manejadorSesion_local);
+        manejadorSesion_local.actualizarRecargarPagina(esRecargaPagina);
         if (manejadorSesion_local.esRecargarPagina()) {
-          asignarPlantillaUtilizarListaNavegacion(request);
+          asignarPlantillaUtilizarListaNavegacion(manejadorRequest_local, manejadorSesion_local);
           manejadorSesion_local.borrarAtributosCamposSesion();
           manejadorSesion_local.copiarAtributosRequestSesion(request);
+          
         } else {
           if (manejadorRequest_local.obtenerValorAtributoRequest("accion", manejadorSesion_local) != ConstantesGeneral.VALOR_NULO)
           {

@@ -19,6 +19,10 @@ public class AtributoSesion
   public void setValorAtributo(Object pValorAtributo) {
     this.aValorAtributo = pValorAtributo;
   }
+  
+  public String toString() {
+	  return aNombreAtributo + "[" + aValorAtributo + "]";
+  } 
 }
 /* Location:              D:\Personal\sisnet\sisnetMasterApp\sisnetapp.war!\WEB-INF\classes\com\sisnet\objetosManejo\AtributoSesion.class
  * Java compiler version: 6 (50.0)
