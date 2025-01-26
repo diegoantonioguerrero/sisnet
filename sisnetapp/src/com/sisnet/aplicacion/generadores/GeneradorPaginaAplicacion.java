@@ -1214,19 +1214,19 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 			menuPrincipal_local = mc.concatenarCadena(menuPrincipal_local, conformarMenuAplicarEvento());
 
 			menuPrincipal_local += "startSubmenu(\"menuprincipal_b1\",\"menuprincipal_menu\",150);\n";
-			menuPrincipal_local += "mainMenuItem(\"menuprincipal_b1_1\",\"Configuraci\u00f3n\",0,0,\"" + destinoConfiguracion_local
-							+ "\",\"\",\"\",1,1,\"menuprincipal_l\");\n";
-			menuPrincipal_local += "mainMenuItem(\"menuprincipal_b1_2\",\"Aplicar Evento\",0,0,\"" + destinoConfiguracion_local
-							+ "\",\"\",\"\",1,1,\"menuprincipal_l\");\n";
+			menuPrincipal_local += "mainMenuItem(\"menuprincipal_b1_1\",\"Configuraci\u00f3n\",0,0,\""
+					+ destinoConfiguracion_local + "\",\"\",\"\",1,1,\"menuprincipal_l\");\n";
+			menuPrincipal_local += "mainMenuItem(\"menuprincipal_b1_2\",\"Aplicar Evento\",0,0,\""
+					+ destinoConfiguracion_local + "\",\"\",\"\",1,1,\"menuprincipal_l\");\n";
 
 			if (getManejadorPermisoUsuario()
 					.verificarPermisoImportacion(getManejadorSesion().obtenerAplicacionActual())) {
 				listaParametrosRedireccion_local.borrarElementos();
 				listaParametrosRedireccion_local.adicionar("accion", String.valueOf(40));
 
-				menuPrincipal_local += "submenuItem(\"Importaci\u00f3n\",\"" + listaParametrosRedireccion_local.concatenarParametros()
-								+ "\",\"\",\"menuprincipal_plain\","
-								+ "\"javascript: mostrarMensajeProcesandoInformacion();\"" + ");\n";
+				menuPrincipal_local += "submenuItem(\"Importaci\u00f3n\",\""
+						+ listaParametrosRedireccion_local.concatenarParametros() + "\",\"\",\"menuprincipal_plain\","
+						+ "\"javascript: mostrarMensajeProcesandoInformacion();\"" + ");\n";
 			} else {
 
 				menuPrincipal_local += "submenuItem(\"Importaci\u00f3n\",\"javascript: mensajeAutorizacionImportacion();\",\"\",\"menuprincipal_plain\",\"\");\n";
@@ -2026,12 +2026,9 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 											campo_local.getEnlaceCampo().getEnlazado().getIdAplicacion());
 							// anterior version de obtener campo enlazado
 							/*
-							 * valorCampo_local =
-							 * getManejadorInformacionRecalculable().
-							 * getManejadorCampoEnlazado()
-							 * .obtenerValorCampoEnlazado(campo_local.
-							 * getEnlaceCampo().getEnlazado(),
-							 * Integer.parseInt(valorCampo_local));
+							 * valorCampo_local = getManejadorInformacionRecalculable().
+							 * getManejadorCampoEnlazado() .obtenerValorCampoEnlazado(campo_local.
+							 * getEnlaceCampo().getEnlazado(), Integer.parseInt(valorCampo_local));
 							 */
 							valorCampo_local = getValorEnlazado(valorCampo_local, campo_local);
 						}
@@ -2537,7 +2534,8 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 		return insertarImagenProcesandoInformacion_local;
 	}
 
-	private String dibujarDatosConsultaPrincipalOld(Aplicacion pAplicacion, ListaGrupoInformacion pListaGrupoInformacion) {
+	private String dibujarDatosConsultaPrincipalOld(Aplicacion pAplicacion,
+			ListaGrupoInformacion pListaGrupoInformacion) {
 		String datosConsultaPrincipal_local = "";
 		int valorLlavePrimaria_local = -1;
 		int numeroRegistrosConsulta_local = 0;
@@ -2683,8 +2681,7 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 		return datosConsultaPrincipal_local;
 	}
 
-	private String dibujarDatosConsultaPrincipal(Aplicacion pAplicacion,
-			ListaGrupoInformacion pListaGrupoInformacion) {
+	private String dibujarDatosConsultaPrincipal(Aplicacion pAplicacion, ListaGrupoInformacion pListaGrupoInformacion) {
 		StringBuilder datosConsultaPrincipal_local = new StringBuilder();
 		Hashtable<Integer, Boolean> contenedorEsDocumentoLocal = new Hashtable<Integer, Boolean>();
 		Hashtable<Integer, ListaCampo> contenedorListaCampo = new Hashtable<Integer, ListaCampo>();
@@ -2817,9 +2814,8 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 				}
 
 				/*
-				 * && numeroRegistrosConsulta_local >=
-				 * numeroPrimerRegistro_local && numeroRegistrosConsulta_local
-				 * <= numeroUltimoRegistro_local
+				 * && numeroRegistrosConsulta_local >= numeroPrimerRegistro_local &&
+				 * numeroRegistrosConsulta_local <= numeroUltimoRegistro_local
 				 */
 				// Si el registro ya est� desplegado no se tiene en cuenta
 				if (listaCadenas_local.verificarExistenciaCadena(String.valueOf(valorLlavePrimaria_local))
@@ -2895,9 +2891,8 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 					}
 
 					/*
-					 * celdasDatos = dibujarDatosGrupoInformacionNoMultiple(
-					 * grupoInformacion_local, nombreAplicacion,
-					 * valorLlavePrimaria_local, alternar_local,
+					 * celdasDatos = dibujarDatosGrupoInformacionNoMultiple( grupoInformacion_local,
+					 * nombreAplicacion, valorLlavePrimaria_local, alternar_local,
 					 * esDocumento_local, listaCamposParaMostrar_local);
 					 */
 					List<HashMap> groupData = (List<HashMap>) fullGroupData
@@ -2935,14 +2930,14 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 	}
 
 	/*
-	 * GrupoInformacion pGrupoInformacion, String
-	 * pNombreGrupoInformacionPrincipal, int pValorLlavePrimaria, boolean
-	 * pResaltarRegistro, boolean esDocumento_local, pListaCamposParaMostrar
+	 * GrupoInformacion pGrupoInformacion, String pNombreGrupoInformacionPrincipal,
+	 * int pValorLlavePrimaria, boolean pResaltarRegistro, boolean
+	 * esDocumento_local, pListaCamposParaMostrar
 	 */
 	private List getData(GrupoInformacion gr, ListaCampo pListaCamposParaMostrar,
 			ArrayList<Integer> pitemsValorLlavePrimaria) {
 
-		if(gr.esGrupoInformacionMultiple()){
+		if (gr.esGrupoInformacionMultiple()) {
 			return new ArrayList();
 		}
 		String pNombreGrupoInformacionPrincipal = gr.getAplicacion().getNombreAplicacion();
@@ -4497,130 +4492,128 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 			ListaBotones listaBotones_local = new ListaBotones();
 			listaParametrosRedireccion_local = new ListaParametrosRedireccion();
 			listaParametrosRedireccion_local.adicionar("accion", String.valueOf(92));
-	
+
 			existenCamposDocumentoConPlantilla_local = getManejadorSesion().obtenerMotorAplicacion()
 					.comprobarCamposDocumentosConPlantilla(pGrupoInformacion);
-	
+
 			if (!getManejadorPermisoUsuario()
 					.verificarPermisoModificarRegistrosAplicacion(pGrupoInformacion.getAplicacion())
 					&& !getManejadorPermisoUsuario().verificarExistenciaGrupoInformacionNoMultiplePermisoModificar(
 							pGrupoInformacion.getAplicacion().getIdAplicacion())
 					&& !getManejadorPermisoUsuario().verificarExistenciaCampoGrupoNoMultiplePermisoModificar(
 							pGrupoInformacion.getAplicacion().getIdAplicacion())) {
-	
+
 				eventosFormulario_local = "return mensajeAutorizacionModificacion();";
 			} else {
 				eventosFormulario_local = "return (verificarCampos() && preguntaModificarRegistro());";
-				if (existenCamposDocumentoConPlantilla_local
-						&& !verificarDocumentoConPlantillaVacio(pGrupoInformacion,
-								getManejadorSesion().obtenerValorLlavePrimaria())) {
+				if (existenCamposDocumentoConPlantilla_local && !verificarDocumentoConPlantillaVacio(pGrupoInformacion,
+						getManejadorSesion().obtenerValorLlavePrimaria())) {
 					eventosFormulario_local = "return (verificarCampos() && recordarCambioPlantilla() && preguntaModificarRegistro());";
 				}
 			}
-	
+
 			listaCampo_local = getManejadorSesion().obtenerMotorAplicacion()
 					.obtenerListaCamposGruposInformacionNoMultiplesConArchivos(
 							pGrupoInformacion.getAplicacion().getIdAplicacion());
-	
+
 			listaCampoValoresAnteriores_local = getManejadorSesion().obtenerMotorAplicacion()
 					.obtenerCopiaListaCamposGruposInformacionNoMultiplesConArchivos(
 							pGrupoInformacion.getAplicacion().getIdAplicacion());
-	
+
 			if (existenCamposDocumentoConPlantilla_local) {
 				campoPlantilla_local = cad.obtenerCampoPlantillaUtilizar(pGrupoInformacion);
 				campoPlantilla_local.setEstiloCampo(getManejadorSesion().obtenerMotorAplicacion()
 						.obtenerPrimerCampoTipoDocumento(pGrupoInformacion).getEstiloCampo());
-	
+
 				listaCampo_local.adicionar(campoPlantilla_local);
 			}
 			getManejadorInformacionRecalculable().asignarValoresConsultaRegistroCampos(pGrupoInformacion,
 					listaCampo_local, pValorLlavePrimaria);
-	
+
 			getManejadorInformacionRecalculable().asignarValoresConsultaRegistroCampos(pGrupoInformacion,
 					listaCampoValoresAnteriores_local, pValorLlavePrimaria);
-	
+
 			getManejadorSesion().asignarValoresAtributosSesionACampos(listaCampo_local);
-	
+
 			huboErrorEventos_local = (!mc.esCadenaVacia(getManejadorSesion().obtenerMensajeEventos())
 					&& getManejadorSesion().obtenerTipoMensajeEventos() == 2);
-	
+
 			if (!getManejadorSesion().esRecargarPagina() && !huboErrorEventos_local) {
 				getManejadorSesion().obtenerManejadorEventos().setNombreEvento("INICIOMODIFICARPRINCIPAL");
-	
+
 				getManejadorSesion().obtenerManejadorEventos()
 						.setGrupoInformacion(getManejadorSesion().obtenerGrupoInformacionActual());
-	
+
 				getManejadorSesion().obtenerManejadorEventos()
 						.setValorLlaveGrupoPrincipal(getManejadorSesion().obtenerValorLlavePrimariaAnterior());
-	
+
 				getManejadorSesion().obtenerManejadorEventos()
 						.setValorLlaveGrupoInformacion(getManejadorSesion().obtenerValorLlavePrimaria());
-	
+
 				getManejadorSesion().obtenerManejadorEventos().setListaCampo(listaCampo_local);
 				getManejadorSesion().obtenerManejadorEventos()
 						.setListaCampoValoresAnteriores(listaCampoValoresAnteriores_local);
-	
+
 				getManejadorSesion().obtenerManejadorEventos().setRealizarAccionUsuario(true);
-	
+
 				getManejadorSesion().actualizarExistenEventosEnEjecucion(true);
 				getManejadorSesion().obtenerManejadorEventos().ejecutarEvento();
 				getManejadorSesion().actualizarExistenEventosEnEjecucion(
 						!getManejadorSesion().obtenerManejadorEventos().haFinalizadoEjecucion());
-	
-				getManejadorSesion().actualizarMensajeEventos(
-						getManejadorSesion().obtenerManejadorEventos().getMensajeEventos());
-	
+
+				getManejadorSesion()
+						.actualizarMensajeEventos(getManejadorSesion().obtenerManejadorEventos().getMensajeEventos());
+
 				getManejadorSesion().actualizarTipoMensajeEventos(
 						getManejadorSesion().obtenerManejadorEventos().getTipoMensajeEventos());
-	
+
 				getManejadorSesion().obtenerManejadorEventos().setMensajeEventos("");
 			}
-	
+
 			insertarMensajePagina(pagina_local);
-	
+
 			formulario_local = new Formulario();
 			formulario_local.setNombre("formularioIncluir");
 			formulario_local.setAction(listaParametrosRedireccion_local.concatenarParametros());
 			formulario_local.setEventoOnSubmit(eventosFormulario_local);
-			formulario_local.setEsMultipart(getAdministradorBaseDatosSisnet()
-					.verificarGrupoInformacionContieneCampoArchivo(pGrupoInformacion));
-	
+			formulario_local.setEsMultipart(
+					getAdministradorBaseDatosSisnet().verificarGrupoInformacionContieneCampoArchivo(pGrupoInformacion));
+
 			formulario_local.setListaCampo(listaCampo_local);
-	
+
 			asignarValoresListaCampoFormulario(formulario_local, true, true);
-	
+
 			pagina_local.setEncabezadoPagina(obtenerBloqueHeadPagina(formulario_local.getListaCampo(),
 					formulario_local.getNombre(), 0, false, false));
-	
-			pagina_local.setInicioCuerpoPagina(getGeneradorComponentesHtml().abrirBody(
-					conformarEventosBody(formulario_local.getListaCampo(), formulario_local.getNombre())));
-	
+
+			pagina_local.setInicioCuerpoPagina(getGeneradorComponentesHtml()
+					.abrirBody(conformarEventosBody(formulario_local.getListaCampo(), formulario_local.getNombre())));
+
 			pagina_local.setTitulo(insertarEncabezadoPagina(getManejadorSesion().obtenerTituloAplicacionActual(),
 					getManejadorSesion().obtenerInformacionActual(), obtenerBotonAtras(String.valueOf(95), 0), 0));
-	
-			listaBotones_local.adicionar("aceptarmodificacion", true, "", "Aceptar Modificaci\u00f3n", "", 0,
-					false);
-	
+
+			listaBotones_local.adicionar("aceptarmodificacion", true, "", "Aceptar Modificaci\u00f3n", "", 0, false);
+
 			listaParametrosRedireccion_local.borrarElementos();
 			listaParametrosRedireccion_local.adicionar("accion", String.valueOf(95));
-	
+
 			listaBotones_local.adicionar("cancelarmodificacion", false,
 					" onClick=\"return (preguntaCancelarModificacion());\" ", "Cancelar Modificaci\u00f3n",
 					listaParametrosRedireccion_local.concatenarParametros(), 0, false);
-	
+
 			formulario_local
 					.setContenido(insertarFormulario(formulario_local, -1, listaBotones_local, true, 1, "center"));
-	
+
 			pagina_local.setContenidoFormulario(formulario_local.dibujar());
-	
+
 			pagina_local.setContenidoDatos(dibujarConsultaGruposInformacionMultiplesAplicacion(
 					pGrupoInformacion.getAplicacion().getIdAplicacion(), pValorLlavePrimaria, 0));
-	
+
 			pagina_local.setFinCuerpoPagina(mc.concatenarCadena(insertarImagenProcesandoInformacion(false),
 					getGeneradorComponentesHtml().cerrarBody()));
-	
+
 			getManejadorSesion().actualizarRecargarPagina(false);
-			
+
 		} catch (Throwable excepcion_local) {
 			excepcion_local.printStackTrace();
 		} finally {
@@ -4699,127 +4692,126 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 		if (pGrupoInformacion == ConstantesGeneral.VALOR_NULO) {
 			return pagina_local;
 		}
+		
+		ManejadorSesion ms_local = this.getManejadorSesion();
 
 		try {
-			if (getManejadorSesion().obtenerExistenEventosEnEjecucion()) {
+			if (ms_local.obtenerExistenEventosEnEjecucion()) {
 				pagina_local = obtenerPaginaErrorEjecucionEventos();
 				return pagina_local;
 			}
 
-			if (getManejadorSesion().getSesion() != ConstantesGeneral.VALOR_NULO) {
-				pagina_local = new Pagina();
-				nombreBotonAceptar_local = "aceptarinclusion";
-				descripcionBotonAceptar_local = "Aceptar Inclusi\u00f3n";
-				nombreBotonCancelar_local = "cancelarinclusion";
-				descripcionBotonCancelar_local = "Cancelar Inclusi\u00f3n";
-				eventoBotonCancelar_local = " onClick=\"return (preguntaCancelarInclusion());\" ";
-				listaParametrosRedireccion_local = new ListaParametrosRedireccion();
-				listaParametrosRedireccion_local.adicionar("accion", String.valueOf(24));
-
-				if (pEsModificacion) {
-					nombreBotonAceptar_local = "aceptarmodificacion";
-					descripcionBotonAceptar_local = "Aceptar Modificaci\u00f3n";
-					nombreBotonCancelar_local = "cancelarmodificacion";
-					descripcionBotonCancelar_local = "Cancelar Modificaci\u00f3n";
-					eventoBotonCancelar_local = " onClick=\"return (preguntaCancelarModificacion());\" ";
-				}
-
-				listaCampo_local = getManejadorSesion().obtenerMotorAplicacion()
-						.obtenerListaCamposTipoDocumentoGrupoInformacion(pGrupoInformacion);
-
-				listaParametrosRedireccion_local
-						.setRecursoDestino(mc.concatenarCadena(mc.complementarDirectorio(2), "administradorServlet"));
-
-				plantillaUtilizar_local = getManejadorSesion().obtenerPlantillaUtilizar();
-				manejadorPlantilla_local = new ManejadorPlantilla();
-				manejadorPlantilla_local.setAdministradorBaseDatosSisnet(getAdministradorBaseDatosSisnet());
-				manejadorPlantilla_local.setAdministradorBaseDatosAplicacion(getAdministradorBaseDatosAplicacion());
-				manejadorPlantilla_local.setMotorAplicacion(getManejadorSesion().obtenerMotorAplicacion());
-				manejadorPlantilla_local
-						.setRutaDescargaArchivos(
-								(new URL(getManejadorRequest().obtenerURLAplicacion(),
-										getManejadorRequest().obtenerRecursoAplicacion()
-												+ getManejadorSesion().obtenerRutaDirectorioUsuarioActual()))
-														.toString());
-
-				manejadorPlantilla_local.setManejadorSesion(getManejadorSesion());
-				manejadorPlantilla_local.asignarValorPlantillaCamposDocumento(listaCampo_local,
-						getManejadorSesion().obtenerValorLlavePrimaria(),
-						getManejadorSesion().obtenerValorLlavePrimariaAnterior(), plantillaUtilizar_local);
-
-				if (pEsModificacion && plantillaUtilizar_local == 0) {
-					getManejadorInformacionRecalculable().asignarValoresConsultaRegistroCampos(pGrupoInformacion,
-							listaCampo_local, getManejadorSesion().obtenerValorLlavePrimaria());
-				}
-
-				if (pEsModificacion) {
-					getManejadorSesion().obtenerManejadorEventos().setNombreEvento("INICIOMODIFICARDOCUMENTO "
-							+ getManejadorSesion().obtenerGrupoInformacionActual().getDescripcionGrupoInformacion());
-
-					getManejadorSesion().obtenerManejadorEventos()
-							.setGrupoInformacion(getManejadorSesion().obtenerGrupoInformacionActual());
-
-					getManejadorSesion().obtenerManejadorEventos()
-							.setValorLlaveGrupoPrincipal(getManejadorSesion().obtenerValorLlavePrimariaAnterior());
-
-					getManejadorSesion().obtenerManejadorEventos()
-							.setValorLlaveGrupoInformacion(getManejadorSesion().obtenerValorLlavePrimaria());
-
-					getManejadorSesion().obtenerManejadorEventos().setListaCampo(listaCampo_local);
-					getManejadorSesion().obtenerManejadorEventos().setRealizarAccionUsuario(true);
-
-					getManejadorSesion().actualizarExistenEventosEnEjecucion(true);
-					getManejadorSesion().obtenerManejadorEventos().ejecutarEvento();
-					getManejadorSesion().actualizarExistenEventosEnEjecucion(
-							!getManejadorSesion().obtenerManejadorEventos().haFinalizadoEjecucion());
-
-					getManejadorSesion().actualizarMensajeEventos(
-							getManejadorSesion().obtenerManejadorEventos().getMensajeEventos());
-
-					getManejadorSesion().actualizarTipoMensajeEventos(
-							getManejadorSesion().obtenerManejadorEventos().getTipoMensajeEventos());
-
-					getManejadorSesion().obtenerManejadorEventos().setMensajeEventos("");
-				}
-
-				getManejadorSesion().asignarValoresSesionCamposGrupoInformacion(listaCampo_local);
-
-				formulario_local = new Formulario();
-				formulario_local.setNombre("formularioIncluir");
-				formulario_local.setAction(listaParametrosRedireccion_local.concatenarParametros());
-				formulario_local.setEventoOnSubmit(" return preguntaModificarRegistro();");
-				formulario_local.setListaCampo(listaCampo_local);
-
-				insertarMensajePagina(pagina_local);
-
-				asignarValoresListaCampoFormulario(formulario_local, pEsModificacion, false);
-
-				pagina_local.setEncabezadoPagina(
-						obtenerBloqueHeadPagina(listaCampo_local, formulario_local.getNombre(), 2, true, false));
-
-				pagina_local.setInicioCuerpoPagina(mc.concatenarCadena(getGeneradorComponentesHtml().abrirBody(""),
-						insertarImagenProcesandoInformacion(true)));
-
-				pagina_local.setTitulo(insertarEncabezadoPagina(getManejadorSesion().obtenerTituloAplicacionActual(),
-						getManejadorSesion().obtenerInformacionActual(), obtenerBotonAtras(String.valueOf(95), 2), 2));
-
-				listaBotones_local = new ListaBotones();
-				listaBotones_local.adicionar(nombreBotonAceptar_local, true, "", descripcionBotonAceptar_local, "", 2,
-						false);
-
-				listaParametrosRedireccion_local.borrarElementos();
-				listaParametrosRedireccion_local.adicionar("accion", String.valueOf(95));
-
-				listaBotones_local.adicionar(nombreBotonCancelar_local, false, eventoBotonCancelar_local,
-						descripcionBotonCancelar_local, listaParametrosRedireccion_local.concatenarParametros(), 2,
-						false);
-
-				formulario_local.setContenido(
-						insertarFormulario(formulario_local, -1, listaBotones_local, pEsModificacion, 1, "center"));
-
-				pagina_local.setContenidoFormulario(formulario_local.dibujar());
-				pagina_local.setFinCuerpoPagina(getGeneradorComponentesHtml().cerrarBody());
+			if (ms_local.getSesion() == ConstantesGeneral.VALOR_NULO) {
+				return pagina_local;
 			}
+			
+			pagina_local = new Pagina();
+			nombreBotonAceptar_local = "aceptarinclusion";
+			descripcionBotonAceptar_local = "Aceptar Inclusi\u00f3n";
+			nombreBotonCancelar_local = "cancelarinclusion";
+			descripcionBotonCancelar_local = "Cancelar Inclusi\u00f3n";
+			eventoBotonCancelar_local = " onClick=\"return (preguntaCancelarInclusion());\" ";
+			listaParametrosRedireccion_local = new ListaParametrosRedireccion();
+			listaParametrosRedireccion_local.adicionar("accion", String.valueOf(24));
+
+			if (pEsModificacion) {
+				nombreBotonAceptar_local = "aceptarmodificacion";
+				descripcionBotonAceptar_local = "Aceptar Modificaci\u00f3n";
+				nombreBotonCancelar_local = "cancelarmodificacion";
+				descripcionBotonCancelar_local = "Cancelar Modificaci\u00f3n";
+				eventoBotonCancelar_local = " onClick=\"return (preguntaCancelarModificacion());\" ";
+			}
+
+			listaCampo_local = ms_local.obtenerMotorAplicacion()
+					.obtenerListaCamposTipoDocumentoGrupoInformacion(pGrupoInformacion);
+
+			listaParametrosRedireccion_local
+					.setRecursoDestino(mc.concatenarCadena(mc.complementarDirectorio(2), "administradorServlet"));
+
+			plantillaUtilizar_local = ms_local.obtenerPlantillaUtilizar();
+			manejadorPlantilla_local = new ManejadorPlantilla();
+			manejadorPlantilla_local.setAdministradorBaseDatosSisnet(getAdministradorBaseDatosSisnet());
+			manejadorPlantilla_local.setAdministradorBaseDatosAplicacion(getAdministradorBaseDatosAplicacion());
+			manejadorPlantilla_local.setMotorAplicacion(ms_local.obtenerMotorAplicacion());
+			manejadorPlantilla_local.setRutaDescargaArchivos((new URL(getManejadorRequest().obtenerURLAplicacion(),
+					getManejadorRequest().obtenerRecursoAplicacion()
+							+ ms_local.obtenerRutaDirectorioUsuarioActual()))
+					.toString());
+
+			manejadorPlantilla_local.setManejadorSesion(ms_local);
+			manejadorPlantilla_local.asignarValorPlantillaCamposDocumento(listaCampo_local, plantillaUtilizar_local);
+
+			if (pEsModificacion && plantillaUtilizar_local == 0) {
+				getManejadorInformacionRecalculable().asignarValoresConsultaRegistroCampos(pGrupoInformacion,
+						listaCampo_local, ms_local.obtenerValorLlavePrimaria());
+			}
+
+			if (pEsModificacion) {
+				ms_local.obtenerManejadorEventos().setNombreEvento("INICIOMODIFICARDOCUMENTO "
+						+ ms_local.obtenerGrupoInformacionActual().getDescripcionGrupoInformacion());
+
+				ms_local.obtenerManejadorEventos()
+						.setGrupoInformacion(ms_local.obtenerGrupoInformacionActual());
+
+				ms_local.obtenerManejadorEventos()
+						.setValorLlaveGrupoPrincipal(ms_local.obtenerValorLlavePrimariaAnterior());
+
+				ms_local.obtenerManejadorEventos()
+						.setValorLlaveGrupoInformacion(ms_local.obtenerValorLlavePrimaria());
+
+				ms_local.obtenerManejadorEventos().setListaCampo(listaCampo_local);
+				ms_local.obtenerManejadorEventos().setRealizarAccionUsuario(true);
+
+				ms_local.actualizarExistenEventosEnEjecucion(true);
+				ms_local.obtenerManejadorEventos().ejecutarEvento();
+				ms_local.actualizarExistenEventosEnEjecucion(
+						!ms_local.obtenerManejadorEventos().haFinalizadoEjecucion());
+
+				ms_local.actualizarMensajeEventos(ms_local.obtenerManejadorEventos().getMensajeEventos());
+
+				ms_local.actualizarTipoMensajeEventos(
+						ms_local.obtenerManejadorEventos().getTipoMensajeEventos());
+
+				ms_local.obtenerManejadorEventos().setMensajeEventos("");
+			}
+
+			ms_local.asignarValoresSesionCamposGrupoInformacion(listaCampo_local);
+
+			formulario_local = new Formulario();
+			formulario_local.setNombre("formularioIncluir");
+			formulario_local.setAction(listaParametrosRedireccion_local.concatenarParametros());
+			formulario_local.setEventoOnSubmit(" return preguntaModificarRegistro();");
+			formulario_local.setListaCampo(listaCampo_local);
+
+			insertarMensajePagina(pagina_local);
+
+			asignarValoresListaCampoFormulario(formulario_local, pEsModificacion, false);
+
+			pagina_local.setEncabezadoPagina(
+					obtenerBloqueHeadPagina(listaCampo_local, formulario_local.getNombre(), 2, true, false));
+
+			pagina_local.setInicioCuerpoPagina(mc.concatenarCadena(getGeneradorComponentesHtml().abrirBody(""),
+					insertarImagenProcesandoInformacion(true)));
+
+			pagina_local.setTitulo(insertarEncabezadoPagina(ms_local.obtenerTituloAplicacionActual(),
+					ms_local.obtenerInformacionActual(), obtenerBotonAtras(String.valueOf(95), 2), 2));
+
+			listaBotones_local = new ListaBotones();
+			listaBotones_local.adicionar(nombreBotonAceptar_local, true, "", descripcionBotonAceptar_local, "", 2,
+					false);
+
+			listaParametrosRedireccion_local.borrarElementos();
+			listaParametrosRedireccion_local.adicionar("accion", String.valueOf(95));
+
+			listaBotones_local.adicionar(nombreBotonCancelar_local, false, eventoBotonCancelar_local,
+					descripcionBotonCancelar_local, listaParametrosRedireccion_local.concatenarParametros(), 2, false);
+
+			formulario_local.setContenido(
+					insertarFormulario(formulario_local, -1, listaBotones_local, pEsModificacion, 1, "center"));
+
+			pagina_local.setContenidoFormulario(formulario_local.dibujar());
+			pagina_local.setFinCuerpoPagina(getGeneradorComponentesHtml().cerrarBody());
+
 		} catch (Throwable excepcion) {
 			excepcion.printStackTrace();
 		} finally {
@@ -5252,8 +5244,7 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 				eventoOnBlur_local = mc.concatenarCadena(eventoOnBlur_local, String.valueOf(' '));
 			}
 			if (!pCampo.esCampoCalculado()) {
-				eventoOnBlur_local = mc.concatenarCadena(eventoOnBlur_local,
-						"ejecutarOperaciones();");
+				eventoOnBlur_local = mc.concatenarCadena(eventoOnBlur_local, "ejecutarOperaciones();");
 			}
 			if (pCampo.esRecargarPantalla()) {
 				eventoOnBlur_local = mc.concatenarCadena(eventoOnBlur_local, String.valueOf(' '));
@@ -5652,9 +5643,8 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 					listaCampo_local.asignarValorCampo("fldidvalormaestro", Integer
 							.valueOf(Integer.parseInt(listacampoConsultaSQL.obtenerValorCampo("fldidvalormaestro"))));
 
-					listaCampo_local.asignarValorCampo("fldhabilitacion",
-							Boolean.valueOf((listacampoConsultaSQL
-									.obtenerValorCampo("fldhabilitacion") != ConstantesGeneral.VALOR_NULO
+					listaCampo_local.asignarValorCampo("fldhabilitacion", Boolean.valueOf(
+							(listacampoConsultaSQL.obtenerValorCampo("fldhabilitacion") != ConstantesGeneral.VALOR_NULO
 									&& mc.sonCadenasIguales(listacampoConsultaSQL.obtenerValorCampo("fldhabilitacion"),
 											"true"))));
 
@@ -6135,14 +6125,13 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 					if (grupoInformacion_local.esMostrarDetalle()) {
 						tablaVinculosGruposInformacionMultiples_local = mc.concatenarCadena(
 								tablaVinculosGruposInformacionMultiples_local,
-								getGeneradorComponentesHtml()
-										.crearCeldaAnchoMarca(
-												getGeneradorComponentesHtml().insertarVinculoMarca(
-														mc.darFormatoTitulo(grupoInformacion_local
-																.getDescripcionGrupoInformacion()),
-														'#' + mc.convertirCadenaFormatoNombre(grupoInformacion_local
-																.getDescripcionGrupoInformacion())),
-												"200"));
+								getGeneradorComponentesHtml().crearCeldaAnchoMarca(
+										getGeneradorComponentesHtml().insertarVinculoMarca(
+												mc.darFormatoTitulo(
+														grupoInformacion_local.getDescripcionGrupoInformacion()),
+												'#' + mc.convertirCadenaFormatoNombre(
+														grupoInformacion_local.getDescripcionGrupoInformacion())),
+										"200"));
 
 						contador_local++;
 					}
@@ -6598,8 +6587,8 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 				nombreArchivo_local = ap.conformarNombreArchivoParaDescarga(numeroArchivo_local, nombreArchivo_local);
 				recurso_local = getManejadorRequest().obtenerRecursoAplicacion();
 				url_local = getManejadorRequest().obtenerURLAplicacion();
-				nombreArchivo_local = ConversorCaracteresHtml.removeSpecialCharsAndAccents(nombreArchivo_local); 
-				
+				nombreArchivo_local = ConversorCaracteresHtml.removeSpecialCharsAndAccents(nombreArchivo_local);
+
 				urlDescarga_local = new URL(url_local, recurso_local
 						+ getManejadorSesion().obtenerRutaDirectorioUsuarioActual() + nombreArchivo_local);
 
@@ -6612,7 +6601,7 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 				manejadorArchivos_local = new ManejadorArchivos();
 				if (manejadorArchivos_local.existeArchivo(rutaArchivo_local)) {
 					waitForFile(rutaArchivo_local);
-					
+
 					destino_local = urlDescarga_local.toString();
 				}
 				numeroArchivo_local++;
@@ -6630,21 +6619,21 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 
 		return destino_local;
 	}
-	
+
 	private void waitForFile(String filePath) {
-		
+
 		try {
 			Thread.sleep(100);
-	        File file = new File(filePath);
-	        while (!file.exists() || file.length() == 0) {
-	            
-	                Thread.sleep(100); // Esperar un poco antes de verificar nuevamente
-	        }
+			File file = new File(filePath);
+			while (!file.exists() || file.length() == 0) {
+
+				Thread.sleep(100); // Esperar un poco antes de verificar nuevamente
+			}
 		} catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            throw new RuntimeException("Thread interrupted", e);
-        }
-    }
+			Thread.currentThread().interrupt();
+			throw new RuntimeException("Thread interrupted", e);
+		}
+	}
 
 	public Pagina obtenerPaginaDescargarArchivo() throws IOException {
 		Pagina pagina_local = null;

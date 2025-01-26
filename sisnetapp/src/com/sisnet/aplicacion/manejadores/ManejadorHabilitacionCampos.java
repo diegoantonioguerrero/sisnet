@@ -94,7 +94,9 @@ public class ManejadorHabilitacionCampos
     }
     
     try {
-      consulta_local = ca.consultaSQLValoresRegistro(pCampo.getHabilitadoPor(), pValorLlavePrimariaPrincipal, getAdministradorBaseDatosSisnet().obtenerNombrePrimerCampoValorUnicoGrupoInformacion(pCampo.getHabilitadoPor().getGrupoInformacion()));
+      String nombrePrimerCampoValorUnicoGrupoInformacion = this.aAdministradorBaseDatosSisnet.obtenerNombrePrimerCampoValorUnicoGrupoInformacion(
+    		  pCampo.getHabilitadoPor().getGrupoInformacion());
+      consulta_local = ca.consultaSQLValoresRegistro(pCampo.getHabilitadoPor(), pValorLlavePrimariaPrincipal, nombrePrimerCampoValorUnicoGrupoInformacion);
       
       manejadorResultadoConsultaSQL_local = new ManejadorResultadoConsultaSQL();
       manejadorResultadoConsultaSQL_local.setAdministradorBaseDatosSisnet(getAdministradorBaseDatosSisnet());

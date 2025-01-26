@@ -41,6 +41,10 @@ public class ObjetoManejadorConsultaSQL
   public void setTimeOut(int pTimeOut) {
     this.aTimeOut = pTimeOut;
   }
+  
+  public String toString() {
+	  return "[" + this.aTipoConsulta + "]" + this.aConsultaSQL;
+  }
 }
 /* Location:              D:\Personal\sisnet\sisnetMasterApp\sisnetapp.war!\WEB-INF\classes\com\sisnet\objetosManejo\manejoBaseDatos\ObjetoManejadorConsultaSQL.class
  * Java compiler version: 6 (50.0)

@@ -372,7 +372,7 @@ public class ManejadorRequest
     try {
       ruta_local = getRequest().getRequestURL();
       URL_local = new URL(ruta_local.toString());
-      System.out.println("Ruteo" + URL_local);
+      System.out.println("Ruteo=" + URL_local);
     } catch (Exception excepcion_local) {
       excepcion_local.printStackTrace();
     } finally {

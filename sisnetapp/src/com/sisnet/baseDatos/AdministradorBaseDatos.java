@@ -1733,17 +1733,16 @@ public class AdministradorBaseDatos
       return nombreCampo_local;
     }
     
+
     try {
       if (pGrupoInformacion.esGrupoInformacionMultiple()) {
         nombreCampo_local = ap.conformarNombreCampoLlavePrimaria(pGrupoInformacion.getNombreGrupoInformacion());
-      } else {
-        nombreCampo_local = ap.conformarNombreCampoLlavePrimaria(pGrupoInformacion.getAplicacion().getNombreAplicacion());
-      } 
-      if (pGrupoInformacion.esGrupoInformacionMultiple()) {
         consulta_local = ca.consultaSQLNombrePrimerCampoValorUnicoGrupoInformacionMultiple(pGrupoInformacion.getIdGrupoInformacion());
       } else {
+        nombreCampo_local = ap.conformarNombreCampoLlavePrimaria(pGrupoInformacion.getAplicacion().getNombreAplicacion());
         consulta_local = ca.consultaSQLNombrePrimerCampoValorUnicoGruposInformacionNoMultiple(pGrupoInformacion.getAplicacion().getIdAplicacion());
       } 
+      //query 1
       objetoManejadorConsultaSQL_local = new ObjetoManejadorConsultaSQL(getConexionBaseDatos(), consulta_local, "seleccion");
       
       manejadorConsultaSQL_local = new ManejadorConsultaSQL(objetoManejadorConsultaSQL_local);
