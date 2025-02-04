@@ -298,6 +298,7 @@ public class ManejadorPlantilla {
 		int numeroArchivo_local = 0;
 		String rutaArchivo_local = null;
 		String primerCampoValorUnico;
+		String campoLlaveValorUnico = null;
 
 		if (pCampo == ConstantesGeneral.VALOR_NULO) {
 			return valorCampo_local;
@@ -308,8 +309,11 @@ public class ManejadorPlantilla {
 
 		try {
 			primerCampoValorUnico = aAdministradorBaseDatosSisnet
+					.obtenerNombrePrimerCampoValorUnicoGrupoInformacion(pCampo.getGrupoInformacion());
+			
+			campoLlaveValorUnico = aAdministradorBaseDatosSisnet
 					.obtenerNombreLlavePrimariaGrupoInformacion(pCampo.getGrupoInformacion(), false);
-					//.obtenerNombrePrimerCampoValorUnicoGrupoInformacion(pCampo.getGrupoInformacion());
+			
 			posicion_local = 1;
 			if (pCampo.getGrupoInformacion().esGrupoInformacionMultiple()) {
 				if (mc.esCadenaNumerica(pRegistroConsultar, true)) {
@@ -342,7 +346,7 @@ public class ManejadorPlantilla {
 					valorCampo_local = mc.concatenarCadena(getRutaDescargaArchivos(), valorCampo_local);
 
 					int valorLlavePrimaria = aAdministradorBaseDatosAplicacion.obtenerValorLlavePrimariaRegistroPorPosicion(pCampo,
-							pValorLlavePrimaria, posicion_local, primerCampoValorUnico);
+							pValorLlavePrimaria, posicion_local, primerCampoValorUnico, campoLlaveValorUnico);
 					aAdministradorBaseDatosAplicacion.descargarArchivoDeBaseDatos(pCampo, rutaArchivo_local, valorLlavePrimaria);
 
 					numeroArchivo_local++;

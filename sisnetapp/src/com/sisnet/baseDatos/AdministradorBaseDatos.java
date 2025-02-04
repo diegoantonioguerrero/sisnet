@@ -4496,7 +4496,8 @@ public class AdministradorBaseDatos
     
     return errorEjecucion_local;
   }
-  public String obtenerValorCampoRegistroPorPosicion(Campo pCampo, int pValorLlavePrincipal, int pPosicionRegistro, String pNombreCampoValorUnico) {
+  public String obtenerValorCampoRegistroPorPosicion(Campo pCampo, int pValorLlavePrincipal, int pPosicionRegistro, 
+		  String pNombreCampoValorUnico) {
     String valorRegistro_local = "";
     int posicion_local = 0;
     String consulta_local = null;
@@ -4542,7 +4543,8 @@ public class AdministradorBaseDatos
     
     return valorRegistro_local;
   }
-  public int obtenerValorLlavePrimariaRegistroPorPosicion(Campo pCampo, int pValorLlavePrincipal, int pPosicionRegistro, String pNombreCampoValorUnico) {
+  public int obtenerValorLlavePrimariaRegistroPorPosicion(Campo pCampo, int pValorLlavePrincipal, int pPosicionRegistro, 
+		  String pNombreCampoValorUnico, String pCampoLlaveValorUnico) {
     int valorLlavePrimaria_local = -1;
     int posicion_local = 0;
     String consulta_local = null;
@@ -4566,9 +4568,11 @@ public class AdministradorBaseDatos
         if (manejadorConsultaSQL_local.ejecutarConsulta() == 0) {
           resultSet_local = manejadorConsultaSQL_local.getResultSet();
           while (resultSet_local.next() && posicion_local < pPosicionRegistro) {
+        	// String campoDato = pNombreCampoValorUnico;
+        	String campoDato = pCampoLlaveValorUnico;
             if (posicion_local == pPosicionRegistro - 1 && 
-              resultSet_local.getObject(pNombreCampoValorUnico) != ConstantesGeneral.VALOR_NULO) {
-              valorLlavePrimaria_local = resultSet_local.getInt(pNombreCampoValorUnico);
+              resultSet_local.getObject(campoDato) != ConstantesGeneral.VALOR_NULO) {
+              valorLlavePrimaria_local = resultSet_local.getInt(campoDato);
             }
             
             posicion_local++;
