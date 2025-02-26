@@ -222,14 +222,8 @@ public class ManejadorCadenas
   }
   public ListaCadenas fraccionarContenidoDocumento(String pCadena) {
     ListaCadenas cadenaFraccionada_local = null;
-    String cadenaAuxiliar_local = null;
     String nuevaCadena_local = null;
-    String cadenaFinLinea_local = null;
     String cadenaListaCadenas_local = null;
-    int posicionInicial_local = 0;
-    int posicionFinal_local = 0;
-    int longitudCadenaMarca_local = -1;
-    int longitudCadena_local = -1;
     ListaCadenas listaCadenasAuxiliar_local = null;
     Iterator iterator_local = null;
     
@@ -237,18 +231,37 @@ public class ManejadorCadenas
       return cadenaFraccionada_local;
     }
     try {
-      cadenaFinLinea_local = "\n";
       cadenaFraccionada_local = new ListaCadenas();
       nuevaCadena_local = pCadena;
-      longitudCadenaMarca_local = obtenerLongitudCadena("{S}");
-      nuevaCadena_local = reemplazarCadena(nuevaCadena_local, "\r\n", "{S}");
-      nuevaCadena_local = reemplazarCadena(nuevaCadena_local, cadenaFinLinea_local, "{L}");
+      nuevaCadena_local = reemplazarCadena(nuevaCadena_local, ConstantesGeneral.const_CadenaSaltoLinea, ConstantesGeneral.const_CadenaMarcaFinLinea);
+      nuevaCadena_local = reemplazarCadena(nuevaCadena_local, ConstantesGeneral.NEW_LINE, ConstantesGeneral.const_CadenaMarcaFinLinea);
       
+      String[] cadenas = nuevaCadena_local.split(java.util.regex.Pattern.quote(ConstantesGeneral.const_CadenaMarcaFinLinea));
+      
+      for(int i=0; i<cadenas.length; i++ ) {
+    	  nuevaCadena_local = cadenas[i];
+    	  if (nuevaCadena_local.length() <= 255) {
+    		  cadenaFraccionada_local.adicionar(concatenarCadena(nuevaCadena_local, ConstantesGeneral.const_CadenaMarcaFinLinea));
+    	  }
+    	  else {
+    		  listaCadenasAuxiliar_local = fraccionarCadenaCaracteres(nuevaCadena_local, 255);
+              iterator_local = listaCadenasAuxiliar_local.iterator();
+              while (iterator_local.hasNext()) {
+                cadenaListaCadenas_local = (String)iterator_local.next();
+                if (iterator_local.hasNext()) {
+                  cadenaFraccionada_local.adicionar(concatenarCadena(cadenaListaCadenas_local, ConstantesGeneral.const_CadenaMarcaFinLinea)); continue;
+                } 
+                cadenaFraccionada_local.adicionar(concatenarCadena(cadenaListaCadenas_local, ConstantesGeneral.const_CadenaMarcaFinLinea));
+              } 
+    	  }
+      }
+      
+      /*
       while (posicionFinal_local != -1) {
         longitudCadena_local = obtenerLongitudCadena(nuevaCadena_local);
-        posicionFinal_local = obtenerPosicionSubCadena(nuevaCadena_local, "{L}");
+        posicionFinal_local = obtenerPosicionSubCadena(nuevaCadena_local, ConstantesGeneral.const_CadenaMarcaFinLinea);
         if (posicionFinal_local == -1) {
-          posicionFinal_local = obtenerPosicionSubCadena(nuevaCadena_local, "{S}");
+          posicionFinal_local = obtenerPosicionSubCadena(nuevaCadena_local, ConstantesGeneral.const_CadenaMarcaSaltoLinea);
         }
         
         if (posicionFinal_local != -1) {
@@ -261,23 +274,21 @@ public class ManejadorCadenas
           while (iterator_local.hasNext()) {
             cadenaListaCadenas_local = (String)iterator_local.next();
             if (iterator_local.hasNext()) {
-              cadenaFraccionada_local.adicionar(concatenarCadena(cadenaListaCadenas_local, "{L}")); continue;
+              cadenaFraccionada_local.adicionar(concatenarCadena(cadenaListaCadenas_local, ConstantesGeneral.const_CadenaMarcaFinLinea)); continue;
             } 
             cadenaFraccionada_local.adicionar(cadenaListaCadenas_local);
           } 
           
           nuevaCadena_local = obtenerSubCadena(nuevaCadena_local, posicionFinal_local + longitudCadenaMarca_local, longitudCadena_local); continue;
         } 
-        cadenaFraccionada_local.adicionar(concatenarCadena(nuevaCadena_local, "{L}"));
-      }
+        cadenaFraccionada_local.adicionar(concatenarCadena(nuevaCadena_local, ConstantesGeneral.const_CadenaMarcaFinLinea));
+      }*/
     
     } catch (Exception excepcion) {
       excepcion.printStackTrace();
     } finally {
       listaCadenasAuxiliar_local = null;
       iterator_local = null;
-      cadenaAuxiliar_local = null;
-      cadenaFinLinea_local = null;
       nuevaCadena_local = null;
       cadenaListaCadenas_local = null;
     } 

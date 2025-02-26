@@ -4894,10 +4894,10 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 				iterator_local = listaCadenas_local.iterator();
 				while (iterator_local.hasNext()) {
 					cadena_local = "'";
-					cadena_local = mc
-							.borrarEspaciosLaterales(mc.concatenarCadena(cadena_local, (String) iterator_local.next()));
-					longitudCadena_local = mc.obtenerLongitudCadena(cadena_local);
-					posicionFinal_local = longitudCadena_local - mc.obtenerLongitudCadena("{L}");
+					cadena_local += (String) iterator_local.next();
+					cadena_local = mc.borrarEspaciosLaterales(cadena_local);
+					longitudCadena_local = cadena_local.length();
+					posicionFinal_local = longitudCadena_local - "{L}".length();
 
 					if (posicionFinal_local > 0) {
 						cadena_local = mc.obtenerSubCadena(cadena_local, 0, posicionFinal_local);

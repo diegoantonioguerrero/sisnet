@@ -40,6 +40,7 @@ public final class ConstantesGeneral
   public static final char const_CaracterCierraCorchete = '}';
   public static final char const_CaracterCopyright = ConstantesGeneral.const_CaracterCopyright;
   public static final char const_CaracterSaltoHtml = '\n';
+  public static final String NEW_LINE = "\n";
   public static final String CADENA_VACIA = "";
   public static final String const_CadenaSi = "Si";
   public static final String const_CadenaNo = "No";

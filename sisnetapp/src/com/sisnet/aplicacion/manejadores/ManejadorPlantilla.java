@@ -760,6 +760,12 @@ public class ManejadorPlantilla {
 				valorCorrectoCampoPlantilla_local = getManejadorCampoEnlazado().obtenerValorCampoEnlazado(
 						pCampo.getEnlaceCampo().getEnlazado(), Integer.parseInt(valorCorrectoCampoPlantilla_local));
 			}
+			
+			if(pCampo.esTipoDatoParrafo() && valorCorrectoCampoPlantilla_local != null) {
+				valorCorrectoCampoPlantilla_local = valorCorrectoCampoPlantilla_local.replace("{$SL}\r", "<br>");
+				valorCorrectoCampoPlantilla_local = valorCorrectoCampoPlantilla_local.replace("{$sl}\r", "<br>");
+				valorCorrectoCampoPlantilla_local = valorCorrectoCampoPlantilla_local.replace("\r", "<br>");
+			}
 
 			valorCorrectoCampoPlantilla_local = ap.obtenerValorCampoConFormato(valorCorrectoCampoPlantilla_local,
 					pCampo.esTipoDatoNumeroEntero(), pCampo.esTipoDatoNumeroReal(), pCampo.esTipoDatoFecha(),
@@ -769,6 +775,7 @@ public class ManejadorPlantilla {
 					valorCorrectoCampoPlantilla_local);
 			valorCorrectoCampoPlantilla_local = ap.obtenerValorCampoConEstilo(valorCorrectoCampoPlantilla_local,
 					pEstiloAplicar);
+			
 		} catch (Exception excepcion) {
 			excepcion.printStackTrace();
 		} finally {
