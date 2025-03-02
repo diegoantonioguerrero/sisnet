@@ -740,6 +740,19 @@ public class ManejadorPlantilla {
 
 		try {
 			valorCorrectoCampoPlantilla_local = pValorCampoPlantilla;
+			if(pCampo.esTipoDatoParrafo() && valorCorrectoCampoPlantilla_local != null) {
+				valorCorrectoCampoPlantilla_local = valorCorrectoCampoPlantilla_local.replace("{$SL}\r", "<br>");
+				valorCorrectoCampoPlantilla_local = valorCorrectoCampoPlantilla_local.replace("{$sl}\r", "<br>");
+				valorCorrectoCampoPlantilla_local = valorCorrectoCampoPlantilla_local.replace("{$sL}\r", "<br>");
+				valorCorrectoCampoPlantilla_local = valorCorrectoCampoPlantilla_local.replace("{$Sl}\r", "<br>");
+				valorCorrectoCampoPlantilla_local = valorCorrectoCampoPlantilla_local
+						.replace("{$SL}", "<br>")
+						.replace("{$sl}", "<br>")
+						.replace("{$sL}", "<br>")
+						.replace("{$Sl}", "<br>");
+				valorCorrectoCampoPlantilla_local = valorCorrectoCampoPlantilla_local.replace("\r", "<br>");
+			}
+			
 			if (mc.verificarExistenciaSubCadena(valorCorrectoCampoPlantilla_local, "{$")) {
 				valorCorrectoCampoPlantilla_local = reemplazarContenidoPlantilla(valorCorrectoCampoPlantilla_local,
 						pValorLlavePrimariaPrincipal, pCampo.getGrupoInformacion().getAplicacion().getIdAplicacion(),
@@ -761,12 +774,6 @@ public class ManejadorPlantilla {
 						pCampo.getEnlaceCampo().getEnlazado(), Integer.parseInt(valorCorrectoCampoPlantilla_local));
 			}
 			
-			if(pCampo.esTipoDatoParrafo() && valorCorrectoCampoPlantilla_local != null) {
-				valorCorrectoCampoPlantilla_local = valorCorrectoCampoPlantilla_local.replace("{$SL}\r", "<br>");
-				valorCorrectoCampoPlantilla_local = valorCorrectoCampoPlantilla_local.replace("{$sl}\r", "<br>");
-				valorCorrectoCampoPlantilla_local = valorCorrectoCampoPlantilla_local.replace("\r", "<br>");
-			}
-
 			valorCorrectoCampoPlantilla_local = ap.obtenerValorCampoConFormato(valorCorrectoCampoPlantilla_local,
 					pCampo.esTipoDatoNumeroEntero(), pCampo.esTipoDatoNumeroReal(), pCampo.esTipoDatoFecha(),
 					pCampo.esTipoDatoHora(), pFormatoAplicar, pValorAplicar);
