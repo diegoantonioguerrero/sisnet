@@ -135,14 +135,14 @@ public class ManejadorConsultaSQL
         asignarNumeroRegistrosActualizacion(getPreparedStatement().executeUpdate());
         getPreparedStatement().setQueryTimeout(getTimeOut());
         
-     // Registra el tiempo de finalizaci髇
+     // Registra el tiempo de finalizaci贸n
         tiempoFin = System.nanoTime();
 
-        // Calcula el tiempo de ejecuci髇 en milisegundos
+        // Calcula el tiempo de ejecuci贸n en milisegundos
         tiempoEjecucion = (tiempoFin - tiempoInicio) / 1000000;
 
-        // Imprime el tiempo de ejecuci髇 en milisegundos
-        // System.out.println("Tiempo de ejecuci髇: " + tiempoEjecucion + " ms");
+        // Imprime el tiempo de ejecuci贸n en milisegundos
+        // System.out.println("Tiempo de ejecuci贸n: " + tiempoEjecucion + " ms");
         //System.out.println("Executed statement: time[" + tiempoEjecucion + " ms]" + query);
       } else {
       	// Registra el tiempo de inicio
@@ -152,9 +152,9 @@ public class ManejadorConsultaSQL
         query = getConsultaSQL();
         // System.out.println("Executing query: " + query);
         setResultSet(getStatement().executeQuery(query));
-        // Registra el tiempo de finalizaci髇
+        // Registra el tiempo de finalizaci贸n
         tiempoFin = System.nanoTime();
-        // Calcula el tiempo de ejecuci髇 en milisegundos
+        // Calcula el tiempo de ejecuci贸n en milisegundos
         tiempoEjecucion = (tiempoFin - tiempoInicio) / 1000000;
         // System.out.println("Executed query: time[" + tiempoEjecucion + " ms]" + query);
         consultaContarRegistros_local = ca.conformarConsultaContarRegistros(getConsultaSQL());

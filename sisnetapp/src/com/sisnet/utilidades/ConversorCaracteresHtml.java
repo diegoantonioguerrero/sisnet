@@ -82,15 +82,15 @@ public class ConversorCaracteresHtml{
         // Normalizar el texto para descomponer los caracteres acentuados
         String normalized = Normalizer.normalize(input, Normalizer.Form.NFD);
 
-        // Eliminar caracteres especiales (diacríticos)
+        // Eliminar caracteres especiales (diacrÃ­ticos)
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
         String result = pattern.matcher(normalized).replaceAll("");
 
-        // Eliminar caracteres no alfabéticos ni numéricos (excepto espacios y puntos)
+        // Eliminar caracteres no alfabÃ©ticos ni numÃ­ricos (excepto espacios y puntos)
         result = result.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit} ._-]", "");
 
-        // Reemplazar ñ y Ñ manualmente
-        result = result.replace("ñ", "n").replace("Ñ", "N");
+        // Reemplazar Ã­ y Ã­ manualmente
+        result = result.replace("Ã­", "n").replace("Ã­", "N");
 
         return result;
     }

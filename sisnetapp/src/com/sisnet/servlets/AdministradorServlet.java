@@ -5490,7 +5490,7 @@ public class AdministradorServlet
               numeroError_local = modificarRegistroValorTabla(request);
               direccionarError(request, numeroError_local, false);
               break;
-            case 91:
+            case ConstantesAdministrador.const_AccionModificarRegistroAplicacion:
               numeroError_local = modificarRegistroAplicacion(request, false, false);
               
               direccionarError(request, numeroError_local, false);

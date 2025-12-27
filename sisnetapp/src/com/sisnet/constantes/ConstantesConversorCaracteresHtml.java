@@ -1,18 +1,18 @@
 package com.sisnet.constantes;
 public final class ConstantesConversorCaracteresHtml {
     //CONSTANTES DE CONVERSOR CARACTER HTML
-    public static final char const_CaracterTildeA = '¡';    
-    public static final char const_CaracterTildeE = '…';    
-    public static final char const_CaracterTildeI = 'Õ';    
-    public static final char const_CaracterTildeO = '”';    
-    public static final char const_CaracterTildeU = '⁄';        
-    public static final char const_CaracterTildea = '·';    
-    public static final char const_CaracterTildee = 'È';    
-    public static final char const_CaracterTildei = 'Ì';    
-    public static final char const_CaracterTildeo = 'Û';    
-    public static final char const_CaracterTildeu = '˙';    
-    public static final char const_CaracterTilden = 'Ò';    
-    public static final char const_CaracterTildeN = '—';
+    public static final char const_CaracterTildeA = '√Å';    
+    public static final char const_CaracterTildeE = '√â';    
+    public static final char const_CaracterTildeI = '√ç';    
+    public static final char const_CaracterTildeO = '√ì';    
+    public static final char const_CaracterTildeU = '√ö';        
+    public static final char const_CaracterTildea = '√°';    
+    public static final char const_CaracterTildee = '√©';    
+    public static final char const_CaracterTildei = '√≠';    
+    public static final char const_CaracterTildeo = '√≥';    
+    public static final char const_CaracterTildeu = '√∫';    
+    public static final char const_CaracterTilden = '√±';    
+    public static final char const_CaracterTildeN = '√ë';
     public static final char const_CaracterQuotation  = '"';
     public static final char const_CaracterQuotationSingle  = '\'';
     public static final char const_CaracterQuotationSingleCustom  = '"';

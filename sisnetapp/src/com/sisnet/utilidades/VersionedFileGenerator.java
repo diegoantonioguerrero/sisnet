@@ -12,7 +12,7 @@ public class VersionedFileGenerator {
     // Singleton para almacenar hashes de archivos
     private static Map<String, String> fileHashCache = Collections.synchronizedMap(new HashMap<String, String>());
 
-    // Método estático para obtener el hash versionado de un archivo
+    // Metodo estatico para obtener el hash versionado de un archivo
     public static String getVersionedHash(String filePath) throws IOException, NoSuchAlgorithmException {
         if (fileHashCache.containsKey(filePath)) {
             return fileHashCache.get(filePath);
@@ -31,12 +31,12 @@ public class VersionedFileGenerator {
         return Long.toString(timestampInSeconds);
     }
 
-    // Limpia el caché de hashes
+    // Limpia el cache de hashes
     public static void clearCache() {
         fileHashCache.clear();
     }
 
-    // Devuelve el mapa del caché (para depuración)
+    // Devuelve el mapa del cache (para depuracion)
     public static Map<String, String> getCache() {
         return fileHashCache;
     }

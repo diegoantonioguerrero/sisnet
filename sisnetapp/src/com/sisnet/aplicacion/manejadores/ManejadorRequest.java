@@ -57,13 +57,15 @@ public class ManejadorRequest
     ListaAtributosRequest listaAtributosRequest_local = null;
     Enumeration<String> atributos_local = null;
     String nombreAtributo_local = null;
-    
+    String local_value;
     try {
       listaAtributosRequest_local = new ListaAtributosRequest();
-      atributos_local = getRequest().getParameterNames();
+      HttpServletRequest request_local = getRequest();
+      atributos_local = request_local.getParameterNames();
       while (atributos_local.hasMoreElements()) {
         nombreAtributo_local = atributos_local.nextElement();
-        listaAtributosRequest_local.adicionar(nombreAtributo_local, getRequest().getParameter(nombreAtributo_local));
+        local_value = request_local.getParameter(nombreAtributo_local);        
+        listaAtributosRequest_local.adicionar(nombreAtributo_local, local_value);
       } 
       if (listaAtributosRequest_local.contarElementos() == 0) {
         listaAtributosRequest_local = null;
