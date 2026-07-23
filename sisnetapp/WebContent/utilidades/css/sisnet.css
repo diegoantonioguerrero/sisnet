@@ -14,8 +14,8 @@
 body{    
     font-family: tahoma,verdana,helvetica,sans-serif;
     font-size: 14px;
-    color:#EEF5FA;
-    background-color:#fff;/*Color de fondo principal de la pagina #DBDBD8*/
+    color:#000000;
+    background-color:#E6E6E6;/*Color de fondo principal de la pagina #DBDBD8*/
     margin:0px;    
 }
 
@@ -88,10 +88,10 @@ font-family: verdana, arial;
 font-weight:bold;
 }
 a.nounderline{text-decoration:none}
-a:link    {color:#02733C; background-color:transparent}
-a:visited {color:#02733C; background-color:transparent}
-a:active  {color:#02733C; background-color:transparent}
-a:hover   {color:#000000; background-color:transparent}/*cuando pasa el mouse por encima*/
+a:link    {color:#000000; background-color:transparent}
+a:visited {color:#000000; background-color:transparent}
+a:active  {color:#000000; background-color:transparent}
+a:hover   {color:#0000FF; background-color:transparent}/*cuando pasa el mouse por encima*/
 
 /*Hipervìnculo marca*/
 /*Kes Pantalla 1: Aplicaciones Fuente */
@@ -215,38 +215,41 @@ input.checkboxOculto {
 	width: 250px !important;
 }
 .select2-container--default .select2-results__option--selected {
-    color: #02733C !important;
+    color: #000000 !important;
+    font-family: tahoma, verdana !important;
 	font-size: 11px !important;
 }
 
 .select2-results__option--selectable {
-    color: #02733C !important;
+    color: #000000 !important;
+    font-family: tahoma, verdana !important;
 	font-size: 11px !important;
 }
 
 .select2-container--default .select2-results>.select2-results__options
 {
 	background-color: #E7FEE5 !important;
-    font-family: verdana, tahoma !important;
+    font-family: tahoma, verdana !important;
 	font-size: 11px !important;
-    color: #02733C !important;
+    color: #000000 !important;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
-    color: #02733C !important;
+    color: #000000 !important;
+    font-family: tahoma, verdana !important;
 	font-size: 11px !important;
-	margin-top: 2px !important;
+	margin-top: 1px !important;
     font-weight: normal !important;
 	line-height: normal !important;
 }
 
 .select2-container .select2-selection--single .select2-selection__rendered{
-	padding-left: 5px !important;
+	padding-left: 6px !important;
 	padding-right: 14px !important;
 }
 
 .select2-container--default .select2-selection--single{
-	height: 19px !important;
+	height: 17px !important;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow{
@@ -257,7 +260,10 @@ input.checkboxOculto {
 .select2-container--default .select2-selection--single {
     background-color: #E7FEE5 !important;
 	border: 1px #E7FEE5 solid !important;
+	border-top: 1px #ccc solid !important;
+	border-right: 1px #ccc solid !important;
 	border-bottom: 1px #ccc solid !important;
+	border-left: 1px #ccc solid !important;
 }
 
 #formularioConsultas .select2-container--default .select2-selection--single {
@@ -266,30 +272,42 @@ input.checkboxOculto {
 }
 
 .select2-container--default .select2-selection--single:hover {
+	border-top: 1px #000 solid !important;
+	border-right: 1px #000 solid !important;
 	border-bottom: 1px #000 solid !important;
+	border-left: 1px #000 solid !important;
 }
 
 .select2-container--default.select2-container--disabled .select2-selection--single:hover {
+	border-top: 1px #ccc solid !important;
+	border-right: 1px #ccc solid !important;
 	border-bottom: 1px #ccc solid !important;
+	border-left: 1px #ccc solid !important;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow b{
-	border-color: #02733C transparent transparent transparent !important;	
+	border-color: #000000 transparent transparent transparent !important;	
 }
 
 
 .select2.select2-container .select2-selection--single:focus{
     background-color: #E7FEE5 !important;
 	border: 1px #E7FEE5 solid !important;
+	border-top: 1px #000 solid !important;
+	border-right: 1px #000 solid !important;
 	border-bottom: 1px #000 solid !important;
+	border-left: 1px #000 solid !important;
 	outline: none !important;
     box-shadow: none !important;
 }
 
 .select2-container--default.select2-container--disabled .select2-selection--single,
 .select2-container--default.select2-container--disabled.select2-container--focus .select2-selection--single{
-	background-color: transparent !important;
+	background-color: #D9D9D9 !important;
+	border-top: 1px #ccc solid !important;
+	border-right: 1px #ccc solid !important;
 	border-bottom: 1px #ccc solid !important;
+	border-left: 1px #ccc solid !important;
 }
 
 

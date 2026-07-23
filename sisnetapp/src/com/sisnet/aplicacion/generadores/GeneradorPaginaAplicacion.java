@@ -5956,6 +5956,16 @@ public class GeneradorPaginaAplicacion extends GeneradorPagina {
 									contenido_local = getExternalTableValue(tipoDato_local, contenido_local);
 								}
 
+								if (mc.sonCadenasIgualesIgnorarMayusculas(campo_local.getNombreCampo(), "fldidtipousuario")) {
+									try {
+										int idTipoUsuario_local = Integer.parseInt(contenido_local);
+										com.sisnet.baseDatos.sisnet.usuario.TipoUsuario tipoUsuario_local = getAdministradorBaseDatosSisnet().obtenerTipoUsuarioPorId(idTipoUsuario_local);
+										if (tipoUsuario_local != ConstantesGeneral.VALOR_NULO) {
+											contenido_local = tipoUsuario_local.getNombreTipoUsuario();
+										}
+									} catch (Exception excepcionTipoUsuario) {}
+								}
+
 								listaParametrosRedireccionModificar_local.adicionar("grupoinformacionactual",
 										String.valueOf(pGrupoInformacion.getIdGrupoInformacion()));
 

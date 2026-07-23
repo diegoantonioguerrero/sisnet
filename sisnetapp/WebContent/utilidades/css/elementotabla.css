@@ -185,9 +185,9 @@ th.titulo{
  border-radius:5px 5px;
  padding-left: 6px;/*Margen izquierdo*/
  padding-right: 6px;/*Margen derecha*/
- background-color: #E7FEE5 !important; /*Color fondo de los cuadros de texto de las consultas */
+ background-color: #E7FEE5 !important; /*Color fondo de los cuadros de texto de las consultas*/
  font-family: verdana,tahoma !important;/*Por defecto es tahoma*/
- color: #02733C;/*Color fuente cuadros de texto de las consultas*/
+ color: #000000 ;/*Color fuente cuadros de texto de las consultas*/
  font-size:11px !important;/*Tamaño fuente cuadros de texto de las consultas*/
  width: 250px !important;/*Ancho de la etiqueta*/
  }
@@ -225,29 +225,26 @@ th.titulo{
 /*Kes Pantalla 2: cajas de texto, selector de arhivos y select*/
 #formularioIncluir input[type="text"],#formularioIncluir textarea,#formularioIncluir select,#formularioIncluir input[type="file"]
 {
-	color: #02733C !important;/*Por defecto es negro #000*/
+	color: #000000 !important;/*Por defecto es negro #000*/
 	font-size:11px !important;/*Por defecto es 11px*/
 	background-color:#E7FEE5 !important;/*Por defecto es #E2FFFF*/
-	font-family: verdana,tahoma !important;/*Por defecto es tahoma*/
+	font-family: tahoma, verdana !important;/*Por defecto es tahoma*/
 	border-radius: 4px 4px;/*redondeo de las cajas de texto de nuevo registro*/
 	padding-left:1px;/*Margen por el redondeo*/
 	padding-right:0px;/*Margen por el redondeo*/
 	padding-top:1px;/*Margen por el redondeo*/
 	padding-bottom:0px;/*Margen por el redondeo*/
-/*}
 
-#formularioIncluir input[type="text"],#formularioIncluir textarea,#formularioIncluir select,#formularioIncluir_ input[type="file"]
-{*/
 	/*font-size:18px !important;Por defecto es 11px*/
 	margin-top:0px;
 	margin-bottom:0px;
 	/*padding-left: 10px;Margen izquierdo*/
 	/*padding-top: 0px;Margen Superior*/
 	border: 0px !important;
-	border-top: 1px #E7FEE5 solid !important;
-	border-right: 1px #E7FEE5 solid !important;
-	border-left: 1px #E7FEE5 solid !important;
-	border-bottom: 1px #ccc solid !important;
+	border-top: 1px #B3B3B3 solid !important;
+	border-right: 1px #B3B3B3 solid !important;
+	border-left: 1px #B3B3B3 solid !important;
+	border-bottom: 1px #B3B3B3 solid !important;
 	height: 100%;
 	/*border-radius:6px 6px;
 	border-top-left-radius: 0px;
@@ -258,8 +255,8 @@ th.titulo{
 /*Kes Pantalla 2: Controles Deshabilitados*/
 #formularioIncluir input[type="text"]:disabled,#formularioIncluir textarea:disabled,#formularioIncluir select:disabled,#formularioIncluir input[type="text"]:not(.date):read-only,#formularioIncluir textarea:read-only
 {
-	color: #02733C !important;/*Por defecto es negro #000*/
-	background-color:transparent !important;/*Por defecto es #E2FFFF*/
+	color: #000000 !important;/*Por defecto es negro #000*/
+	background-color: #D9D9D9 !important;/*Por defecto es #E2FFFF*/
 	/*border: 1px solid #02733C !important;
 	border-top: 1px #E7FEE5 solid !important;
 	border-right: 1px #E7FEE5 solid !important;
@@ -269,10 +266,10 @@ th.titulo{
 #formularioIncluir input[type="text"]:focus,#formularioIncluir input[type="password"]:focus,#formularioIncluir select:focus, #formularioIncluir textarea:focus
 {
 	 border: 0px !important;
-	 border-top:    1px #E7FEE5 solid !important;
-	 border-right:  1px #E7FEE5 solid !important;
-	 border-left:   1px #E7FEE5 solid !important;
-	 border-bottom: 1px #000 solid !important;
+	 border-top:    1px #000000 solid !important;
+	 border-right:  1px #000000 solid !important;
+	 border-left:   1px #000000 solid !important;
+	 border-bottom: 1px #000000 solid !important;
 	 outline: none;
 	 outline-style: none;
 	 -o-transition: border-color ease-in-out .60s, box-shadow ease-in-out .60s;
@@ -285,18 +282,18 @@ th.titulo{
 #formularioIncluir textarea[readonly=""]:focus
 {
 	 border: 0px !important;
-	 border-top:   1px #E7FEE5 solid !important;
-	 border-right: 1px #E7FEE5 solid !important;
-	 border-left:  1px #E7FEE5 solid !important;
-	 border-bottom: 1px #eee solid !important;/*#000 */
+	 border-top:   1px #B3B3B3 solid !important;
+	 border-right: 1px #B3B3B3 solid !important;
+	 border-left:  1px #B3B3B3 solid !important;
+	 border-bottom: 1px #B3B3B3 solid !important;/*#000 */
 }
 #formularioIncluir input[type="text"]:hover,#formularioIncluir input[type="password"]:hover,#formularioIncluir select:hover, #formularioIncluir textarea:hover
 {
 	 border: 0px !important;
-	 border-top:   1px #E7FEE5 solid !important;
-	 border-right: 1px #E7FEE5 solid !important;
-	 border-left:  1px #E7FEE5 solid !important;
-	 border-bottom: 1px #000 solid !important;
+	 border-top:   1px #000000 solid !important;
+	 border-right: 1px #000000 solid !important;
+	 border-left:  1px #000000 solid !important;
+	 border-bottom: 1px #000000 solid !important;/*#000 */
 }
 
 #formularioIncluir input[type="text"][disabled=""]:hover,
@@ -311,10 +308,10 @@ th.titulo{
 #formularioIncluir textarea[readonly=""]:hover
 {
 	 border: 0px !important;
-	 border-top:   1px #E7FEE5 solid !important;
-	 border-right: 1px #E7FEE5 solid !important;
-	 border-left:  1px #E7FEE5 solid !important;
-	 border-bottom: 1px #ccc solid !important;/*#000 */
+	 border-top:   1px #B3B3B3 solid !important;
+	 border-right: 1px #B3B3B3 solid !important;
+	 border-left:  1px #B3B3B3 solid !important;
+	 border-bottom: 1px #B3B3B3 solid !important;/*#000 */
 }
 
 
@@ -323,8 +320,8 @@ th.titulo{
 {
 	color: #000000 !important;/*Por defecto es negro #000*/
 	font-size:11px !important;/*Por defecto es 11px*/
-	background-color:#E7FEE5 !important;/*Por defecto es #E2FFFF*/
-	font-family: verdana, Tahoma !important;/*Por defecto es tahoma*/
+	background-color:#E6E6E6 !important;/*Por defecto es #E2FFFF*/
+	font-family: Tahoma, verdana !important;/*Por defecto es tahoma*/
 }
 /*Kes Opcion seleccionada de los select*/
 #formularioIncluir select option[selected]
@@ -332,7 +329,7 @@ th.titulo{
 	color: #000000 !important;/*Por defecto es negro #000*/
 	font-size:11px !important;/*Por defecto es 11px*/
 	background-color:#E2FFFF !important;/*Por defecto es #E2FFFF*/
-	font-family: verdana, Tahoma !important;/*Por defecto es tahoma*/
+	font-family: Tahoma, verdana !important;/*Por defecto es tahoma*/
 }
 /*Kes Pantalla 2: Color Boton Fecha*/
 #formularioIncluir button, #formularioIncluir input[type="button"]
@@ -345,12 +342,12 @@ th.titulo{
 
 /*Kes Pantalla 2: Color de fondo Formulario*/
 #formularioIncluir table:first-of-type tr td{
-	background-image: -moz-linear-gradient(top, #FFFFFF, #FFFFFF);  /*DBDBD8*/
-    background-image: -ms-linear-gradient(top, #FFFFFF, #FFFFFF);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FFFFFF), to(#FFFFFF));
-    background-image: -webkit-linear-gradient(top, #FFFFFF, #FFFFFF);
-    background-image: -o-linear-gradient(top, #FFFFFF, #FFFFFF);
-    background-image: linear-gradient(top, #FFFFFF, #FFFFFF);
+	background-image: -moz-linear-gradient(top, #F8F8F8, #F8F8F8);  /*DBDBD8*/
+    background-image: -ms-linear-gradient(top, #F8F8F8, #F8F8F8);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#F8F8F8), to(#F8F8F8));
+    background-image: -webkit-linear-gradient(top, #F8F8F8, #F8F8F8);
+    background-image: -o-linear-gradient(top, #F8F8F8, #F8F8F8);
+    background-image: linear-gradient(top, #F8F8F8, #F8F8F8);
 }
 
 /*Kes Pantalla 2 Barra de titulo formulario: DATOS BASICOS*/
@@ -370,9 +367,9 @@ th.titulo{
 
 /*Kes Etiquetas del formulario de registro*/
 table.internaformulario tr th, table.transparente tr th{
-	font-family: GraviolaSoftRegular, Tahoma !important;/*Por defecto es tahoma*/
-	font-size: 12px !important;/*Por defecto es 11px*/
-	color: #000000 !important;/*Por defecto es blanco #fff */
+	font-family: Tahoma, Verdana  !important;/*Por defecto es tahoma*/
+	font-size: 11px !important;/*Por defecto es 11px*/
+	color: #333333 !important;/*Por defecto es blanco #fff */
 	/*font-weight: bold  !important; Por defecto bold*/
 }
 
@@ -488,15 +485,15 @@ table.botones{
 
 /*Filas de la tabla de los resultados de consulta (1er columna) */
 th.tablaContenidoImagen{
-    background-image: -moz-linear-gradient(top, #FFFFFF, #FFFFFF);/* Por defecto CCFFFF, 99CCFF */
-    background-image: -ms-linear-gradient(top, #FFFFFF, #FFFFFF);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FFFFFF), to(#FFFFFF));
-    background-image: -webkit-linear-gradient(top, #FFFFFF, #FFFFFF);
-    background-image: -o-linear-gradient(top, #FFFFFF, #FFFFFF);
-    background-image: linear-gradient(top, #FFFFFF, #FFFFFF);
-    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#FFFFFF',endColorstr='#FFFFFF', gradientType='0');    
+    background-image: -moz-linear-gradient(top, #F8F8F8, #F8F8F8);/* Por defecto CCFFFF, 99CCFF */
+    background-image: -ms-linear-gradient(top, #F8F8F8, #F8F8F8);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#F8F8F8), to(#F8F8F8));
+    background-image: -webkit-linear-gradient(top, #F8F8F8, #F8F8F8);
+    background-image: -o-linear-gradient(top, #F8F8F8, #F8F8F8);
+    background-image: linear-gradient(top, #F8F8F8, #F8F8F8);
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#F8F8F8',endColorstr='#F8F8F8', gradientType='0');    
     color:#000000;
-    background-color:#FFFFFF;
+    background-color:#F8F8F8;
     text-align:center;    
     border-color: black;
     border-width: 1px;
@@ -521,15 +518,15 @@ th.tablaContenidoImagenAlterno{
 }
 /*Filas de la tabla de los resultados de consulta (2da y 3er columna) */
 th.tablaContenido{
-	background-image: -moz-linear-gradient(top, #FFFFFF, #FFFFFF);/* Por defecto CCFFFF, 99CCFF */
-    background-image: -ms-linear-gradient(top, #FFFFFF, #FFFFFF);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FFFFFF), to(#FFFFFF));
-    background-image: -webkit-linear-gradient(top, #FFFFFF, #FFFFFF);
-    background-image: -o-linear-gradient(top, #FFFFFF, #FFFFFF);
-    background-image: linear-gradient(top, #FFFFFF, #FFFFFF);
-    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#FFFFFF',endColorstr='#FFFFFF', gradientType='0');    
+	background-image: -moz-linear-gradient(top, #F8F8F8, #F8F8F8);/* Por defecto CCFFFF, 99CCFF */
+    background-image: -ms-linear-gradient(top, #F8F8F8, #F8F8F8);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#F8F8F8), to(#F8F8F8));
+    background-image: -webkit-linear-gradient(top, #F8F8F8, #F8F8F8);
+    background-image: -o-linear-gradient(top, #F8F8F8, #F8F8F8);
+    background-image: linear-gradient(top, #F8F8F8, #F8F8F8);
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#F8F8F8',endColorstr='#F8F8F8', gradientType='0');    
     color:#000000;
-    background-color:#FFFFFF;    
+    background-color:#F8F8F8;    
     font-size:11px;  
     border-color: black;
     border-width: 1px;
@@ -555,15 +552,15 @@ th.tablaContenidoAlterno{
 
 /*Filas de la tabla de los resultados de consulta (4ta columna en adelante) */
 th.tablaContenidoParrafo{
-  background-image: -moz-linear-gradient(top, #FFFFFF, #FFFFFF); /* Por defecto CCFFFF, 99CCFF */
-    background-image: -ms-linear-gradient(top, #FFFFFF, #FFFFFF);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FFFFFF), to(#FFFFFF));
-    background-image: -webkit-linear-gradient(top, #FFFFFF, #FFFFFF);
-    background-image: -o-linear-gradient(top, #FFFFFF, #FFFFFF);
-    background-image: linear-gradient(top, #FFFFFF, #FFFFFF);
-    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#FFFFFF',endColorstr='#FFFFFF', gradientType='0');
+  background-image: -moz-linear-gradient(top, #F8F8F8, #F8F8F8); /* Por defecto CCFFFF, 99CCFF */
+    background-image: -ms-linear-gradient(top, #F8F8F8, #F8F8F8);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#F8F8F8), to(#F8F8F8));
+    background-image: -webkit-linear-gradient(top, #F8F8F8, #F8F8F8);
+    background-image: -o-linear-gradient(top, #F8F8F8, #F8F8F8);
+    background-image: linear-gradient(top, #F8F8F8, #F8F8F8);
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#F8F8F8',endColorstr='#F8F8F8', gradientType='0');
     color:#000000;
-    background-color:#FFFFFF;
+    background-color:#F8F8F8;
     font-size:11px;
     border-color: black;
     border-width: 1px;
@@ -614,13 +611,13 @@ th.tabla{
 table.tabla{
     color:#000000;
     background-color:#FFFFFF;
-    font-size:12px;/*Por defecto 11px*/
+    font-size:11px;/*Por defecto 11px*/
     border-color: #02733C;
     border-width: 1px;
     border-style: solid;
     border-collapse:collapse;
     table-layout: fixed;
-	font-family: GraviolaSoftBold, tahoma,verdana,helvetica,sans-serif;/*Por defecto tahoma,verdana,helvetica,sans-serif*/
+	font-family: tahoma,verdana,helvetica,sans-serif;/*Por defecto tahoma,verdana,helvetica,sans-serif*/
 }
 
 th.transparente{
