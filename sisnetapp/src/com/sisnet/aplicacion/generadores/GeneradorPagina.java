@@ -6778,6 +6778,16 @@ private String dibujarDatosGrupoInformacion(GrupoInformacion pGrupoInformacion, 
                     if (!mc.esCadenaVacia(campo_local.getEtiquetaCampo()) && campo_local.esVisibleUsuarioPrincipal())
                     {
                         contenido_local = resultSet_local.getObject(campo_local.getNombreCampo()).toString();
+                        if (mc.sonCadenasIgualesIgnorarMayusculas(campo_local.getNombreCampo(), "fldidtipousuario"))
+                        {
+                            try {
+                                int idTipoUsuario_local = Integer.parseInt(contenido_local);
+                                com.sisnet.baseDatos.sisnet.usuario.TipoUsuario tipoUsuario_local = getAdministradorBaseDatosSisnet().obtenerTipoUsuarioPorId(idTipoUsuario_local);
+                                if (tipoUsuario_local != ConstantesGeneral.VALOR_NULO) {
+                                    contenido_local = tipoUsuario_local.getNombreTipoUsuario();
+                                }
+                            } catch (Exception excepcionTipoUsuario) {}
+                        }
                         listaParametrosRedireccionModificar.adicionar("valorllaveprimaria", valorLlavePrimaria_local);
 
                         datosGrupoInformacion_local = mc.concatenarCadena(datosGrupoInformacion_local, getGeneradorComponentesHtml().crearCeldaHipervinculo(contenido_local, "left", listaParametrosRedireccionModificar.concatenarParametros(), calcularAnchoCampo(campo_local), alternar_local, "", campo_local.esTipoDatoParrafo()));

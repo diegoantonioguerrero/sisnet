@@ -1674,6 +1674,9 @@ public class CamposAdministrador
         campo_local.setEtiquetaCampo("Tipo de Usuario");
         campo_local.getFormatoCampo().setTipoDato("Q");
         campo_local.setModificable(true);
+        campo_local.setVisibleUsuarioSecundario(true);
+        campo_local.setVisibleUsuarioPrincipal(true);
+        campo_local.setAnchoColumna(420);
       }
     }
     catch (Exception excepcion)
@@ -1837,7 +1840,9 @@ public class CamposAdministrador
       campo_local.getFormatoCampo().setLongitudCampo(60);
       campo_local.setObligatorio(true);
       campo_local.setModificable(true);
-      campo_local.setAnchoColumna(200);
+      campo_local.setVisibleUsuarioSecundario(true);
+      campo_local.setVisibleUsuarioPrincipal(true);
+      campo_local.setAnchoColumna(320);
     }
     catch (Exception excepcion)
     {
